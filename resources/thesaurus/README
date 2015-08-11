@@ -1,0 +1,10 @@
+download from Nasa the file
+
+sciencekeywords.rdf
+
+and European Union the:
+
+gemet-definitions.rdf
+gemet-skoscore.rdf
+
+The programs sciencekeywords2csv.php and gemet2csv.php will transfer the data into a format that can by used by the application.

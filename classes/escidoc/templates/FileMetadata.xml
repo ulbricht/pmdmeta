@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://purl.org/escidoc/metadata/profiles/0.1/file">
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/"/>
+    <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/"/>
+    <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="dcterms:IMT"/>
+    <dcterms:extent xmlns:dcterms="http://purl.org/dc/terms/"/>
+    <dcterms:dateCopyrighted xmlns:dcterms="http://purl.org/dc/terms/"/>
+    <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/"/>
+    <dcterms:license xmlns:dcterms="http://purl.org/dc/terms/"/>
+</file>
