@@ -29,7 +29,7 @@ Ext.define('PMDMeta.view.iso.DatasetContact', {
             store: 'isoDatasetContact',
             columns: [
 	    {		    
-                header: 'Author (Lastname, Firstname)',
+                header: 'Contact (Lastname, Firstname)',
                 dataIndex: 'name',
                 flex: 1,
 		sortable: false,	

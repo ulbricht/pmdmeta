@@ -56,7 +56,12 @@ Ext.define('PMDMeta.view.datacite.RelatedIdentifiers', {
                                 '<div data-qtip="{name}: {qtip}">{group}:{name}</div>'
                             ]
                         }			
-		})
+		}),
+                renderer: function(value, metaData, record, rowIdx, colIdx, store) {
+                    var qtip="e.g. dataset is supplement to data report (doi); if applicable";
+                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
+                    return value;
+                }
               },		
 		{
                 header: 'Type',
@@ -66,7 +71,12 @@ Ext.define('PMDMeta.view.datacite.RelatedIdentifiers', {
                 width: 130,
                 editor: new PMDMeta.view.main.ComboBox({
 		    store: 'IdentifiertypeCombo'
-            })
+                }),
+                renderer: function(value, metaData, record, rowIdx, colIdx, store) {
+                    var qtip="e.g. dataset is supplement to data report (doi); if applicable";
+                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
+                    return value;
+                }
                 
             },{
                 header: 'Identifier',
@@ -76,6 +86,11 @@ Ext.define('PMDMeta.view.datacite.RelatedIdentifiers', {
 		menuDisabled: true,
                 editor: {
                     allowBlank: false
+                },
+                renderer: function(value, metaData, record, rowIdx, colIdx, store) {
+                    var qtip="e.g. dataset is supplement to data report (doi); if applicable";
+                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
+                    return value;
                 }
                 /*getEditor: function(record, defaultfield){
                     //set validation type for the selected type

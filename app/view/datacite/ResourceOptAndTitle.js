@@ -14,6 +14,7 @@ Ext.define('PMDMeta.view.datacite.ResourceOptAndTitle', {
 	'PMDMeta.model.datacite.ResourceOptAndTitle',
 	'PMDMeta.store.datacite.ResourceOptAndTitle',
 	'PMDMeta.store.datacite.combobox.ResourcetypeGeneralCombo',
+	'PMDMeta.store.datacite.combobox.ResourcetypeCombo',        
 	'PMDMeta.store.datacite.combobox.LanguageCombo',
 	'PMDMeta.store.datacite.combobox.TitletypeCombo',        
 	'PMDMeta.view.main.ComboBox'	
@@ -27,6 +28,7 @@ Ext.define('PMDMeta.view.datacite.ResourceOptAndTitle', {
 	
 	Ext.create('PMDMeta.store.datacite.combobox.LanguageCombo');	
 	Ext.create('PMDMeta.store.datacite.combobox.ResourcetypeGeneralCombo');	
+	Ext.create('PMDMeta.store.datacite.combobox.ResourcetypeCombo');	        
         Ext.apply(this, {
             plugins: [this.cellEditing],
             store: 'DataCiteResourceOptAndTitle',
@@ -40,6 +42,16 @@ Ext.define('PMDMeta.view.datacite.ResourceOptAndTitle', {
                 width: 180,
                 editor: new PMDMeta.view.main.ComboBox({
 		    store: 'ResourcetypeGeneralCombo'
+		})
+            },{
+		cls: 'PMDrequired',			
+                header: 'Data Type',
+                dataIndex: 'resourceType',
+		sortable: false,		
+                menuDisabled: true,			
+                width: 180,
+                editor: new PMDMeta.view.main.ComboBox({
+		    store: 'ResourcetypeCombo'
 		})
             },{
 		cls: 'PMDrequired',                

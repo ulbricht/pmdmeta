@@ -64,7 +64,12 @@ Ext.define('PMDMeta.view.iso.Extent', {
                                     emptyText:'DD.ddddd',
                                     allowBlank: false,
                                     vtype: 'floatval'
-                                }
+                                },
+                                renderer: function(value, metaData, record, rowIdx, colIdx, store) {
+                                    var qtip="center coordinates or min/max values of covered region; not necessary in case of seismological network data to be archived in GEOFON";
+                                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
+                                    return value;
+                                }                                 
                             },{
                                 header: 'Max',
                                 width: 100,           
@@ -76,7 +81,12 @@ Ext.define('PMDMeta.view.iso.Extent', {
                                     emptyText:'DD.ddddd',
                                     allowBlank: true,
                                     vtype: 'floatval'
-                                }
+                                },
+                                renderer: function(value, metaData, record, rowIdx, colIdx, store) {
+                                    var qtip="center coordinates or min/max values of covered region; not necessary in case of seismological network data to be archived in GEOFON";
+                                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
+                                    return value;
+                                } 
                             }
                         ]
                     },
@@ -97,7 +107,12 @@ Ext.define('PMDMeta.view.iso.Extent', {
                                     emptyText:'DD.ddddd',
                                     allowBlank: false,
                                     vtype: 'floatval'
-                                }
+                                },
+                                renderer: function(value, metaData, record, rowIdx, colIdx, store) {
+                                    var qtip="center coordinates or min/max values of covered region; not necessary in case of seismological network data to be archived in GEOFON";
+                                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
+                                    return value;
+                                } 
                         },{
                                 header: 'Max',
                                 width: 100,           
@@ -109,7 +124,12 @@ Ext.define('PMDMeta.view.iso.Extent', {
                                     emptyText:'DD.ddddd',                            
                                     allowBlank: true,
                                     vtype: 'floatval'
-                                }
+                                },
+                                renderer: function(value, metaData, record, rowIdx, colIdx, store) {
+                                    var qtip="center coordinates or min/max values of covered region; not necessary in case of seismological network data to be archived in GEOFON";
+                                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
+                                    return value;
+                                } 
                         }
                     ]
                 },{
@@ -124,7 +144,7 @@ Ext.define('PMDMeta.view.iso.Extent', {
 			    allowBlank: true
 			}	
                     },{
-                    text: 'Date/Time Start',                  
+                    text: 'Start Date',                  
                     sortable: false,		
                     menuDisabled: true,	                    
                     columns:[{
@@ -138,8 +158,13 @@ Ext.define('PMDMeta.view.iso.Extent', {
                             emptyText:'YYYY-MM-DD',
 			    allowBlank: true,
                             vtype: 'DATE'
-			}	
-                    },{
+			},
+                        renderer: function(value, metaData, record, rowIdx, colIdx, store) {
+                            var qtip="year[s] - begin data - end date";
+                            metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
+                            return value;
+                        } 	
+                    }/*,{
 			header: 'Time',
                         align: 'center',
                         sortable: false,		
@@ -151,9 +176,9 @@ Ext.define('PMDMeta.view.iso.Extent', {
 			    allowBlank: true,
                             vtype: 'TIME'
 			}	
-                    }]
+                    }*/]
                 },{
-                    text: 'Date/Time End',             
+                    text: 'End Date',             
                     sortable: false,		
                     menuDisabled: true,	
                     columns:[{
@@ -167,8 +192,13 @@ Ext.define('PMDMeta.view.iso.Extent', {
                             emptyText:'YYYY-MM-DD',
 			    allowBlank: true,
                             vtype: 'DATE'
-			}	
-                    },{
+			},
+                        renderer: function(value, metaData, record, rowIdx, colIdx, store) {
+                            var qtip="year[s] - begin data - end date";
+                            metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
+                            return value;
+                        }	
+                    }/*,{
 			header: 'Time',
                         align: 'center',
                         sortable: false,		
@@ -180,8 +210,8 @@ Ext.define('PMDMeta.view.iso.Extent', {
 			    allowBlank: true,
                             vtype: 'TIME'
 			}	
-                    }]
-                },{
+                    }*/]
+                }/*,{
 			header: 'Time<br>zone',
                         align: 'center',
                         sortable: false,		
@@ -193,7 +223,7 @@ Ext.define('PMDMeta.view.iso.Extent', {
                             editable: true,    
                             emptyText: 'GMT+/-'
                         })                        
-                },
+                }*/,
                 {
                 xtype: 'actioncolumn',
                 width: 30,

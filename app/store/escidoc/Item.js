@@ -16,7 +16,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                                 /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD'
                             //ISO    
                             ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent',
-                            'difSpatialCoverage','difProject'
+                            'difSpatialCoverage','difProject','GIPPInfo'
                            ),
     eventListeningStores: new Array(
                             //DataCite
@@ -25,7 +25,8 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                                 'DataCiteRelatedIdentifier'/*,'DataCiteGeoLocation'*/,'DataCiteFormat','DataCiteDescription',
                                 /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD','DataCiteResourceOptAndTitle'
                             //ISO    
-                            ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent'
+                            ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent',
+                            'GIPPInfo','GIPPInfoHelper'
                            ),
                    
     changefuncon:false,                   
@@ -49,11 +50,13 @@ Ext.define('PMDMeta.store.escidoc.Item', {
     listeners:{
  
         load: function (store){   
-                var item=store.getAt(0);
-                var itemstore=Ext.getStore('Item'); 
-                
-                if (!item)
-                    return;
+            var item=store.getAt(0);
+            var itemstore=Ext.getStore('Item'); 
+
+            if (!item)
+                itemstore.loaddata({id:null,href:null,local:null});
+
+            if (item){
                 var local=item.get('local');
                 var href=item.get('href');
 
@@ -69,10 +72,11 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                         dom.loadXML( local );
                     }
                     itemstore.unmarshal(dom);
-                    
+
                 }else{
                     itemstore.loaddata({id:null,href:href,local:null});
                 }
+            }
                            
             Ext.each(itemstore.eventListeningStores, function(storename){
                 Ext.getStore(storename).on('datachanged',itemstore.changefunc);
@@ -599,6 +603,8 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         iso+=datasetcontact.asXML();
         iso+=Ext.getStore('DataCiteSubject').asISOXML();
         iso+=Ext.getStore('DataCiteSubjectGCMD').asISOXML();
+        iso+=Ext.getStore('GIPPInfo').asISOXML();      
+//        console.log(Ext.getStore('GIPPInfo').asISOXML());
         iso+=Ext.getStore('DataCiteRight').asISOXML();        
         iso+=identificationinfo.asXML('language');
         iso+=identificationinfo.asXML('isotopic');

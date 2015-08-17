@@ -32,12 +32,12 @@ Ext.define('PMDMeta.view.datacite.Contributors', {
 	Ext.create('PMDMeta.store.datacite.combobox.ContributortypeCombo');
 	
         Ext.apply(this, {
-            height: 300,
+            height: 200,
             plugins: [this.cellEditing],
             store: 'DataCiteContributor',
             columns: [
 	    {
-                header: 'Contributor (Lastname, Firstname)',
+                header: 'Sponsor (Lastname, Firstname)',
                 dataIndex: 'name',
                 flex: 1,
 		sortable: false,	
@@ -58,13 +58,14 @@ Ext.define('PMDMeta.view.datacite.Contributors', {
                 dataIndex: 'role',
                 width: 160,
 		sortable: false,
+                hidden: true,
                 menuDisabled: true,		    
                 editor: new PMDMeta.view.main.CheckComboBox({		
                     store: 'ContributortypeCombo',
                     multiSelect: true      
 		})
             }, {
-                header: 'Contributor ID Type',
+                header: 'Sponsor ID Type',
                 dataIndex: 'nameIdentifierScheme',
                 width: 130,
 		sortable: false,	
@@ -81,7 +82,7 @@ Ext.define('PMDMeta.view.datacite.Contributors', {
                     return value;
                 }
             },{
-                header: 'Contributor Identifier (ID)',
+                header: 'Sponsor Identifier (ID)',
                 dataIndex: 'nameIdentifier',
                 flex: 1,
 		sortable: false,	

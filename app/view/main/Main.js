@@ -248,7 +248,7 @@ Ext.define('PMDMeta.view.main.Main', {
         
          Ext.apply(me, {
                
-
+/*
             tbar:[
             {
                 text: 'Metadata',
@@ -352,7 +352,7 @@ Ext.define('PMDMeta.view.main.Main', {
                 ]
             }        
 
-            ]
+            ]*/
 
                  }   );
 
@@ -370,13 +370,15 @@ Ext.define('PMDMeta.view.main.Main', {
 				},
 				{
 					xtype: 'Iso-Form'
-				},{
+				}
+/*                                ,{
                                         xtype: 'PMD-FileUpload'
  //,hidden:true
-                                },{
+                                }
+                                ,{
                                         xtype: 'Publications' 
                                 }
-			]
+*/			]
 		}
 		,
 		{	region: 'east',			

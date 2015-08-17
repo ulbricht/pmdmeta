@@ -41,7 +41,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     xtype: 'button',
                                     scale: 'large',                                                
                                     text: 'DOI',
-//hidden:true,
+hidden:true,
                                     tooltip: 'register a DOI or update metadata',
                                     handler: function() {
                                         if (!me.doiregistration)
@@ -52,7 +52,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                 },{
                                     xtype: 'button',
                                     scale: 'large',
-//hidden: true,
+hidden: true,
                                     text: 'Preview',
                                     tooltip: 'preview Dataset in new Window',
                                     handler: function() {
@@ -169,7 +169,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     xtype: 'button',
                                     scale: 'large',                                                
                                     text: 'Sync',
-//hidden: true,
+hidden: true,
                                     tooltip: 'Sync data to eSciDoc repository',
                                     handler: function() {	  
                                             Ext.getStore('Item').synccontent();

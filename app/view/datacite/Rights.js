@@ -61,8 +61,12 @@ Ext.define('PMDMeta.view.datacite.Rights', {
                     editable: true
 		}),
                 renderer: function(value, metaData, record, rowIdx, colIdx, store) {
-                    var qtip="Provide a rights management statement for the resource or reference a service providing such information. ";
-                    qtip+=" Include embargo information if applicable. Use the complete title of a license and include version information if applicable. ";
+                    var qtip="Suggested default: &quot;Creative Commons Attribution-ShareAlike 4.0 International License&quot; (CC BY-SA) or - in case of non-commercial license -";
+                    qtip+="&quot;Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License&quot; (CC BY-NC-SA); more information: http://creativecommons.org and ";
+                    qtip+="http://creativecommons.org/choose ; guide for embargo period of GIPP experiments: 4 years after completion of field deployment";
+                    
+                    
+
                     metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
                     return value;
                 } 

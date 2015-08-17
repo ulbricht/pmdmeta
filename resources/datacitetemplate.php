@@ -6,9 +6,11 @@
     echo '<identifier identifierType="DOI">10.5880/GFZ.</identifier>';
     echo '<publisher>GFZ German Research Center for Geosciences</publisher>';
     echo '<publicationYear>'.date('Y',time()).'</publicationYear>';
+    echo '<contributors><contributor contributorType="Sponsor"><contributorName>Geophysical Instrumentation Pool Potsdam (GIPP)</contributorName></contributor></contributors>';
+    
     echo '<language>eng</language>';
-    echo '<resourceType resourceTypeGeneral="Dataset">Dataset</resourceType>';
-    echo '<rightsList><rights rightsURI="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</rights></rightsList>';
+    echo '<resourceType resourceTypeGeneral="Dataset">controlled source data</resourceType>';
+    echo '<rightsList><rights rightsURI="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</rights></rightsList>';
     echo '<descriptions><description descriptionType="Abstract"></description></descriptions>';
     echo '</resource>';
 

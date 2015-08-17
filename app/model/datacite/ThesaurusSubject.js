@@ -21,8 +21,12 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
                         return "GCMD";                    
                     var gemet=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(GEMET - INSPIRE themes)',descriptivekeywords);                     
                     if (gemet)
-                        return "GEMET";                    
-                    return "";
+                        return "GEMET"; 
+                    var thesaurusname=Ext.DomQuery.selectNode('gmd|thesaurusName gmd|title',descriptivekeywords);
+                    if (thesaurusname && thesaurusname.firstChild)
+                        return thesaurusname.firstChild.textContent;
+                    return 
+                        return "";
                 }},
 		{name: 'subjectSchemeURI',   type: 'string', mapping:function(data){
                     var mdkeyword=data.parentNode;

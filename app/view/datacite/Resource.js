@@ -38,8 +38,7 @@ Ext.define('PMDMeta.view.datacite.Resource', {
                     allowBlank: false
                 },
                 renderer: function(value, metaData, record, rowIdx, colIdx, store) {
-                    var qtip="The DOI is a unique string that identifies a resource.";
-                    qtip+=" Format should be <b>10.5880/GFZ.</b>";
+                    var qtip="if already available";
                     metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
                     return value;
                 }
