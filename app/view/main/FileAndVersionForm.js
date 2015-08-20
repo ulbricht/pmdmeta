@@ -74,7 +74,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                         if (root.length===url.length-1) //trailing slash
                                             root=root.substr(0,root.lastIndexOf("/"))
 
-                                        window.location.href=root+"/preview.php?id="+itemid;
+                                        window.open(root+"/preview.php?id="+itemid,"_blank");
                                     }
                                 },{
                                     xtype: 'button',
