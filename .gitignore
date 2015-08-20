@@ -19,4 +19,4 @@ bootstrap.js
 bootstrap.css
 bootstrap.json
 sass/example/bootstrap.json
-includes/inc_conf.php
+resources/includes/inc_conf.php
