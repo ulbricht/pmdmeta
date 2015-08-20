@@ -59,7 +59,15 @@ Ext.define('PMDMeta.model.escidoc.ItemFile', {
         {name: 'rights',   type: 'string',mapping: function(data){
             var ret=Ext.DomQuery.selectValue('dc|rights',data);
             return ret;
-            }}
+            }},
+        {name: 'sortindex',   type: 'integer',mapping: function(data){
+            var pos=Ext.DomQuery.selectNode('position',data);
+            var ret;
+            if (pos)
+                ret=Ext.DomQuery.selectValue('index',pos);
+            
+            return ret;
+            }}        
             
         
     ],
@@ -93,6 +101,12 @@ Ext.define('PMDMeta.model.escidoc.ItemFile', {
             mdrecord['escidoc']+='<dcterms:available xmlns:dcterms="http://purl.org/dc/terms/">'+this.get('available')+'</dcterms:available>';        
         mdrecord['escidoc']+='</file:file>';    
         component.mdrecords.push(mdrecord);
+        if (this.get('sortindex')>0){
+            mdrecord['position']='<position><index>'+this.get('sortindex')+'</index></position>';
+        }else{
+            mdrecord['position']=null;
+        }
+
         return component;
     }
 });
