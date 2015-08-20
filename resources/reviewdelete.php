@@ -1,6 +1,6 @@
 <?php
 
-    include_once("../includes/inc_conf.php"); 
+    include_once("includes/inc_conf.php"); 
         
     require_once ("Net/URL.php");
     use \Net_URL;

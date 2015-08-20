@@ -1,5 +1,5 @@
 <?php
-    include_once("../includes/inc_conf.php");
+    include_once("includes/inc_conf.php");
     require_once ("Net/URL.php");
     use \Net_URL;        
     include_once "classes/escidoc/escidoclogin.php";
@@ -21,6 +21,8 @@
     use escidoc\resources\xacml\ctx\Action;
     use escidoc\resources\xacml\ctx\ActionIdentifier;
     use escidoc\mapping\DOMMapper;    
+    
+    use escidoc\resources\common\StorageType;
 
     require_once "classes/escidoc/FileMetadata.php";    
     
@@ -126,16 +128,20 @@ function createreview($escidocid){
 function storeFilesLocal($item,$reviewlocation){
     if (isset($reviewlocation)){
         foreach ($item->getComponents()->getList() as $component){ 
-                $file["item"]=preg_replace("|^(\w+:\d+):\d+|",'${1}',$item->getObjid());//cut version information
-                $md=new FileMetadata($component->getMetadataRecords()->get("escidoc")->getContent());       
-                $file["size"]=$md->getFilesize();
-                $file["name"]=$md->getFilename();                    
+            
+                if ($component->getContent()->getStorage() === StorageType::INTERNAL_MANAGED){
+            
+                    $file["item"]=preg_replace("|^(\w+:\d+):\d+|",'${1}',$item->getObjid());//cut version information
+                    $md=new FileMetadata($component->getMetadataRecords()->get("escidoc")->getContent());       
+                    $file["size"]=$md->getFilesize();
+                    $file["name"]=$md->getFilename();                    
 
-                //copy file to harddisc
-                $fh=fopen($reviewlocation.'/'.$file["name"],"w");
-                set_time_limit(4*30);
-                fputs($fh,$_SESSION["itemhandler"]->retrieveContent($file["item"],$component->getObjid()));
-                fclose($fh);            
+                    //copy file to harddisc
+                    $fh=fopen($reviewlocation.'/'.$file["name"],"w");
+                    set_time_limit(4*30);
+                    fputs($fh,$_SESSION["itemhandler"]->retrieveContent($file["item"],$component->getObjid()));
+                    fclose($fh);      
+                }
         }
     }  
 }
