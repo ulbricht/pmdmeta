@@ -19,7 +19,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 	'PMDMeta.view.datacite.Titles',
 	'PMDMeta.view.datacite.Subjects',
 	'PMDMeta.view.datacite.SubjectsGCMD',
-	'PMDMeta.view.datacite.SubjectsGEMET',	
+//	'PMDMeta.view.datacite.SubjectsGEMET',	
 	'PMDMeta.view.datacite.AlternateIdentifiers',
 	'PMDMeta.view.datacite.RelatedIdentifiers',
 	'PMDMeta.view.datacite.Descriptions',
@@ -53,7 +53,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 		new PMDMeta.store.datacite.AlternateIdentifier();
 		new PMDMeta.store.datacite.Subject();
 		new PMDMeta.store.datacite.SubjectGCMD();
-		new PMDMeta.store.datacite.SubjectGEMET();		
+//		new PMDMeta.store.datacite.SubjectGEMET();		
 		new PMDMeta.store.datacite.Size();
 		new PMDMeta.store.datacite.Date();
 		new PMDMeta.store.datacite.Right(); 
