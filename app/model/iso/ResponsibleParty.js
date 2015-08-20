@@ -109,11 +109,14 @@ Ext.define('PMDMeta.model.iso.ResponsibleParty', {
                ret+='</gmd:CI_Address>';
                ret+='</gmd:address>';
             }
-            if (this.get('internet').length>0){            
+            if (this.get('internet').length>0){
+                var internet=this.get('internet');
+                if (internet.substring(0,7)!=="http://")
+                    internet="http://"+internet;
                 ret+='<gmd:onlineResource>';
                 ret+='<gmd:CI_OnlineResource>';
                 ret+='<gmd:linkage>';
-                ret+='<gmd:URL>'+this.get('internet')+'</gmd:URL>';
+                ret+='<gmd:URL>'+internet+'</gmd:URL>';
                 ret+='</gmd:linkage>';
                 ret+='<gmd:function>';
                 ret+='<gmd:CI_OnLineFunctionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode_information">information</gmd:CI_OnLineFunctionCode>';
