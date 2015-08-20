@@ -1,7 +1,7 @@
 <?php
  
        
-    include_once("../includes/inc_conf.php");    
+    include_once("includes/inc_conf.php");    
 
     require_once 'classes/escidoc/cls_pmdconfig.php';    
     use escidoc\client\ItemHandler;
@@ -86,11 +86,13 @@ try{
                                     $itemcomponentmdrecords=new MetadataRecords();
                                     foreach ($componentstructvalue as $mdrecord){
                                         foreach ($mdrecord as $mdrecordname=>$mdrecordstringcontent){
-                                            $mdrecordcontent=new DOMDocument();
-                                            $mdrecordcontent->loadXML($mdrecordstringcontent);
-                                            $record=new MetadataRecord($mdrecordname);
-                                            $record->setContent($mdrecordcontent->documentElement);
-                                            $itemcomponentmdrecords->add($record);                                        
+                                            if ($mdrecordstringcontent && strlen($mdrecordstringcontent)>0){                                            
+                                                $mdrecordcontent=new DOMDocument();
+                                                $mdrecordcontent->loadXML($mdrecordstringcontent);
+                                                $record=new MetadataRecord($mdrecordname);
+                                                $record->setContent($mdrecordcontent->documentElement);
+                                                $itemcomponentmdrecords->add($record);
+                                            }
                                         }
                                         $newitemcomponent->setMetadataRecords($itemcomponentmdrecords);
                                     }
@@ -109,18 +111,23 @@ try{
                                         $modifyitemcomponent=DOMMapper::unmarshal($componentstructvalue, true); 
                                  }                                 
                             }
+                            $deletecomponentsmdrecords=array();
                             foreach ($component as $componentstructtype=>$componentstructvalue){
                                 if ($componentstructtype=='mdrecords'){
                                     $itemcomponentmdrecords=new MetadataRecords();
                                     foreach ($componentstructvalue as $mdrecord){
                                         foreach ($mdrecord as $mdrecordname=>$mdrecordstringcontent){
-                                            $mdrecordcontent=new DOMDocument();
-                                            $mdrecordcontent->loadXML($mdrecordstringcontent);
-                                            $record=new MetadataRecord($mdrecordname);
-                                            $record->setContent($mdrecordcontent->documentElement);
-                                            $itemcomponentmdrecords->add($record);                                        
+                                            if ($mdrecordstringcontent && strlen($mdrecordstringcontent)>0){                                            
+                                                $mdrecordcontent=new DOMDocument();
+                                                $mdrecordcontent->loadXML($mdrecordstringcontent);
+                                                $record=new MetadataRecord($mdrecordname);
+                                                $record->setContent($mdrecordcontent->documentElement);
+                                                $itemcomponentmdrecords->add($record);
+                                            }else{
+                                                array_push($deletecomponentsmdrecords,$mdrecordname);
+                                            }
                                         }
-                                        $modifyitemcomponent->setMetadataRecords($itemcomponentmdrecords);
+                                        $modifyitemcomponent->setMetadataRecords($itemcomponentmdrecords);                                        
                                     }
                                 }
                             } 
@@ -138,7 +145,11 @@ try{
                             
                             foreach ($modifyitemcomponent->getMetadataRecords()->getList() as $mdrecord){
                                 $itemcomponent->getMetadataRecords()->add($mdrecord);
-                            }  
+                            }
+                            foreach ($deletecomponentsmdrecords as $name){
+                                $itemcomponent->getMetadataRecords()->remove($name);
+                            }
+                            
                         }
                     }
                 }
