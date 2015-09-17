@@ -3,7 +3,7 @@ Ext.define('PMDMeta.model.datacite.RelatedIdentifier', {
 	fields: [
 		{name: 'identifier',  type: 'string', mapping :function(data) {
                             if (data.firstChild)
-				    return data.firstChild.textContent;
+				    return data.firstChild.textContent.replace('&amp;','&');
 				}},
 		{name: 'identifierType',   type: 'string', mapping: '@relatedIdentifierType'},
 		{name: 'relation',  type: 'string', mapping: '@relationType'}
@@ -22,7 +22,7 @@ Ext.define('PMDMeta.model.datacite.RelatedIdentifier', {
 			relation=' relationType="'+this.get('relation')+'"';		
 		var result="";
 		if (type.length>0 || relation.length>0 || this.get('identifier').length>0)
-			result='<relatedIdentifier'+type+relation+'>'+this.get('identifier')+'</relatedIdentifier>';
+			result='<relatedIdentifier'+type+relation+'>'+this.get('identifier').replace('&','&amp;')+'</relatedIdentifier>';
 		return result;
 	}
 });
