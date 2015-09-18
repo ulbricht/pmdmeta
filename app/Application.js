@@ -212,10 +212,10 @@ Ext.define('PMDMeta.Application', {
         });          
         Ext.apply(Ext.form.field.VTypes, {
             TIME:  function(v) {
-                var match=/^(0?[1-9]|1[0-9]|2[0-3])(:([0-5][0-9])(:([0-5][0-9]))?)?$/i
+                var match=/^(0?[1-9]|1[0-9]|2[0-3])(:([0-5][0-9]):([0-5][0-9]))?$/i
                 return match.test(v);
             },
-            TIMEText: 'Specify a time in format HH:MM, or HH:MM:SS.',
+            TIMEText: 'Specify a time in format HH:MM:SS.',
             TIMEMask: /[0-9:]/i
         });       
         
