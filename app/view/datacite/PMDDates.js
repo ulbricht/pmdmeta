@@ -42,12 +42,12 @@ Ext.define('PMDMeta.view.datacite.PMDDates', {
             defaults:{margin:'5 0 0 5'},
             items:[
                 {xtype:'label'},
-                {xtype:'label',text:'Date from'},
+                {xtype:'label'/*,text:'Date from'*/},
      //           {xtype:'label',text:'Time from'},
                 {xtype:'label',text:'Date to'},
      //           {xtype:'label',text:'Time to'},
                 
-                {xtype:'label',text:'Created'},
+   /*             {xtype:'label',text:'Created'},
                 {xtype:'validatingtextbox',emptyText:'YYYY-MM-DD',PMDmodel: datemodel,PMDfield:'type',msgTarget: tid,
                     qtip:'The date the resource itself was put together; this could be a single date for a final component, e.g., the finalised file with all of the data. (Recommended for discovery.)',
                     listeners:{
@@ -93,7 +93,7 @@ Ext.define('PMDMeta.view.datacite.PMDDates', {
                         }                        
                     }                   
                 },
-                {xtype:'label'},
+                {xtype:'label'},*/
    //             {xtype:'label'},
    //             {xtype:'label'},
                 
@@ -144,7 +144,7 @@ Ext.define('PMDMeta.view.datacite.PMDDates', {
                             Ext.tip.QuickTipManager.register({target:c.getEl(), text:c.qtip});
                         }
                     }
-                },
+                }/*,
       //          {xtype:'label'},        
                 
                 {xtype:'label',text:'Valid'},
@@ -238,7 +238,7 @@ Ext.define('PMDMeta.view.datacite.PMDDates', {
                             Ext.tip.QuickTipManager.register({target:c.getEl(), text:c.qtip});
                         }
                     }
-                }//,
+                }*///,
           //      {xtype:'label'}
                 /* ,
                
