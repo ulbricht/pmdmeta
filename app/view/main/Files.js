@@ -45,6 +45,21 @@ Ext.define('PMDMeta.view.main.Files', {
                     allowBlank: false
                  }
             },{
+                header: 'Index',
+                dataIndex: 'sortindex',
+		sortable: true,	
+                menuDisabled: true,	
+                width: 60,
+                renderer: function(value, metaData, record, rowIdx, colIdx, store) {
+                    var qtip="The default behavior ist to sort the file entries alphanumeric and descending by filename, i.e. higher numbers - such as recent dates in the filename - lead the list. You may change this behavior by explicitly";
+                    qtip+=" setting a position here. Please use positive numbers starting from 1 (zero will be ignored). Small numbers will lead the list, i.e. 1=top and n=bottom.";
+                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
+                    return value;
+                },
+                 editor:{
+                    allowBlank: true
+                 }               
+            },{
                 header: 'Visible name',
                 dataIndex: 'description',
 		sortable: false,	

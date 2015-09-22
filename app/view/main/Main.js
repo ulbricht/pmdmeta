@@ -142,10 +142,46 @@ Ext.define('PMDMeta.view.main.Main', {
         var doiregister=new Ext.Action({
                         text: 'Register DOI',
                         handler: function(){
+                            
                             if (!me.doiregistration)
                                 me.doiregistration=new PMDMeta.view.main.DOIregistration();
-                            me.doiregistration.setup();
-                            me.doiregistration.show();
+                            me.doiregistration.setup();                           
+                            
+                            var item=Ext.getStore('Item').getAt(0);
+                            if (!item) return;
+                            var itemhref=item.get("href");
+                            if (!itemhref) return;
+                            var itemid=itemhref.substr(itemhref.lastIndexOf("/")+1,itemhref.length-1);
+                            if (!itemid) return;                              
+                            
+                            Ext.Ajax.request({
+                                url: 'resources/getpublishstatus.php?id='+itemid,	
+                                success: function(response, opts) {                  
+                                    var responseData = Ext.decode(response.responseText);
+                                    var ispublished=false;
+                                    if (responseData.success && responseData.versionstatus==='released'){
+                                        ispublished=true;
+                                    }
+        
+                                    if (ispublished){
+                                        me.doiregistration.show();                                                                            
+                                    }else{
+                                        Ext.Msg.show({
+                                            title:'Unpublished Dataset',
+                                            message: 'Dataset is not public.<br>You can set the dataset status via menu <b>Publication</b> &gt; <b>Status</b>',
+                                            buttons: Ext.Msg.OK,
+                                            icon: Ext.Msg.INFO,
+                                            fn: function(btn) {
+                                                me.doiregistration.show();
+                                            }
+                                        });                                       
+                                    }
+                                },
+                                failure: function(response, opts) {
+                                     me.doiregistration.show();                                    
+                                }  
+                            });                            
+
                         }
                     });
 

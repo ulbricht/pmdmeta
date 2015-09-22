@@ -6,7 +6,11 @@ Ext.define('PMDMeta.view.main.DOIregistration', {
     title: 'DOI registration',
 	closeAction: 'hide',
     layout: 'fit',
+    landingpageurl:'http://pmd.gfz-potsdam.de/',
+    landingpagelayout: 'panmetaworks',
+    landingpageappendix: '/showshort.php?id=',   
     setup: function(){
+            var me=this;
             var itemid="";
             var content=Ext.getStore('Item').getAt(0);
             if (content){
@@ -21,18 +25,16 @@ Ext.define('PMDMeta.view.main.DOIregistration', {
              
              var doi=Ext.getStore("DataCiteResource").getAt(0).get("identifier");
              
-            var url="http://pmd.gfz-potsdam.de/panmetaworks/showshort.php?id="+itemid;
-
-//         $.ajax({url: 'lookupdoi.php?doi='+doi+'&resolve=1'}).
-
+            var url=me.landingpageurl+me.landingpagelayout+me.landingpageappendix+itemid;
                    
-             this.down("[name='doi']").setValue(doi);             
-             this.down("[name='item']").setValue(itemid);
-             this.down("[name='dataciteurl']").setValue(url);             
+             me.down("[name='doi']").setValue(doi);             
+             me.down("[name='item']").setValue(itemid);
+             me.down("[name='dataciteurl']").setValue(url);             
     },
      initComponent: function() {
          
          var me=this;
+        new PMDMeta.store.publish.Layouts();         
          Ext.apply(me, {
                 items: {
                    xtype: 'form',
@@ -64,7 +66,25 @@ Ext.define('PMDMeta.view.main.DOIregistration', {
                        displayField: 'name',
                        valueField: 'abbr',
                        store: new Ext.data.Store({model:'Ext.data.Model',data:[{abbr:'register', name:'register DOI'},{abbr:'metadata', name:'update DOI metadata'},{abbr:'deactivate', name:'deactivate DOI'}]})
-                   }]
+                   },{
+                    xtype: 'combobox',
+                    store: 'layouts',
+                    fieldLabel: 'Layout',
+                    emptyText: 'Standard Layout',                    
+                    valueField: 'id',
+                    displayField: 'id',
+                    listeners:{
+                        select:function(elem){
+                            var value=elem.getValue();
+                            if (value && value.length>0){
+                                var itemid=me.down("[name='item']").getValue();
+                                var url=me.landingpageurl+value+me.landingpageappendix+itemid;
+                                 me.down("[name='dataciteurl']").setValue(url);                                  
+                            }
+
+                        }
+                    }
+                }]
                },
 
                buttons: [{
@@ -95,35 +115,6 @@ Ext.define('PMDMeta.view.main.DOIregistration', {
                        }           
 
 
-           /*            var xml=Ext.getStore('Item').marshal();
-                       Ext.Ajax.request({
-                           url: 'resources/doi.php',	
-                           method: 'POST',
-                           params:{
-                               mailcontent: xml
-                           },                                                        
-                           success: function(response, opts) {
-                               var responseData = Ext.decode(response.responseText);
-                               if(!responseData.success) {
-                                   Ext.Msg.show({
-                                       title: 'Submit mail',
-                                       msg: 'Submission failed. Please save the XML file and send it via mail.',
-                                       icon: Ext.Msg.ERROR,
-                                       buttons: Ext.Msg.OK
-                                   });
-                               }else{
-                                   Ext.Msg.show({
-                                       title: 'Submit mail',
-                                       msg: 'Submission mail sent successfully.',
-                                       icon: Ext.Msg.INFO,
-                                       buttons: Ext.Msg.OK
-                                   });
-                               }
-                           },
-                           failure: function(response, opts) {
-                             console.log('server-side failure with status code ' + response.status);
-                           }            
-                       });*/
                    }    
                }]           
          }   );

@@ -12,7 +12,8 @@ Ext.define('PMDMeta.view.main.ReviewGrid', {
         'Ext.util.*',
         'Ext.form.*',
 	'PMDMeta.model.publish.Review',
-        'PMDMeta.store.publish.Reviews'
+        'PMDMeta.store.publish.Reviews',
+        'PMDMeta.store.publish.Layouts'        
     ],
     xtype: 'ReviewGrid',
     layout: 'fit',
@@ -22,12 +23,11 @@ Ext.define('PMDMeta.view.main.ReviewGrid', {
             clicksToEdit: 1
         });
         new PMDMeta.store.publish.Reviews();
+        new PMDMeta.store.publish.Layouts();
         
         Ext.apply(Ext.getStore('reviews').getProxy().extraParams, {
             id: me.getEscidocItemId()
         });                        
-
-//        Ext.getStore('reviews').reload();
 
         Ext.apply(this, {
             height: 300,
@@ -78,6 +78,13 @@ Ext.define('PMDMeta.view.main.ReviewGrid', {
             }],
             tbar:[
                 {
+                    xtype: 'combobox',
+                    store: 'layouts',
+                    valueField: 'id',
+                    displayField: 'id',
+                    fieldLabel: 'Layout',
+                    emptyText: 'Standard Layout'                    
+                },{
                     xtype: 'button',
                     buttonOnly: true,
                     hideLabel:true,            
@@ -133,9 +140,11 @@ Ext.define('PMDMeta.view.main.ReviewGrid', {
     },
     onAddClick:function(){
         var me=this;
-        var progress=Ext.Msg.wait('Please wait', "creating review");        
+        var progress=Ext.Msg.wait('Please wait', "creating review");   
+        
+        var layout=me.down('combobox').getValue();
         Ext.Ajax.request({
-            url: 'resources/reviewcreate.php?item='+me.getEscidocItemId(),	
+            url: 'resources/reviewcreate.php?item='+me.getEscidocItemId()+"&layout="+layout,	
             success: function(response, opts) {
                 progress.close();                    
                 var responseData = Ext.decode(response.responseText);
@@ -154,9 +163,7 @@ Ext.define('PMDMeta.view.main.ReviewGrid', {
                 progress.close();
                 Ext.getStore('reviews').reload();
            }            
-        });         
-        
-        
+        });          
     },
     getEscidocItemId: function(){
         var item=Ext.getStore('Item').getAt(0);

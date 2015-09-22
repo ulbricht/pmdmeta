@@ -1,6 +1,6 @@
 <?php
     
-    include_once("../includes/inc_conf.php");    
+    include_once("includes/inc_conf.php");    
     
     use escidoc\client\ItemHandler;
     use escidoc\mapping\DOMMapper;

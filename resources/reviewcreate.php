@@ -1,5 +1,5 @@
 <?php
-    include_once("../includes/inc_conf.php");
+    include_once("includes/inc_conf.php");
     require_once ("Net/URL.php");
     use \Net_URL;        
     include_once "classes/escidoc/escidoclogin.php";
@@ -21,8 +21,12 @@
     use escidoc\resources\xacml\ctx\Action;
     use escidoc\resources\xacml\ctx\ActionIdentifier;
     use escidoc\mapping\DOMMapper;    
+    
+    use escidoc\resources\common\StorageType;
 
     require_once "classes/escidoc/FileMetadata.php";    
+    
+    ini_set("display_errors",1);
     
 try{
     
@@ -39,7 +43,7 @@ try{
    
     checkwriteable($_SESSION["pdphandler"],$user->getObjid(),$_REQUEST['item']);
     
-    createreview($_REQUEST["item"]);
+    createreview($_REQUEST["item"],$_REQUEST["layout"]);
 
     echo json_encode(array("success"=>true, "message"=>$warning));                 
                 
@@ -82,39 +86,41 @@ function checkwriteable($pdphandler,$user,$item){
         throw new Exception ("You are not allowed to update the dataset");
 }
 
-function createreview($escidocid){        
+function createreview($escidocid,$layout){        
     $item= $_SESSION["itemhandler"]->retrieve($escidocid);
     $modtime=preg_replace("/\+00:00/","Z",$item->getLastModificationDate()->format(DateTime::W3C));
     $exposedlinkbase=md5($item->getObjid()).md5($modtime);
 
-    $base="../../";
-                   
+    $base="../../";    
+
     $reviewlocation=$base."review/".$exposedlinkbase;
+    
+    if (strlen($layout)>0 && $layout!="null")
+        $reviewlocation.="-".$layout;
+    
     if (file_exists($reviewlocation))
         throw new Exception("There already exists a review of this dataset.");
+
     mkdir($reviewlocation);
+ 
+ 
+    $filesrc=$base;    
+    if ($layout && file_exists("../../../".$layout) && is_dir("../../../".$layout))
+        $filesrc="../../../".$layout."/";
+    
+                   
 
-    mkdir($reviewlocation."/css");
-    file_put_contents($reviewlocation."/css/datasetoverview.css", file_get_contents($base."css/datasetoverview_review.css"));
-    file_put_contents($reviewlocation."/css/template.css", file_get_contents($base."css/template.css"));
-    file_put_contents($reviewlocation."/css/gfz_text.css", file_get_contents($base."css/gfz_text.css"));
 
-    mkdir($reviewlocation."/xsl");
-    file_put_contents($reviewlocation."/xsl/datasetoverview.xslt", file_get_contents($base."xsl/datasetoverview.xslt"));
+     recurse_copy($filesrc."/css",$reviewlocation."/css");
+    rename($reviewlocation."/css/datasetoverview_review.css",$reviewlocation."/css/datasetoverview.css");
 
-     mkdir($reviewlocation."/images");
-     file_put_contents($reviewlocation."/images/logo_gfz_en.gif", file_get_contents($base."images/logo_gfz_en.gif"));
-     file_put_contents($reviewlocation."/images/logo_helmholtz_gemeinschaft_de.gif", file_get_contents($base."images/logo_helmholtz_gemeinschaft_de.gif"));
-     file_put_contents($reviewlocation."/images/wordmark_gfz_en.gif", file_get_contents($base."images/wordmark_gfz_en.gif"));
-     file_put_contents($reviewlocation."/images/background.gif", file_get_contents($base."images/background.gif"));   
-     file_put_contents($reviewlocation."/images/All_Status_ItemReleased_31_Static.png", file_get_contents($base."images/All_Status_ItemReleased_31_Static.png"));   
-     file_put_contents($reviewlocation."/images/article_31.png", file_get_contents($base."images/article_31.png"));   
-     file_put_contents($reviewlocation."/images/abstract_31.png", file_get_contents($base."images/abstract_31.png"));   
-     file_put_contents($reviewlocation."/images/external_Ressources_31.png", file_get_contents($base."images/external_Ressources_31.png"));
-     file_put_contents($reviewlocation."/getcitationinfo.php", file_get_contents($base."getcitationinfo.php"));
+    recurse_copy($filesrc."/xsl", $reviewlocation."/xsl");    
+    
+    recurse_copy($filesrc."/images", $reviewlocation."/images");
+
+    copy($filesrc."getcitationinfo.php", $reviewlocation."/getcitationinfo.php");
      
-
-    file_put_contents($reviewlocation."/index.php", file_get_contents($base."review/index.php"));
+    copy($base."review/index.php", $reviewlocation."/index.php");
 
     $fh=fopen($reviewlocation.'/item.xml',"w");
     fputs($fh,DOMMapper::marshal($item));
@@ -126,18 +132,54 @@ function createreview($escidocid){
 function storeFilesLocal($item,$reviewlocation){
     if (isset($reviewlocation)){
         foreach ($item->getComponents()->getList() as $component){ 
-                $file["item"]=preg_replace("|^(\w+:\d+):\d+|",'${1}',$item->getObjid());//cut version information
-                $md=new FileMetadata($component->getMetadataRecords()->get("escidoc")->getContent());       
-                $file["size"]=$md->getFilesize();
-                $file["name"]=$md->getFilename();                    
+            
+                if ($component->getContent()->getStorage() === StorageType::INTERNAL_MANAGED){
+            
+                    $file["item"]=preg_replace("|^(\w+:\d+):\d+|",'${1}',$item->getObjid());//cut version information
+                    $md=new FileMetadata($component->getMetadataRecords()->get("escidoc")->getContent());       
+                    $file["size"]=$md->getFilesize();
+                    $file["name"]=$md->getFilename();                    
 
-                //copy file to harddisc
-                $fh=fopen($reviewlocation.'/'.$file["name"],"w");
-                set_time_limit(4*30);
-                fputs($fh,$_SESSION["itemhandler"]->retrieveContent($file["item"],$component->getObjid()));
-                fclose($fh);            
+                    //copy file to harddisc
+                    $fh=fopen($reviewlocation.'/'.$file["name"],"w");
+                    set_time_limit(4*30);
+                    fputs($fh,$_SESSION["itemhandler"]->retrieveContent($file["item"],$component->getObjid()));
+                    fclose($fh);      
+                }
         }
     }  
 }
 
+function recurse_copy($src,$dst) {
+    $dir = @opendir($src);
+    
+    if ($dir===FALSE)
+	throw new Exception("Can not copy layout due do inaccessible/nonexistent directory ".$src);
+    
+    if (!@mkdir($dst))
+	throw new Exception("Could not create directory ".$dst);        
+
+    $invalidfiles=array ('.','..','.svn');
+    
+    try{
+        for ( $file=readdir($dir) ; $file!==FALSE ; $file=readdir($dir) ){
+            if (array_search($file,$invalidfiles)===FALSE) {
+                $srcfile=$src.'/'.$file;
+                $dstfile=$dst.'/'.$file;
+                if ( is_dir($srcfile) ) {
+                    if (!recurse_copy($srcfile,$dstfile))
+                            throw new Exception("could not copy directory ".$srcfile." to ".$dstfile);
+                }else {
+                    if (!copy($srcfile,$dstfile))
+                            throw new Exception("could not copy file ".$srcfile." to ".$dstfile);
+                }
+            }
+        }
+        closedir($dir);
+        return true;
+    }catch (Exception $e){
+        closedir($dir);
+        throw $e;
+    }
+} 
 ?>
