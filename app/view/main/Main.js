@@ -284,7 +284,7 @@ Ext.define('PMDMeta.view.main.Main', {
         
          Ext.apply(me, {
                
-/*
+
             tbar:[
             {
                 text: 'Metadata',
@@ -388,7 +388,7 @@ Ext.define('PMDMeta.view.main.Main', {
                 ]
             }        
 
-            ]*/
+            ]
 
                  }   );
 
