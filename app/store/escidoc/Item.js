@@ -201,6 +201,12 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                 
         var contributorroles=new Object();
         var authorkeys=new Object();
+               
+        var titleindex;
+        var titleremove=new Array();
+        for (titleindex=1;titleindex<Ext.getStore('DataCiteTitle').getCount();titleindex++)
+            titleremove.push(titleindex);        
+        Ext.getStore('DataCiteTitle').revove(titleremove);
         
         //collect roles
         contributorstore.each(function(contributor){                         
