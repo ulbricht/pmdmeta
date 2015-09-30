@@ -202,7 +202,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         var titleremove=new Array();
         for (titleindex=1;titleindex<Ext.getStore('DataCiteTitle').getCount();titleindex++)
             titleremove.push(titleindex);        
-        Ext.getStore('DataCiteTitle').revove(titleremove);
+        Ext.getStore('DataCiteTitle').remove(titleremove);
         
         //collect roles
         contributorstore.each(function(contributor){                         
