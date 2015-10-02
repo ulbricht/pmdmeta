@@ -422,6 +422,9 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         if (Ext.getStore('isoIdentificationInfo').getCount()==0)
             Ext.getStore('isoIdentificationInfo').add(Ext.create("PMDMeta.model.iso.IdentificationInfo"));
         
+	 
+	if (Ext.getStore('DataCiteSubjectGCMD').getCount()==0)
+	   Ext.getStore('DataCiteSubjectGCMD').add({subject:"EARTH SCIENCE > SOLID EARTH",subjectScheme:"GCMD",subjectSchemeURI:"http://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/sciencekeywords"});
        
         itemstore.changefuncon=true;
         
