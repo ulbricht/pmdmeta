@@ -422,9 +422,20 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         if (Ext.getStore('isoIdentificationInfo').getCount()==0)
             Ext.getStore('isoIdentificationInfo').add(Ext.create("PMDMeta.model.iso.IdentificationInfo"));
         
+	 var isgemet=false;
+	 var isgcmd=false;
+	 Ext.getStore('DataCiteSubjectGCMD').each(function(model){
+		 var scheme=model.get('subjectScheme');
+		 if (scheme && scheme==="GCMD")
+			isgcmd=true;
+		 if (scheme && scheme==="GEMET")		 
+			isgemet=true;
+	});
 	 
-	if (Ext.getStore('DataCiteSubjectGCMD').getCount()==0)
+	if (!isgcmd)
 	   Ext.getStore('DataCiteSubjectGCMD').add({subject:"EARTH SCIENCE > SOLID EARTH",subjectScheme:"GCMD",subjectSchemeURI:"http://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/sciencekeywords"});
+	if (!isgemet)
+	   Ext.getStore('DataCiteSubjectGCMD').add({subject:"geology",subjectScheme:"GEMET",subjectSchemeURI:"http://www.eionet.europa.eu/gemet/"});	   
        
         itemstore.changefuncon=true;
         
