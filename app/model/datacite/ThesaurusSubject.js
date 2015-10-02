@@ -82,6 +82,13 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
                 var variable3=sciparams[5];
                 var detailed=sciparams[6];
                 
+                if (!category || category.length===0)
+		    category="EARTH SCIENCE";
+                if (!topic || topic.length===0)
+		    topic=" ";
+                if (!term || term.length===0)
+		    term=" ";
+		    
                 var ret="";
                 if (category)
                     ret+='<dif:Category>'+category.trim()+'</dif:Category>';
