@@ -7,7 +7,7 @@ Ext.define('PMDMeta.view.main.DOIregistration', {
 	closeAction: 'hide',
     layout: 'fit',
     landingpageurl:'http://pmd.gfz-potsdam.de/',
-    landingpagelayout: 'panmetaworks',
+    landingpagelayout: 'gipp',
     landingpageappendix: '/showshort.php?id=',   
     setup: function(){
             var me=this;
