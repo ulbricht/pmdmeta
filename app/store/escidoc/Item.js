@@ -30,22 +30,48 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                    
     changefuncon:false,                   
     changefunc: function(){
+	var me=this;
         var store=Ext.getStore('Item');
         if (!store.changefuncon)
             return;
         var xml=store.marshal();
         var elem=store.getAt(0);
         if (!elem || elem.get('local')!=xml){
-//            console.log("storing "+xml)
-            var href=null;
-            if (elem)
-                href=elem.get("href");
-            store.suspendEvents(true);
-            store.removeAll();
-            store.insert(0,{id:null,href:href,local:xml});
-            store.resumeEvents();
+		var href=null;
+		if (elem)
+			href=elem.get("href");
+		store.suspendEvents(false);
+		store.removeAll();
+		store.insert(0,{id:null,href:href,local:xml});
+		store.resumeEvents();
+	    
+		me.validate(xml);	    
+	    
         }
     },
+	validate: function(xml){
+		var out = Ext.getCmp("validationcomponent");
+		if (out){
+			Ext.Ajax.request({
+				url: 'resources/validate.php',	
+				method: 'POST',
+				params:{
+					validationdata: xml
+				},                                                        
+				success: function(response, opts) {
+					var responseData = Ext.decode(response.responseText);
+					if (responseData.success){
+						out.setHtml(responseData.message);				
+					}else{
+						out.setHtml("Error validating Metadata. Missing Internet?");						
+					}
+				},
+				   failure: function(response, opts) {
+				      console.log('server-side failure with status code ' + response.status);
+				}            
+			});   
+		}
+	},   
     listeners:{
  
         load: function (store){   
@@ -89,7 +115,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         }
     },  
     loaddata: function(data){
-
+	var me=this;
  
         var item=new PMDMeta.model.escidoc.Item(data);
  
@@ -118,6 +144,8 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                        
                        Ext.getStore('Files').removeAll();
                        Ext.getStore('ItemVersions').removeAll();
+		       
+		       store.changefunc();
 
                 },
                 failure: function(response, opts) {

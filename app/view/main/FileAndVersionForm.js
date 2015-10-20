@@ -210,7 +210,12 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                         });                                                                
 //                                                    Ext.getStore('Item').synccontent();
                                     }
-                                }
+                                },{
+					xtype: 'panel',
+					title:"Please check these entries:",
+					id:"validationcomponent", 
+					width:200    
+				}
                         ]
                 }			
             ]              
