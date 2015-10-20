@@ -30,7 +30,6 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                    
     changefuncon:false,                   
     changefunc: function(){
-	var me=this;
         var store=Ext.getStore('Item');
         if (!store.changefuncon)
             return;
@@ -45,7 +44,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
 		store.insert(0,{id:null,href:href,local:xml});
 		store.resumeEvents();
 	    
-		me.validate(xml);	    
+		store.validate(xml);	    
 	    
         }
     },
