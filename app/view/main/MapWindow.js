@@ -10,17 +10,20 @@ Ext.define('PMDMeta.view.main.MapWindow',{
 	height: 500,
 	closeAction: 'hide',
 	initComponent: function (arguments){
-		Ext.apply(this,{
-			items: [{
-				    xtype: 'PMD-Google',
-				    mapOptions: {
-					zoom: 1,
-					center:  new google.maps.LatLng(0, 0),
-					mapTypeId: google.maps.MapTypeId.HYBRID
-				    }  
-				}
-			]
-		});			
+		if (google){
+			Ext.apply(this,{
+				items: [{
+					    xtype: 'PMD-Google',
+					    mapOptions: {
+						zoom: 1,
+						center:  new google.maps.LatLng(0, 0),
+						mapTypeId: google.maps.MapTypeId.HYBRID
+					    }  
+					}
+				]
+			});	
+		}
+		this.callParent(arguments);		
 		
 	},	
 	setStore: function(store, geolocid) {
