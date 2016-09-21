@@ -14,6 +14,13 @@ ini_set('display_errors','1');
   // contentmodel of escidoc items adn address of the core service
   $escidoccontentmodel="/cmm/content-model/escidoc:4001";
   $escidoccoreservice='http://localhost:8080';
-        
+
+  //URLs for DOI registration - uses the DataCite-API
+  $doidbrestserver["GFZ"]["user"]="GFZ";
+  $doidbrestserver["GFZ"]["password"]="secret";
+  $doidbrestserver["GFZ"]["url"]="http://doidb.wdc-terra.org/mds";       
+  $doidbrestserver["ICGEM"]["user"]="ICGEM";
+  $doidbrestserver["ICGEM"]["password"]="secret";
+  $doidbrestserver["ICGEM"]["url"]="http://doidb.wdc-terra.org/mds";       
         
 ?>

@@ -2,9 +2,13 @@ download from Nasa the file
 
 sciencekeywords.rdf
 
-and European Union the:
+into directory "gcmd" and download from the European Union the files:
 
 gemet-definitions.rdf
 gemet-skoscore.rdf
 
-The programs sciencekeywords2csv.php and gemet2csv.php will transfer the data into a format that can by used by the application.
+into the directory "gemet"
+
+The programs sciencekeywords2csv.php and gemet2csv.php will transfer the data into 
+multiple CSV files that are used by the application to build the trees of the 
+thesauruses. Place the CSV files into the same directory as the file "thesaurus.php".
