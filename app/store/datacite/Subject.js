@@ -26,13 +26,13 @@ Ext.define('PMDMeta.store.datacite.Subject', {
       
 
         var ret="";
-        ret+='<gmd:descriptiveKeywords>';
-        ret+='<gmd:MD_Keywords>';
         this.each(function(keyword){
             ret+=keyword.asISOXML();
         });
-        ret+='</gmd:MD_Keywords>';
-        ret+='</gmd:descriptiveKeywords>';
+
+
+	if (ret.length>0)
+        	ret='<gmd:descriptiveKeywords><gmd:MD_Keywords>'+ret+'</gmd:MD_Keywords></gmd:descriptiveKeywords>';
         return ret;
         
     },
