@@ -196,16 +196,18 @@ $prefixes= array( "GFZ" => array("10.1594/GFZ.","10.5880/ENMAP.","10.5880/GFZ.",
 
 	$account=null;
 	
-	foreach ($prefixes as $key => $prefix){
+	foreach ($prefixes as $key => $prefixarray){
 
-		foreach ($prefixes as $prefix)
-			if (substr($doi,0,strlen($prefix))===$prefix){
+		foreach ($prefixarray as $prefix)
+			if (strtolower(substr($doi,0,strlen($prefix)))===strtolower($prefix)){
 				$account=$key;
 			}
 	}
 
 	if (!$account)
 		throw new Exception("There is no datacenter for your DOI prefix.");
+
+//	throw new Exception($account);
 
         $datacite=new DOIDB($doidbrestserver[$account]["user"],$doidbrestserver[$account]["password"] , $doidbrestserver[$account]["url"]);
 
