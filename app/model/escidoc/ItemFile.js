@@ -26,7 +26,7 @@ Ext.define('PMDMeta.model.escidoc.ItemFile', {
 		}},
         {name: 'name',   type: 'string',mapping: function(data){
 		var ret=Ext.DomQuery.selectValue('prop|file-name',data);
-		return ret;
+		return ret.replace('&amp;','&');;
 		}},
         {name: 'type',   type: 'string',mapping: function(data){
 		var ret=Ext.DomQuery.selectValue('prop|mime-type',data);
@@ -87,7 +87,7 @@ Ext.define('PMDMeta.model.escidoc.ItemFile', {
         component.mdrecords=new Array();
         var mdrecord=new Object();
         mdrecord['escidoc']='<file:file xmlns:file="http://purl.org/escidoc/metadata/profiles/0.1/file">';
-        mdrecord['escidoc']+='<dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">'+this.get('name')+'</dc:title>';
+        mdrecord['escidoc']+='<dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">'+this.get('name').replace('&','&amp;').trim()+'</dc:title>';
         if (this.get('description') && this.get('description').length >0)
             mdrecord['escidoc']+='<dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">'+this.get('description')+'</dc:description>';
         mdrecord['escidoc']+='<dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">'+this.get('type')+'</dc:format>';
