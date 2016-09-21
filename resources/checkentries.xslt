@@ -100,7 +100,7 @@
     </xsl:template>
 
     <xsl:template match="*[local-name()='MD_Metadata']">
-
+<!--
 	<xsl:call-template name="check">
 		<xsl:with-param name="entity" select=".//*[local-name()='MD_Keywords']/*[local-name()='keyword']/*[local-name()='CharacterString' and normalize-space(../../*[local-name()='thesaurusName']//*[local-name()='title'])='GEMET - INSPIRE themes, version 1.0']"/>
 		<xsl:with-param name="errmsg">Please provide at least one keyword from GEMET thesaurus</xsl:with-param>
@@ -112,7 +112,7 @@
 		<xsl:with-param name="errmsg">Please provide at least one keyword from NASA Science Keywords</xsl:with-param>
 		<xsl:with-param name="class">error</xsl:with-param>
 	</xsl:call-template>
-
+-->
     </xsl:template>
 
 

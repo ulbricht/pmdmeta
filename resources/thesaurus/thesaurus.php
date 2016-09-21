@@ -1,79 +1,68 @@
 <?php
 
-$rel=array();
-$def=array();
-$key=array();
 
-$thesaurus=false;
-$conceptid=false;
+$thesauruses=array();
 
-if (php_sapi_name()==='cli'){
-	$thesaurus=$argv[1];
-	$conceptid=$argv[2];
-}else{
-	$thesaurus=strtolower($_REQUEST["thesaurus"]);
-	$conceptid=$_REQUEST["node"];
+foreach ($_REQUEST as $key => $value){
+
+	if (substr($key,0,strlen("thesaurus"))==="thesaurus")
+		$thesauruses[$value]=$value;
 }
-if (strlen($thesaurus)==0){
-    echo '{"success": true,"children": []}';
-    return;
-}
+//$thesauruses=array("gcmd");
 
 
-$file = fopen($thesaurus."_labels.csv","r");
-while(($line=fgetcsv($file) )!==FALSE)
-  {
-	$id=array_shift($line);
-	$def[$id]=$line;
-  }
-fclose ($file);
+foreach ($thesauruses as $thesaurus){
 
-$file = fopen($thesaurus."_relations.csv","r");
-while(($line=fgetcsv($file) )!==FALSE)
-  {
-	$id=array_shift($line);
-	$rel[$id]=$line;
-  }
-fclose ($file);
+	$thesaurusuri="";
+	$thesaurusname="";
 
-$file = fopen($thesaurus."_keywords.csv","r");
-while(($line=fgetcsv($file) )!==FALSE)
-  {
-	$id=array_shift($line);
-	$key[$id]=$line;
-  }
-fclose ($file);
+	if (strlen($thesaurus)==0)
+		continue;
 
-$elements;
-if (strlen($conceptid)==0 || $conceptid=="root"){
+	$def=readfromfile($thesaurus,"_labels.csv");
+
+	foreach (readfromfile($thesaurus,"_index.csv") as $uri =>$name){
+		$thesaurusuri=$uri;
+		$thesaurusname=array_shift($name);
+	}
+	$rel=readfromfile($thesaurus,"_relations.csv");
+	$key=readfromfile($thesaurus,"_keywords.csv");
+
 	$elements=getRoots($rel);
-}else{
-	$elements=$rel[$conceptid];
-}
-	
+
+//var_dump($elements);return;
+
 $ret['success']='true';
-$ret['children']=walktree($rel,$def,$key,$elements);
+	foreach (walktree($rel,$def,$key,$thesaurusuri,$thesaurusname,$elements) as $child)
+		$ret['children'][]=$child;
+}
+
+
 echo json_encode($ret);
 
-
-
-function walktree ($relations, $definitions, $keys, $items,$searchkey=""){
+function walktree ($relations, $definitions, $keys, $thesaurusuri, $thesaurusname, $items,$searchkey=""){
 	$ret=array();
 	foreach ($items as $element){	
 		$obj=array();
 		$obj['id']=$element;
 		$obj["name"]=$definitions[$element][0];
 		$obj["qtip"]=$definitions[$element][1];
+	
+//		$obj["qtip"]=preg_replace("/[\n\r]/","<br>",$obj["qtip"]);
+
                 if ($element=='1eb0ea0a-312c-4d74-8d42-6f1ad758f999')//expand science keywords
                     $obj['expanded']=true;
 		if (array_key_exists($element,$keys)!==FALSE)
 			$obj["keyword"]=$keys[$element][0];					
 
+		$obj["thesaurusuri"]= $thesaurusuri;
+		$obj["thesaurusname"]= $thesaurusname;
+
 		if (count($relations[$element])==0){
 			$obj['leaf']='true';
 		}else{
 			$obj['leaf']='false';
-			$obj['children']=walktree($relations, $definitions, $keys, $relations[$element]);
+			$obj['children']=walktree($relations, $definitions, $keys, $thesaurusuri, $thesaurusname, $relations[$element]);
 		}
 		array_push($ret,$obj);
 	}
@@ -92,5 +81,20 @@ function getRoots($relations){
 	$roots=array_diff($keys,$children);
 	return $roots;
 }
+function readfromfile ($thesaurus,$extention){
+	$file = fopen($thesaurus.$extention,"r");
+
+	if (!$file)
+		throw new Exception("can not find thesaurus ".$thesaurus);
+	$def=array();
+	while(($line=fgetcsv($file) )!==FALSE)
+	  {
+		$id=array_shift($line);
+		$def[$id]=$line;
+	  }
+	fclose ($file);
+	return $def;
+}
+
 
 ?>

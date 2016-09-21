@@ -187,7 +187,27 @@ function registerDOIFromItem($item,$targeturl,$publication,$doidbrestserver,$reg
             substr($doi,0,strlen($publication["doitestprefix"]))!=$publication["doitestprefix"]) //allow testprefixes
                 throw new Exception("Dataset must be released to register a DOI.");
 
-        $datacite=new DOIDB($doidbrestserver["user"],$doidbrestserver["password"] , $doidbrestserver["url"]);
+
+$prefixes= array( "GFZ" => array("10.1594/GFZ.","10.5880/ENMAP.","10.5880/GFZ.","10.5880/PIK.","10.5880/TERENO."),
+		"ICGEM" => array("10.5880/ICGEM."),
+		 "SDDB" => array("10.1594/GFZ.SDDB.","10.1594/GFZ/ICDP","10.5880/SDDB."),
+		  "WSM" => array("10.1594/GFZ.WSM.","10.5880/WSM.")
+	   );
+
+	$account=null;
+	
+	foreach ($prefixes as $key => $prefix){
+
+		foreach ($prefixes as $prefix)
+			if (substr($doi,0,strlen($prefix))===$prefix){
+				$account=$key;
+			}
+	}
+
+	if (!$account)
+		throw new Exception("There is no datacenter for your DOI prefix.");
+
+        $datacite=new DOIDB($doidbrestserver[$account]["user"],$doidbrestserver[$account]["password"] , $doidbrestserver[$account]["url"]);
 
         switch ($registermode){   
             case "register":
@@ -212,10 +232,10 @@ function registerDOIFromItem($item,$targeturl,$publication,$doidbrestserver,$reg
                 return 'successfully registered DOI "'.$doi.'"';                                                
             case "metadata":
                 $datacite->metaUpdate($dataciteuploaddata);
-//                if (strlen($iso19115uploaddata)>0)
-//                    $datacite->metaIsoUpdate($doi,$iso19115uploaddata);
-//                if (strlen($difuploaddata)>0)
-//                    $datacite->metaDifUpdate($doi,$difuploaddata);                
+                if (strlen($iso19115uploaddata)>0)
+                    $datacite->metaIsoUpdate($doi,$iso19115uploaddata);
+                if (strlen($difuploaddata)>0)
+                    $datacite->metaDifUpdate($doi,$difuploaddata);                
                 return 'successfully updated metadata of DOI "'.$doi.'"';                                
             case "deactivate":
                 $datacite->metaDelete($doi);

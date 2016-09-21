@@ -15,8 +15,7 @@ Ext.define('PMDMeta.view.main.Main', {
 	'PMDMeta.view.main.FileAndVersionForm',
 	'PMDMeta.view.fileupload.FileUpload',
         'PMDMeta.view.main.LoadMetadataWindow',
-        'PMDMeta.view.main.ReviewWindow',
-        'PMDMeta.view.main.Publications'        
+        'PMDMeta.view.main.ReviewWindow'        
     ],
 
     xtype: 'app-main',
@@ -408,9 +407,7 @@ Ext.define('PMDMeta.view.main.Main', {
 					xtype: 'Iso-Form'
 				},{
                                         xtype: 'PMD-FileUpload'
- //,hidden:true
-                                },{
-                                        xtype: 'Publications' 
+
                                 }
 			]
 		}

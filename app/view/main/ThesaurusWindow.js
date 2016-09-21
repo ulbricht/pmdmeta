@@ -9,8 +9,8 @@ Ext.define('PMDMeta.view.main.ThesaurusWindow',{
 			xtype: 'thesauruspanel'
 		}
 	],
-	setModel:function(thesaurusname,model){
-		this.down("thesauruspanel").setModel(thesaurusname,model);
+	setExchangeStore:function(store){
+		this.down("thesauruspanel").setExchangeStore(store);
 	}
 
 });

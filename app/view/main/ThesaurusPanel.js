@@ -5,9 +5,8 @@ Ext.define('PMDMeta.view.main.ThesaurusPanel',{
 		'PMDMeta.store.ThesaurusCombo',
 		'PMDMeta.model.datacite.Subject'
 	],
-	setModel:function(thesaurusname,model){	
-		this.model=model;
-	//	this.down('combobox').setValue(thesaurusname);
+	setExchangeStore:function(store){	
+		this.exchangeStore=store;
 	},
 	xtype: 'thesauruspanel',
 	initComponent: function (arguments){
@@ -19,7 +18,6 @@ Ext.define('PMDMeta.view.main.ThesaurusPanel',{
 		    width: 600,
 		    height: 500,
 		    rootVisible: false,
-		    autoLoad:false,
 		    store: 'Thesaurus',
 		    columns: [
 			{ xtype: 'treecolumn', header: 'Name', dataIndex: 'name', flex: 1 },
@@ -34,53 +32,17 @@ Ext.define('PMDMeta.view.main.ThesaurusPanel',{
                                 scope: me,
                                 handler: function(grid, rowIndex){
                                     var elem=grid.getStore().getAt(rowIndex);
-                                    var thesaurusstore=Ext.getStore('ThesaurusCombo');
-                                    var combobox=grid.up('treepanel').down('radio');
-                                    var thesaurus=combobox.getGroupValue();
-                                    var thesaurusentity=thesaurusstore.getById(thesaurus);
-                                    me.model.beginEdit();
-                                    me.model.set("subject",elem.get("keyword"));
-                                    me.model.set("lang","en");					
-                                    me.model.set("subjectScheme",thesaurus);		
-                                    me.model.set("subjectSchemeURI",thesaurusentity.get('uri'));						
-                                    me.model.endEdit();
+//                                    var thesaurusstore=Ext.getStore('ThesaurusCombo');
+//                                    var combobox=grid.up('treepanel').down('radio');
+//                                    var thesaurus=combobox.getGroupValue();
+//                                    var thesaurusentity=thesaurusstore.getById(thesaurus);
+				    if (elem.get("keyword").length >0)
+				   	 me.exchangeStore.insert(0,{"subject":elem.get("keyword"),"lang":"en","subjectScheme":elem.get("thesaurusname"),"subjectSchemeURI":elem.get("thesaurusuri")});
                                 }
                             }]
 			}
 		    ],
 		    tbar:[
-                        {
-                            xtype      : 'fieldcontainer',
-                            defaultType: 'radiofield',
-                            defaults: {
-                                flex: 1,		
-                            listeners:{
-                                change: function (elem,newValue, oldValue, eOpts ){	
-                                        newValue=elem.getGroupValue();
-                                        var thesaurus=this.up('treepanel').store;
-                                        thesaurus.getProxy().getExtraParams().thesaurus=newValue;
-                                        thesaurus.clearFilter();
-                                        thesaurus.removeAll();
-                                        thesaurus.load();
-
-                                    }
-                                }
-                            },
-                            layout: 'vbox',
-                            items: [              
-                                {
-                                    boxLabel  : 'GEMET Thesaurus (INSPIRE)',
-                                    name      : 'thesaurus',
-                                    inputValue: 'GEMET'
-                                }, {
-                                    boxLabel  : 'NASA GCMD Science Keywords',
-                                    name      : 'thesaurus',
-                                    inputValue: 'GCMD'
- //                                   ,qtip:'The GCMD vocabulary is developed and maintained by: Olsen, L.M., G. Major, K. Shein, J. Scialdone, S. Ritz, T. Stevens, M. Morahan, A. Aleman, R. Vogel, S. Leicester, H. Weir, M. Meaux, S. Grebas, C.Solomon, M. Holland, T. Northcutt, R. A. Restrepo, R. Bilodeau, 2013. NASA/Global Change Master Directory (GCMD) Earth Science Keywords. Version 8.0.0.0.0'
-                                }
-                            ]
-
-                        },
                         '->',
                         {
                             labelWidth: 130,
@@ -136,8 +98,7 @@ Ext.define('PMDMeta.view.main.ThesaurusPanel',{
                                     } catch (e) {
                                         this.markInvalid('Invalid regular expression');
                                     }
-                                },
-                                buffer: 250
+                                }
                             }
                         }  
 		    ]

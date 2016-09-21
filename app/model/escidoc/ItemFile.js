@@ -5,7 +5,7 @@ Ext.define('PMDMeta.model.escidoc.ItemFile', {
                 var content=Ext.DomQuery.selectNode('components|content',data);
 		for (var i=0;i<content.attributes.length;i++){			
 			if (content.attributes.item(i).localName=='href')
-				return content.attributes.item(i).value
+				return content.attributes.item(i).value.replace('&amp;','&');
 		}		
 		return null;
 		}},
@@ -82,7 +82,7 @@ Ext.define('PMDMeta.model.escidoc.ItemFile', {
         component.content+='<prop:content-category>'+this.get('content-category')+'</prop:content-category>';
         component.content+='<prop:mime-type>'+this.get('type')+'</prop:mime-type>';
         component.content+='</escidocComponents:properties>';
-        component.content+='<escidocComponents:content  xlink:href="'+this.get('content')+'" storage="'+this.get('storage')+'"/>';
+        component.content+='<escidocComponents:content  xlink:href="'+this.get('content').replace('&','&amp;').trim()+'" storage="'+this.get('storage')+'"/>';
         component.content+='</escidocComponents:component>'    
         component.mdrecords=new Array();
         var mdrecord=new Object();

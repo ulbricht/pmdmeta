@@ -4,8 +4,9 @@ ini_set("display_errors","1");
 
 header("HTTP/1.0 200 OK");
 
+
 $filecontent=$_POST['mailcontent'];
-$filename="metadata.xml";
+$filename=genfilename($filecontent);
 $filetype="text/xml";  
     
 $recipient ="ulbricht@gfz-potsdam.de";
@@ -34,6 +35,31 @@ $success=mail($recipient, $subject, "", $kopf);
 echo json_encode(array("success"=>$success, "fileName"=>$filename, "fileSize"=>sizeof($filecontent), "fileType"=>$filetype));
 
     
+function genfilename($xml){
+
+	$dom=new DOMDocument();
+	$dom->loadXML($xml);
+	$xpath=new DOMXPath($dom);
+
+	$title="";
+	$tq=$xpath->query("//*[local-name()='resource']/*[local-name()='titles']/*[local-name()='title']");
+	if ($tq->length >0)
+		$title=$tq->item(0)->nodeValue;
+
+	$name="";
+	$nq=$xpath->query("//*[local-name()='resource']/*[local-name()='creators']/*[local-name()='creator']/*[local-name()='creatorName']");
+	if ($nq->length >0)
+		$name=$nq->item(0)->nodeValue;
+
+	$name=array_shift(preg_split('/,/',$name));
+
+	$timestamp=date("Ymd_Hi");
+	$savename=$name."_".$title."_".$timestamp;
+	return preg_replace('/[^A-Za-z0-9äöüÄÖÜß_\-\ ]/','',$savename);
+}
+
+
+
      
      
 ?>

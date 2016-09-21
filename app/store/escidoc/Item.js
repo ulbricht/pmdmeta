@@ -3,7 +3,8 @@ Ext.define('PMDMeta.store.escidoc.Item', {
     model:  'PMDMeta.model.escidoc.Item',
     storeId: 'Item',
     autoSync: true,
-    requires:['PMDMeta.store.datacite.Contributor'],
+    requires:['PMDMeta.store.datacite.Contributor',
+	'PMDMeta.model.publish.Htmlcontent'],
 //    autoLoad: true,
     proxy:{
             type: 'localstorage'
@@ -49,27 +50,32 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         }
     },
 	validate: function(xml){
-		var out = Ext.getCmp("validationcomponent");
-		if (out){
-			Ext.Ajax.request({
-				url: 'resources/validate.php',	
-				method: 'POST',
-				params:{
-					validationdata: xml
-				},                                                        
-				success: function(response, opts) {
-					var responseData = Ext.decode(response.responseText);
-					if (responseData.success){
-						out.setHtml(responseData.message);				
-					}else{
-						out.setHtml("Error validating Metadata. Missing Internet?");						
-					}
-				},
-				   failure: function(response, opts) {
-				      console.log('server-side failure with status code ' + response.status);
-				}            
-			});   
-		}
+		var store=Ext.getStore("validationresult");
+
+		Ext.Ajax.request({
+			url: 'resources/validate.php',	
+			method: 'POST',
+			params:{
+				validationdata: xml
+			},                                                        
+			success: function(response, opts) {
+				var model=new PMDMeta.model.publish.Htmlcontent();
+				var responseData = Ext.decode(response.responseText);
+				var htmlcontent;
+				if (responseData.success){
+					htmlcontent=responseData.message;
+				}else{
+					htmlcontent="Error validating Metadata. Missing Internet?";
+				}
+				model.set("html",htmlcontent);
+				store.insert(0,model);
+				store.removeAt(1);
+			},
+			   failure: function(response, opts) {
+			      console.log('server-side failure with status code ' + response.status);
+			}            
+		});   
+		
 	},   
     listeners:{
  
@@ -640,6 +646,9 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         iso+=Ext.getStore('DataCiteDate').asISOXML('coverage');
         iso+='</gmd:MD_DataIdentification>';
         iso+='</gmd:identificationInfo>';             
+	
+	iso+=mdmeta.asXML('distributioninfo');
+
         iso+='</gmd:MD_Metadata>';
         return iso;
   },

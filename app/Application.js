@@ -12,8 +12,6 @@ Ext.define('PMDMeta.Application', {
 
     launch: function () {
 
-
-
         Ext.Ajax.setTimeout(60*5*1000);//5 minutes ajax timout
         
         // TODO - Launch the application
@@ -21,7 +19,18 @@ Ext.define('PMDMeta.Application', {
         new PMDMeta.store.escidoc.Item();   
         var itemstore=Ext.getStore('Item'); 
         
-        
+        if (urlparameter.formview==="bib"){
+		
+		
+	}else{
+		var tabs=Ext.ComponentQuery.query("tab");
+		tabs[1].hide();
+		tabs[2].hide();
+		Ext.getCmp('doibutton').hide();
+		Ext.getCmp('syncbutton').hide();
+		Ext.getCmp('previewbutton').hide();
+	}
+	    
         if (urlparameter.action==="new"){
             itemstore.loaddata({id:null,href:null,local:null});
         }else if (urlparameter.object && urlparameter.object.length>0){
@@ -34,6 +43,7 @@ Ext.define('PMDMeta.Application', {
             itemstore.load();
         }
         
+
         Ext.apply(Ext.form.field.VTypes, {
             DataCitePublicationYear:  function(v) {
                 var match=/^\d{4}$/;

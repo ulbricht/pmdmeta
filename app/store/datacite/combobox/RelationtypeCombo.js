@@ -22,10 +22,8 @@ Ext.define('PMDMeta.store.datacite.combobox.RelationtypeCombo', {
 					{abbr:'IsOriginalFormOf',name:'IsOriginalFormOf', group:'Versions',  qtip:'This dataset is the original form of the repackaged dataset ...'},
 					{abbr:'IsIdenticalTo',name:'IsIdenticalTo', group:'Versions',  qtip:'This dataset is identical to ...'},
 					{abbr:'IsNewVersionOf',name:'IsNewVersionOf', group:'Versions',  qtip:'This dataset is a new edition of ...'},	
-					{abbr:'IsPreviousVersionOf',name:'IsNewVersionOf', group:'Versions',  qtip:'This dataset is a previous edition of ...'},						
+					{abbr:'IsPreviousVersionOf',name:'IsPreviousVersionOf', group:'Versions',  qtip:'This dataset is a previous edition of ...'},						
 					
-					
-
 					{abbr:'HasMetadata',name:'HasMetadata', group:'Documentation',  qtip:'Metadata for this dataset can be found at ...'},	
 					{abbr:'IsMetadataFor',name:'IsMetadataFor', group:'Documentation',  qtip:'This dataset is metadata for ...'},						
 					{abbr:'IsDocumentedBy',name:'IsDocumentedBy', group:'Documentation',  qtip:'This dataset is documented by ...'},	
@@ -33,7 +31,7 @@ Ext.define('PMDMeta.store.datacite.combobox.RelationtypeCombo', {
 					{abbr:'IsReviewedBy',name:'IsReviewedBy', group:'Documentation',  qtip:'This dataset is reviewed in ...'},	
 					{abbr:'Reviews',name:'Reviews', group:'Documentation',  qtip:'This dataset is a manuscript and reviews ...'},	
 					
-					{abbr:'IsDerivedForm',name:'IsDerivedForm', group:'Derivation',  qtip:'This dataset is a derivative of an original resource, e.g. a subset of the data with recalculated values.'},
+					{abbr:'IsDerivedFrom',name:'IsDerivedFrom', group:'Derivation',  qtip:'This dataset is a derivative of an original resource, e.g. a subset of the data with recalculated values.'},
 					{abbr:'IsSourceOf',name:'IsSourceOf', group:'Derivation',  qtip:'The original form of a derived dataset.'}
 ]
 });				

@@ -125,6 +125,40 @@ Ext.define('PMDMeta.model.iso.MD_Metadata', {
                 ret+='</gmd:MD_ReferenceSystem>';
                 ret+='</gmd:referenceSystemInfo>';
                 break;
+            case 'distributioninfo':  
+                var identifier='doi:'+Ext.getStore('DataCiteResource').getAt(0).get('identifier');
+	        ret+='<gmd:distributionInfo>';
+	        ret+='<gmd:MD_Distribution>';
+	        ret+='<gmd:transferOptions>';
+	        ret+='<gmd:MD_DigitalTransferOptions>';
+	        ret+='<gmd:onLine>';
+	        ret+='<gmd:CI_OnlineResource>';
+	        ret+='<gmd:linkage>';
+	        ret+='<gmd:URL>';
+	        ret+='http://dx.doi.org/'+identifier;
+	        ret+='</gmd:URL>';	
+	        ret+='</gmd:linkage>';   
+	        ret+='<gmd:protocol>';
+	        ret+='<gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WWW:LINK-1.0-http--link</gco:CharacterString>';
+	        ret+='</gmd:protocol>';
+	        ret+='<gmd:name>';
+	        ret+='<gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Download</gco:CharacterString>';
+	        ret+='</gmd:name>';
+	        ret+='<gmd:description>';
+	        ret+='<gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Download</gco:CharacterString>';
+	        ret+='</gmd:description>';
+	        ret+='<gmd:function>';
+	        ret+='<gmd:CI_OnLineFunctionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode_download">download</gmd:CI_OnLineFunctionCode>';
+	        ret+='</gmd:function>';
+	        ret+='</gmd:CI_OnlineResource>';
+	        ret+='</gmd:onLine>';
+	        ret+='</gmd:MD_DigitalTransferOptions>';
+	        ret+='</gmd:transferOptions>';
+	        ret+='</gmd:MD_Distribution>';
+	        ret+='</gmd:distributionInfo>';
+	            
+                break;		
+		
         }
 
         return ret;

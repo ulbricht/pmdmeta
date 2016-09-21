@@ -94,7 +94,24 @@ Ext.define('PMDMeta.view.datacite.RelatedIdentifiers', {
                     me.PMDeditor.setPMDmodel(record);
                     return me.PMDeditor;
                 }*/	
-            }, {
+            },/*{
+		xtype: 'actioncolumn',
+		width: 30,
+		sortable: false,
+		menuDisabled: true,
+		items: [{
+		    icon: 'resources/images/icons/fam/page_white_edit.png',
+		    tooltip: 'Enter citation manually ',
+		    scope: this,
+		    handler: this.onManualCitation
+		}]
+	    },{
+                header: 'Citation',
+                flex: 2,		    
+                dataIndex: 'citation',
+		sortable: false,		
+		menuDisabled: true
+            },*/{
                 xtype: 'actioncolumn',
                 width: 30,
                 sortable: false,
@@ -140,7 +157,19 @@ Ext.define('PMDMeta.view.datacite.RelatedIdentifiers', {
         });
 
         this.callParent();
-    },
+    },    
+    onManualCitation: function(grid, rowIndex){
+	    
+	var me=this;   
+	var store=this.getStore();
+        var model=store.getAt(rowIndex);		    
+	if (!grid.cite)
+		grid.cite=Ext.create('PMDMeta.view.main.CitationWindow');
+	    
+	grid.cite.show();
+	grid.cite.setStore(store,model);		
+	    
+    },   
     onRemoveClick: function(grid, rowIndex){
         var me=this;
 	me.getStore().removeAt(rowIndex);

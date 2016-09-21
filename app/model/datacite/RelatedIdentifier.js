@@ -6,7 +6,8 @@ Ext.define('PMDMeta.model.datacite.RelatedIdentifier', {
 				    return data.firstChild.textContent.replace('&amp;','&');
 				}},
 		{name: 'identifierType',   type: 'string', mapping: '@relatedIdentifierType'},
-		{name: 'relation',  type: 'string', mapping: '@relationType'}
+		{name: 'relation',  type: 'string', mapping: '@relationType'},
+		{name: 'citation',  type: 'string'} //only used for display
 	],
 	validators: {
 		identifier: { type: 'length', min: 1 },
@@ -22,7 +23,7 @@ Ext.define('PMDMeta.model.datacite.RelatedIdentifier', {
 			relation=' relationType="'+this.get('relation')+'"';		
 		var result="";
 		if (type.length>0 || relation.length>0 || this.get('identifier').length>0)
-			result='<relatedIdentifier'+type+relation+'>'+this.get('identifier').replace('&','&amp;')+'</relatedIdentifier>';
+			result='<relatedIdentifier'+type+relation+'>'+this.get('identifier').replace('&','&amp;').trim()+'</relatedIdentifier>';
 		return result;
 	}
 });

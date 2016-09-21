@@ -12,16 +12,18 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
 	'PMDMeta.view.main.ItemVersions',
         'PMDMeta.view.main.FileDownloader',
         'Ext.window.MessageBox',
-        'PMDMeta.view.main.DOIregistration'
+        'PMDMeta.view.main.DOIregistration',
+	'PMDMeta.store.publish.ValidationResult',
+	'PMDMeta.view.main.ValidationWindow'
     ],
 
     xtype: 'FileAndVersion-Form',
     
     layout:  'fit',
      initComponent: function() {
-         
-         var me=this;
-         Ext.apply(me, {
+        var me=this;
+        new PMDMeta.store.publish.ValidationResult();
+        Ext.apply(me, {
              items: [
 		{	
 			xtype: 'form',
@@ -41,6 +43,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     xtype: 'button',
                                     scale: 'large',                                                
                                     text: 'DOI',
+				    id:   'doibutton',
 //hidden:true,
                                     tooltip: 'register a DOI or update metadata',
                                     handler: function() {
@@ -52,6 +55,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                 },{
                                     xtype: 'button',
                                     scale: 'large',
+				    id:   'previewbutton',
 //hidden: true,
                                     text: 'Preview',
                                     tooltip: 'preview Dataset in new Window',
@@ -169,6 +173,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     xtype: 'button',
                                     scale: 'large',                                                
                                     text: 'Sync',
+				    id:   'syncbutton',
 //hidden: true,
                                     tooltip: 'Sync data to eSciDoc repository',
                                     handler: function() {	  
@@ -211,10 +216,14 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
 //                                                    Ext.getStore('Item').synccontent();
                                     }
                                 },{
-					xtype: 'panel',
-					title:"Please check these entries:",
-					id:"validationcomponent", 
-					width:200    
+					xtype: 'button',
+					scale: 'large',
+					text: 'Form Errors',
+					handler: function(){
+						if (!me.validationwindow)
+							me.validationwindow=Ext.create("PMDMeta.view.main.ValidationWindow");
+						me.validationwindow.show();
+					}
 				}
                         ]
                 }			

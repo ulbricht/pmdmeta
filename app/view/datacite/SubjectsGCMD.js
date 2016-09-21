@@ -103,10 +103,9 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
    },
     onAddViaThesaurus:function (grid, rowIndex){
 	var me=this;
-	var model=me.getStore().getAt(rowIndex)
 	if (!me.thesaurus)
 	    me.thesaurus=Ext.create('PMDMeta.view.main.ThesaurusWindow');
-        me.thesaurus.setModel("GCMD",model);
+        me.thesaurus.setExchangeStore(me.getStore());
         me.thesaurus.show();
     },
     onRemoveClick: function(grid, rowIndex){
