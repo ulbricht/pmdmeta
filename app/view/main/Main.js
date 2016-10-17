@@ -271,15 +271,21 @@ Ext.define('PMDMeta.view.main.Main', {
         var helpformular=new Ext.Action({
                         text: 'Help on formular',
                         handler: function(){
-                            window.open("resources/pdf/usage-of-pmd-formular_final.pdf","_blank");
+                            window.open("resources/pdf/GFZ-Metadata-Editor_functionality_20161002.pdf","_blank");
                         }
                     });
         var helpmetadatafields=new Ext.Action({
                         text: 'Help on metadata fields',
                         handler: function(){
-                            window.open("resources/pdf/Metadata%20Fields%20Description-V2.pdf","_blank");
+                            window.open("resources/pdf/Metadata-Form-Documentation_20161002.pdf","_blank");
                         }
-                    });                    
+                    });  
+        var quickstart=new Ext.Action({
+                        text: 'Quick Start Guide',
+                        handler: function(){
+                            window.open("resources/pdf/Quick-Start-Guide-fo-Data-Publications-GFZ-Data-Services.pdf","_blank");
+                        }
+                    });                   
         
          Ext.apply(me, {
                
@@ -383,7 +389,7 @@ Ext.define('PMDMeta.view.main.Main', {
             }, {
                 text: 'About/Help',
                 menu: [
-                    helpformular,helpmetadatafields
+                    quickstart,helpformular,helpmetadatafields
                 ]
             }        
 
