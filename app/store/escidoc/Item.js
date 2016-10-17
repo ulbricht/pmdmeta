@@ -709,7 +709,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                 var data=Ext.JSON.decode(response.responseText);
                 if (data.success){
                     if (oldhref.length===0){
-                        window.location.href="?object="+data.object;
+                        window.location.href="?object="+data.object+"&formview=bib";
                     }else{                    
                         var store=Ext.getStore('Item');
                         store.loaddata({href:data.object});
