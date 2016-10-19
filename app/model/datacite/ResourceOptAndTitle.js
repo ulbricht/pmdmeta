@@ -4,7 +4,8 @@ Ext.define('PMDMeta.model.datacite.ResourceOptAndTitle', {
 		{name: 'resourceTypeGeneral',   type: 'string'},
 		{name: 'title',   type: 'string'},
 		{name: 'titleType',   type: 'string'},
-		{name: 'language', type: 'string'}
+		{name: 'language', type: 'string'},
+		{name: 'version', type: 'string'}
 	]
 });
 

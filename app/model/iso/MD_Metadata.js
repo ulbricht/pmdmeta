@@ -117,14 +117,9 @@ Ext.define('PMDMeta.model.iso.MD_Metadata', {
                 ret+='<gmd:RS_Identifier>';
                 ret+='<gmd:code>';
                 ret+='<gco:CharacterString>';
-                ret+='4326';
+                ret+='urn:ogc:def:crs:EPSG:4326';
                 ret+='</gco:CharacterString>';
-                ret+='</gmd:codeCode>';
-                ret+='<gmd:code>';
-                ret+='<gco:CharacterString>';
-                ret+='EPSG';
-                ret+='</gco:CharacterString>';
-                ret+='</gmd:codeCode>';
+                ret+='</gmd:code>';
                 ret+='</gmd:RS_Identifier>';
                 ret+='</gmd:referenceSystemIdentifier>';
                 ret+='</gmd:MD_ReferenceSystem>';

@@ -106,14 +106,17 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                         }
                     }
                     if (resOptTitle && (!resOpt || resOptTitle.get("resourceTypeGeneral")!=resOpt.get("resourceTypeGeneral") ||
-                            resOptTitle.get("language")!=resOpt.get("language"))){                           
+                            resOptTitle.get("language")!=resOpt.get("language")||
+                            resOptTitle.get("version")!=resOpt.get("version"))){                           
                         if (resOpt) {
                             resOpt.beginEdit();
                             resOpt.set('resourceTypeGeneral',resOptTitle.get("resourceTypeGeneral"));
                             resOpt.set('language',resOptTitle.get("language"));
+                            resOpt.set('version',resOptTitle.get("version"));
                             resOpt.endEdit();
                         }else{
                             resOptStore.insert(0,{
+                                version:resOptTitle.get("version"),
                                 language:resOptTitle.get("language"),
                                 resourceTypeGeneral:resOptTitle.get("resourceTypeGeneral")});
                         }
@@ -132,8 +135,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                     
                     resOptTitle.beginEdit();                    
                     if (title && (resOptTitle.get("title")!=title.get("title") ||
-                            resOptTitle.get("titleType")!=title.get("titleType"))){                        
-
+                            resOptTitle.get("titleType")!=title.get("titleType"))){ 
                             resOptTitle.set('title',title.get("title"));
                             resOptTitle.set('titleType',title.get("titleType"));
 
@@ -147,7 +149,10 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                     }                    
                     if (language)
                         resOptTitle.set('language',language);
-                    
+
+                    if (resOpt && resOptTitle.get("version")!=resOpt.get("version")){
+                            resOptTitle.set('version',resOpt.get("version"));  
+                    }                    
 
                     if (resOpt && resOptTitle.get("resourceTypeGeneral")!=resOpt.get("resourceTypeGeneral")){
                                resOptTitle.set('resourceTypeGeneral',resOpt.get("resourceTypeGeneral"));                                    

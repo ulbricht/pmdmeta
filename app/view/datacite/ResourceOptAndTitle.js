@@ -62,6 +62,21 @@ Ext.define('PMDMeta.view.datacite.ResourceOptAndTitle', {
                 }),
                 hidden: true
             },{
+                header: 'Version',
+                dataIndex: 'version',
+		sortable: false,		
+                menuDisabled: true,			    
+                width: 80,
+                editor: {
+                    allowBlank: true
+                },
+                renderer: function(value, metaData, record, rowIdx, colIdx, store) {
+                    var qtip="The suggested practice is to use a pair of <i>major_version.minor_version</i> to indicate changes in the dataset. Major changes typically require registration of a new DOI.";
+                    qtip+="  <b>If unsure leave blank.</b>";
+                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
+                    return value;
+                }		    
+            },{
                 header: 'Language of dataset',
                 dataIndex: 'language',   
                 width: 170,
