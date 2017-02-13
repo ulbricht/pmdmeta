@@ -191,7 +191,8 @@ function registerDOIFromItem($item,$targeturl,$publication,$doidbrestserver,$reg
 $prefixes= array( "GFZ" => array("10.1594/GFZ.","10.5880/ENMAP.","10.5880/GFZ.","10.5880/PIK.","10.5880/TERENO."),
 		"ICGEM" => array("10.5880/ICGEM."),
 		 "SDDB" => array("10.1594/GFZ.SDDB.","10.1594/GFZ/ICDP","10.5880/SDDB."),
-		  "WSM" => array("10.1594/GFZ.WSM.","10.5880/WSM.")
+		  "WSM" => array("10.1594/GFZ.WSM.","10.5880/WSM."),
+		  "ENMAP" => array("10.5880/ENMAP.")
 	   );
 
 	$account=null;
