@@ -3,7 +3,7 @@
  * editing is not recommeded on keyboardless touch devices.
  */
  
-Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
+Ext.define('PMDMeta.view.datacite.SubjectsGCMD6', {
     extend: 'PMDMeta.view.datacite.Grid',
     requires: [
         'Ext.selection.CellModel',
@@ -12,77 +12,47 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
         'Ext.util.*',
         'Ext.form.*',
 	'PMDMeta.model.datacite.Subject',
-        'PMDMeta.store.datacite.SubjectGCMD',
+        'PMDMeta.store.datacite.SubjectGCMD6',
 	'PMDMeta.view.main.ComboBox'
     ],
-    xtype: 'DataCite-SubjectsGCMD',
+    xtype: 'DataCite-SubjectsGCMD6',
     title: 'NASA GCMD Science Keywords',
     frame: true,
     layout: 'fit',
     modelname: 'PMDMeta.model.datacite.Subject',
     initComponent: function() {
+
+	var me=this;
+
         this.cellEditing = new Ext.grid.plugin.CellEditing({
-            clicksToEdit: 1
+            clicksToEdit: 1,
+		listeners: {
+		    beforeedit: function(editor,context){
+			if (context.field==='subject'){
+				me.onAddViaThesaurus(context.grid, context.rowIdx);                                 
+			}
+			return  false;
+		    }
+		}
         });
 
         Ext.apply(this, {
             height: 200,
             plugins: [this.cellEditing],
-            store: 'DataCiteSubjectGCMD',
-            columns: [
-		{
-		xtype: 'actioncolumn',
-		width: 30,
-		sortable: false,
-		menuDisabled: true,
-		items: [{
-		    icon: 'resources/images/icons/fam/page_white_edit.png',
-		    tooltip: 'Add via Thesaurus',
-		    scope: this,
-		    handler: this.onAddViaThesaurus
-		}]
-		},		
+            store: 'DataCiteSubjectGCMD6',
+            columns: [	
 		{
 		cls: 'PMDrequired',			
-                header: 'Keyword',
+                header: 'Apparatus',
                 dataIndex: 'subject',
                 flex: 1,
 		sortable: false,		
 		menuDisabled: true,				
                 editor: {
                     allowBlank: false,
-                    editable: false
-                }	
-            },{
-                header: 'Scheme',
-                dataIndex: 'subjectScheme',
-                width: 130,
-		sortable: false,		
-		menuDisabled: true,			    
-                editor: {
-                    allowBlank: false,
-                    editable: false
-                }	
-            },{
-                header: 'Scheme URI',
-                dataIndex: 'subjectSchemeURI',
-                width: 130,					    
-		sortable: false,		
-		menuDisabled: true,	
-                editor: {
-                    allowBlank: false,
-                    editable: false
-                }	
-            },{
-                header: 'Language',
-                dataIndex: 'lang',   
-                width: 130,
-		sortable: false,		
-		menuDisabled: true,			    
-                editor: {
-                    allowBlank: false,
-                    editable: false
+ 		    emptyText: 'click here'
                 }
+	
             },{
                 xtype: 'actioncolumn',
                 width: 30,
@@ -105,6 +75,7 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
 	var me=this;
 	if (!me.thesaurus)
 	    me.thesaurus=Ext.create('PMDMeta.view.main.ThesaurusWindow');
+	me.thesaurus.setThesauruses({thesaurus3: 'eposwp16apparatus'});
         me.thesaurus.setExchangeStore(me.getStore());
         me.thesaurus.show();
     },

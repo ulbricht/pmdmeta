@@ -1,7 +1,7 @@
-Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
+Ext.define('PMDMeta.store.datacite.SubjectGCMD1', {
     extend: 'Ext.data.Store',
     model:  'PMDMeta.model.datacite.ThesaurusSubject',
-    storeId: 'DataCiteSubjectGCMD',
+    storeId: 'DataCiteSubjectGCMD1',
     proxy:{
             type: 'memory',
 

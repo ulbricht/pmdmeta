@@ -8,6 +8,11 @@ Ext.define('PMDMeta.view.main.ThesaurusPanel',{
 	setExchangeStore:function(store){	
 		this.exchangeStore=store;
 	},
+	setThesauruses:function(thesauruses){
+		this.getStore().removeAll();
+                this.getStore().getProxy().extraParams = thesauruses;
+		this.getStore().load();
+	},
 	xtype: 'thesauruspanel',
 	initComponent: function (arguments){
 		Ext.create('PMDMeta.store.Thesaurus');	
@@ -32,10 +37,6 @@ Ext.define('PMDMeta.view.main.ThesaurusPanel',{
                                 scope: me,
                                 handler: function(grid, rowIndex){
                                     var elem=grid.getStore().getAt(rowIndex);
-//                                    var thesaurusstore=Ext.getStore('ThesaurusCombo');
-//                                    var combobox=grid.up('treepanel').down('radio');
-//                                    var thesaurus=combobox.getGroupValue();
-//                                    var thesaurusentity=thesaurusstore.getById(thesaurus);
 				    if (elem.get("keyword").length >0)
 				   	 me.exchangeStore.insert(0,{"subject":elem.get("keyword"),"lang":"en","subjectScheme":elem.get("thesaurusname"),"subjectSchemeURI":elem.get("thesaurusuri")});
                                 }
