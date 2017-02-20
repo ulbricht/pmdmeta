@@ -223,7 +223,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 			},{
 				xtype: 'panel',
 				frame: true,
-      	                        title: 'Analogue Models',
+      	                        title: 'Rock Physics',
 				layout: {type: 'hbox'},
 				items:[{
 						xtype: 'DataCite-SubjectsGCMD1',
@@ -250,7 +250,7 @@ cls: 'PMD-grid-border',
 	      	                       		 title: '',
 						frame: false
 				}]
-			},{
+			}/*,{
 				xtype: 'panel',
 				frame: true,
       	                        title: 'Analogue Models - Experimental Setup',
@@ -280,7 +280,7 @@ cls: 'PMD-grid-border',
 	      	                       		 title: '',
 						frame: false
 				}]
-			},{
+			}*/,{
 				xtype: 'DataCite-Subjects',
                                 title: 'Free Keywords (Supply as many keywords as you want)'
 			},{                            
