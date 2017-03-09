@@ -1,12 +1,15 @@
 <?php
 
-//used to temporarily store xml data for download
-error_log("\nin metastore\n", 3, "/var/www/html/pmdmeta/php_logfile.log");
+//write xml data to file
+error_log("\nin write_to_file\n", 3, "/var/www/html/pmdmeta/php_logfile.log");
 session_start();
 //error_log($_POST['storedata'], 3, "/var/www/html/pmdmeta/php_logfile.log");
-if (isset($_POST) && isset($_POST['storedata'])){
-    $_SESSION['storedata']=$_POST['storedata'];
-    error_log($_SESSION['storedata'], 3, "/var/www/html/pmdmeta/php_logfile.log");
+if (isset($_POST) && isset($_POST['storedata']) && isset($_POST['file'])){
+    $data=$_POST['storedata'];
+    $fname=$_POST['file'];
+    $file = fopen($fname, 'w');//creates new file
+    fwrite($file, $data);
+    fclose($file); 
 }else{
  
     if (isset($_GET) && isset($_GET['file']) && strlen(isset($_GET['file']))>0)

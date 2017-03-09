@@ -6,6 +6,10 @@
  * TODO - Replace this content of this view to suite the needs of your application.
  */
 
+// Determine if the form is editable 
+var urlparameter=Ext.Object.fromQueryString(location.search.substring(1));
+var disabled = (urlparameter.editable == 'False');
+
 Ext.define('PMDMeta.view.main.DataCiteForm', {
     extend: 'Ext.form.Panel',
     requires: [
@@ -85,6 +89,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                 var resOptTitleStore=Ext.getStore('DataCiteResourceOptAndTitle');
                 var titleStore=Ext.getStore('DataCiteTitle');
                 var resOptStore=Ext.getStore('DataCiteResourceOpt');
+
 
 
                 //distribute values to associated stores
@@ -174,11 +179,13 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                 resOptStore.on('clear',function (){resOptTitleStore.removeAll()});
                 this.callParent();   		
 	},
+
 	items:[         {
 				xtype: 'panel',
 				height: 182,
 				frame: true,
-				title: 'Resource Information',
+				title: 'Nevilles Resource Information',
+                disabled: disabled,
 				items:[
                                     {
 					xtype: 'DataCite-Resource'
@@ -190,26 +197,33 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                                     }
                                 ]
 			},{
+                disabled: disabled,
 				xtype: 'DataCite-Rights',
 				title: 'Licenses and Rights'
 			},{
+                disabled: disabled,
 				xtype: 'DataCite-Authors',
 				title: 'Authors (Persons and/or Institutions)'
 			},{
+                disabled: disabled,
 				xtype: 'isoviewDatasetContact',
 				title: 'Contact Person(s) / Point of Contact'
 			},{
+                disabled: disabled,
 				xtype: 'DataCite-Contributors',
 				title: 'Contributors (Persons and/or Institutions)'
 			},/*{
 				xtype: 'DataCite-Titles',
                                 hidden:true
 			},*/{
+                disabled: disabled,
 				xtype: 'DataCite-Descriptions'
 			},{
+                disabled: disabled,
 				xtype: 'DataCite-SubjectsGCMD',
                                 title: 'Thesaurus Keywords (Choose at least one keyword from each thesaurus)'
 			},{
+                disabled: disabled,
 				xtype: 'DataCite-Subjects',
                                 title: 'Free Keywords (Supply as many keywords as you want)'
 			},{                            
@@ -217,24 +231,30 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 			},{    
 				xtype: 'DataCite-GeoLocations'
 			},{    
-*/				xtype: 'ISO-Extent'
+*/				disabled: disabled,
+                xtype: 'ISO-Extent'
 /*			},{
 				xtype: 'ISO-TemporalCoverage'				    
 */			},{
+                disabled: disabled,
 				xtype: 'DataCite-PMDDates'
 			}/*,{
 				xtype: 'DataCite-Dates',
                                 disabled: false
 			}*/,{
+                disabled: disabled,
 				xtype: 'DataCite-RelatedIdentifiers'				    
 
 			},{
+                disabled: disabled,
 				xtype: 'DataCite-AlternateIdentifiers',
 				hidden:true
-			},{    
+			},{ 
+                disabled: disabled,   
 				xtype: 'DataCite-Sizes',
 				hidden:true
 			},{
+                disabled: disabled,
 				xtype: 'DataCite-Formats',
 				hidden:true
 			},{

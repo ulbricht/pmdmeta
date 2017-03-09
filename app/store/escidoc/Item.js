@@ -184,6 +184,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                        });                          
                   },
                   failure: function(response, opts) {
+                     console.log('response: ' + response.responseText)
                      console.log('server-side failure with status code ' + response.status);
                   }
                });                  

@@ -5,6 +5,8 @@
  *
  * TODO - Replace this content of this view to suite the needs of your application.
  */
+var urlparameter=Ext.Object.fromQueryString(location.search.substring(1));
+var disabled = (urlparameter.editable == 'False');
 Ext.define('PMDMeta.view.main.FileAndVersionForm', {
     extend: 'Ext.container.Container',
     requires: [
@@ -85,7 +87,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     scale: 'large',                                                
                                     text: 'Clear',
                                     tooltip: 'Load default metadata',
-
+                                    disabled: disabled,
                                     handler: function() {
                                         Ext.getStore('Item').loaddata();                                                    
                                     }
@@ -97,9 +99,11 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     hideLabel:true,
                                     msgTarget: 'under',
                                     buttonConfig: {
+                                         disabled: disabled,
                                          scale: 'large'
                                     },                                           
                                     buttonText: 'Load',
+
                                     listeners:{
                                         change: function( elem, value, eOpts ) {
                                             var form = elem.up('form').getForm();
@@ -169,6 +173,37 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                            }            
                                         });   
                                     }
+                                    },{
+                                    xtype: 'button',
+                                    scale: 'large',                                                
+                                    text: 'Commit',
+                                    tooltip: 'Commit metadata changes',
+                                    disabled: disabled,
+                                    handler: function() {    
+                                        var xml=Ext.getStore('Item').marshal();
+                                        var item=Ext.getStore('Item').getAt(0);
+                                        if (!item) return;
+                                        var itemhref=item.get("href");
+                                        //var itemdir=itemhref.substr(0,itemhref.lastIndexOf("/")+1);
+                                        //var itemfile=itemhref.substr(itemhref.lastIndexOf("/")+1,itemhref.length-1);
+                                        var commit_file=itemhref;//itemdir+"commit_"+itemfile;
+
+                                        Ext.Ajax.request({
+                                            url: 'resources/upload/write_to_file.php',  
+                                            method: 'POST',
+                                            params:{
+                                                storedata: xml,
+                                                file: commit_file
+                                            },                                                        
+                                            success: function(response, opts) {
+                                                alert("XML committed to file " + commit_file);
+                                            },
+                                            failure: function(response, opts) {
+                                                alert("XML FAILED to commit to file " + commit_file);
+                                              console.log('server-side failure with status code ' + response.status);
+                                            }            
+                                        });   
+                                    }
                                 },{
                                     xtype: 'button',
                                     scale: 'large',                                                
@@ -183,6 +218,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     xtype: 'button',
                                     scale: 'large',                                                
                                     text: 'Submit',
+                                    disabled: true,
                                     handler: function() {	  
                                         var xml=Ext.getStore('Item').marshal();
                                         Ext.Ajax.request({

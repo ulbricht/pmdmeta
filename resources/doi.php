@@ -28,9 +28,9 @@
     require_once ("Net/URL.php");
     use \Net_URL;
     
- session_start();         
- 
-    
+ session_start();     
+
+    echo json_encode(array("session"=>$_SESSION));
 try{
     
     
