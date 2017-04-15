@@ -1,10 +1,10 @@
-Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
+Ext.define('PMDMeta.store.datacite.SubjectGCMD6', {
     extend: 'Ext.data.Store',
     model:  'PMDMeta.model.datacite.ThesaurusSubject',
-    storeId: 'DataCiteSubjectGCMD',
-    subjectScheme: ['NASA/GCMD Earth Science Keywords','GEMET - INSPIRE themes, version 1.0'],
+    storeId: 'DataCiteSubjectGCMD6',
+    subjectScheme: 'EPOS WP16 Analogue Apparatus',
     isvalidscheme: function(subjectScheme){
-	return (this.subjectScheme.indexOf(subjectScheme)>=0);
+	return (subjectScheme==this.subjectScheme);
     },
     proxy:{
             type: 'memory',
@@ -30,12 +30,15 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
 
         var gcmds=new Array();
         var gemets=new Array();
-        
+        var eposwp16s=new Array();
+var me=this;        
         this.each(function(elem){
-            if (elem.get('subjectScheme')=='NASA/GCMD Earth Science Keywords')
+            if (elem.get('subjectScheme')=='GCMD')
                 gcmds.push(elem);
-            else if (elem.get('subjectScheme')=='GEMET - INSPIRE themes, version 1.0')
+            else if (elem.get('subjectScheme')=='GEMET')
                 gemets.push(elem);
+	    else if (elem.get('subjectScheme')==me.subjectScheme)
+                eposwp16s.push(elem);
         })
         
         var gcmd='<gmd:thesaurusName>';
@@ -76,6 +79,24 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
         gemet+='</gmd:CI_Citation>';
         gemet+='</gmd:thesaurusName>';
 
+        var eposwp16='<gmd:thesaurusName>';
+        eposwp16+='<gmd:CI_Citation>';
+        eposwp16+='<gmd:title>';
+        eposwp16+='<gco:CharacterString>'+this.subjectScheme+'</gco:CharacterString>';
+        eposwp16+='</gmd:title>';
+        eposwp16+='<gmd:date>';
+        eposwp16+='<gmd:CI_Date>';
+        eposwp16+='<gmd:date>';
+        eposwp16+='<gco:Date>2016-08-31</gco:Date>';
+        eposwp16+='</gmd:date>';
+        eposwp16+='<gmd:dateType>';
+        eposwp16+='<gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" >publication</gmd:CI_DateTypeCode>';
+        eposwp16+='</gmd:dateType>';
+        eposwp16+='</gmd:CI_Date>';
+        eposwp16+='</gmd:date>';
+        eposwp16+='</gmd:CI_Citation>';
+        eposwp16+='</gmd:thesaurusName>';
+
         var ret="";
         
         if (gemets.length>0){
@@ -100,7 +121,16 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
             ret+='</gmd:descriptiveKeywords>';
         }
 
-
+        if (eposwp16s.length>0){
+            ret+='<gmd:descriptiveKeywords>';
+            ret+='<gmd:MD_Keywords>';
+            Ext.each(eposwp16s, function(keyword){
+                ret+=keyword.asISOXML();
+            });
+            ret+=eposwp16;            
+            ret+='</gmd:MD_Keywords>';
+            ret+='</gmd:descriptiveKeywords>';
+        }
 
        return ret;
         
@@ -111,9 +141,9 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
         var gemets=new Array();
         
         this.each(function(elem){
-            if (elem.get('subjectScheme')=='NASA/GCMD Earth Science Keywords')
+            if (elem.get('subjectScheme')=='GCMD')
                 gcmds.push(elem);
-            else if (elem.get('subjectScheme')=='GEMET - INSPIRE themes, version 1.0')
+            else if (elem.get('subjectScheme')=='GEMET')
                 gemets.push(elem);
         }) 
         

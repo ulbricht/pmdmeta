@@ -11,6 +11,11 @@ Ext.define('PMDMeta.view.main.ThesaurusWindow',{
 	],
 	setExchangeStore:function(store){
 		this.down("thesauruspanel").setExchangeStore(store);
+	},
+	setThesauruses:function(thesauruses){
+		this.down("thesauruspanel").setThesauruses(thesauruses);
+	},
+	setWalktreeup:function(walktreeup){
+		this.down("thesauruspanel").setWalktreeup(walktreeup);
 	}
-
 });

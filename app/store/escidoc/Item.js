@@ -14,7 +14,10 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                                 'DataCiteAuthor','DataCiteTitle','DataCiteAlternateIdentifier','DataCiteSubject',
                                 'DataCiteSize','DataCiteDate','DataCiteRight','DataCiteResourceOpt','DataCiteResource',
                                 'DataCiteRelatedIdentifier','DataCiteGeoLocation','DataCiteFormat','DataCiteDescription',
-                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD'
+                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD','DataCiteSubjectGCMD1','DataCiteSubjectGCMD2',
+				'DataCiteSubjectGCMD3','DataCiteSubjectGCMD4','DataCiteSubjectGCMD5','DataCiteSubjectGCMD6',
+				'DataCiteSubjectGCMD7','DataCiteSubjectGCMD8','DataCiteSubjectGCMD9',
+				'DataCiteSubjectGCMD10','DataCiteSubjectGCMD11','DataCiteSubjectGCMD12'
                             //ISO    
                             ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent',
                             'difSpatialCoverage','difProject'
@@ -24,7 +27,11 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                                 'DataCiteAuthor','DataCiteTitle','DataCiteAlternateIdentifier','DataCiteSubject',
                                 'DataCiteSize','DataCiteDate','DataCiteRight','DataCiteResourceOpt','DataCiteResource',
                                 'DataCiteRelatedIdentifier'/*,'DataCiteGeoLocation'*/,'DataCiteFormat','DataCiteDescription',
-                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD','DataCiteResourceOptAndTitle'
+                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD','DataCiteSubjectGCMD1','DataCiteSubjectGCMD2',
+				'DataCiteSubjectGCMD3','DataCiteSubjectGCMD4','DataCiteSubjectGCMD5','DataCiteSubjectGCMD6',
+				'DataCiteSubjectGCMD7','DataCiteSubjectGCMD8','DataCiteSubjectGCMD9',
+				'DataCiteSubjectGCMD10','DataCiteSubjectGCMD11','DataCiteSubjectGCMD12',
+				'DataCiteResourceOptAndTitle'
                             //ISO    
                             ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent'
                            ),
@@ -307,7 +314,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
             })
         }
         contributorstore.remove(delcontrib);
-        
+/*        
        var delkeywords=new Array();
         Ext.getStore('DataCiteSubjectGCMD').each(function(keyword){
            var subject=keyword.get('subject');
@@ -315,7 +322,23 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                 delkeywords.push(keyword);   
         });
         Ext.getStore('DataCiteSubjectGCMD').remove(delkeywords);
-        
+*/        
+        var wp16stores=new Array('DataCiteSubjectGCMD','DataCiteSubjectGCMD1','DataCiteSubjectGCMD2',
+				'DataCiteSubjectGCMD3','DataCiteSubjectGCMD4','DataCiteSubjectGCMD5','DataCiteSubjectGCMD6',
+				'DataCiteSubjectGCMD7','DataCiteSubjectGCMD8','DataCiteSubjectGCMD9',
+				'DataCiteSubjectGCMD10','DataCiteSubjectGCMD11','DataCiteSubjectGCMD12');
+
+	Ext.each(wp16stores, function(wp16store){
+		var delkeywords=new Array();
+		var thewp16store=Ext.getStore(wp16store);
+
+		thewp16store.each(function(keyword){
+		 	var subjectscheme=keyword.get('subjectScheme');
+			if (!subjectscheme || !thewp16store.isvalidscheme(subjectscheme))
+				delkeywords.push(keyword);   
+		});
+		thewp16store.remove(delkeywords);
+	});
 
        //points only have "min"-Values
         var extentstore=Ext.getStore('isoExtent'); 
@@ -638,6 +661,18 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         iso+=datasetcontact.asXML();
         iso+=Ext.getStore('DataCiteSubject').asISOXML();
         iso+=Ext.getStore('DataCiteSubjectGCMD').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD1').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD2').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD3').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD4').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD5').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD6').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD7').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD8').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD9').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD10').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD11').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD12').asISOXML();
         iso+=Ext.getStore('DataCiteRight').asISOXML();        
         iso+=identificationinfo.asXML('language');
         iso+=identificationinfo.asXML('isotopic');
@@ -666,10 +701,10 @@ Ext.define('PMDMeta.store.escidoc.Item', {
     dif+=Ext.getStore('DataCiteResource').asDifXML('publisher');
     dif+=Ext.getStore('DataCiteResource').asDifXML('identifierlink');  
     dif+='</dif:Data_Set_Citation>'
-    dif+=Ext.getStore('DataCiteSubjectGCMD').asDifXML('scienceparamenters');
+//    dif+=Ext.getStore('DataCiteSubjectGCMD').asDifXML('scienceparamenters');
     dif+='<dif:ISO_Topic_Category>geoscientificInformation</dif:ISO_Topic_Category>'
-    dif+=Ext.getStore('DataCiteSubjectGCMD').asDifXML('keyword');
-    dif+=Ext.getStore('DataCiteSubject').asDifXML('keyword');
+//    dif+=Ext.getStore('DataCiteSubjectGCMD').asDifXML('keyword');
+//    dif+=Ext.getStore('DataCiteSubject').asDifXML('keyword');
     dif+=Ext.getStore('isoExtent').asDifXML(); 
     dif+=Ext.getStore('difProject').asDifXML();    
     dif+='<dif:Data_Center>';

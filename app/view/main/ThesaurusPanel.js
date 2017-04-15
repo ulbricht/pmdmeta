@@ -8,6 +8,14 @@ Ext.define('PMDMeta.view.main.ThesaurusPanel',{
 	setExchangeStore:function(store){	
 		this.exchangeStore=store;
 	},
+	setThesauruses:function(thesauruses){
+		this.getStore().removeAll();
+                this.getStore().getProxy().extraParams = thesauruses;
+		this.getStore().load();
+	},
+	setWalktreeup: function(walktreeup){
+		this.walktreeup=walktreeup;
+	},
 	xtype: 'thesauruspanel',
 	initComponent: function (arguments){
 		Ext.create('PMDMeta.store.Thesaurus');	
@@ -15,6 +23,7 @@ Ext.define('PMDMeta.view.main.ThesaurusPanel',{
 		var me=this;
 		
 		Ext.apply(this,{
+		    walktreeup: true,
 		    width: 600,
 		    height: 500,
 		    rootVisible: false,
@@ -32,12 +41,15 @@ Ext.define('PMDMeta.view.main.ThesaurusPanel',{
                                 scope: me,
                                 handler: function(grid, rowIndex){
                                     var elem=grid.getStore().getAt(rowIndex);
-//                                    var thesaurusstore=Ext.getStore('ThesaurusCombo');
-//                                    var combobox=grid.up('treepanel').down('radio');
-//                                    var thesaurus=combobox.getGroupValue();
-//                                    var thesaurusentity=thesaurusstore.getById(thesaurus);
-				    if (elem.get("keyword").length >0)
-				   	 me.exchangeStore.insert(0,{"subject":elem.get("keyword"),"lang":"en","subjectScheme":elem.get("thesaurusname"),"subjectSchemeURI":elem.get("thesaurusuri")});
+
+				    while (elem && elem.get && elem.get("keyword")){
+				        if (elem.get("keyword").length >0)
+					   me.exchangeStore.insert(0,{"subject":elem.get("keyword"),"lang":"en","subjectScheme":elem.get("thesaurusname"),"subjectSchemeURI":elem.get("thesaurusuri")});
+					if (me.walktreeup)
+						elem=elem.parentNode;
+					else
+						elem=false;
+				   }
                                 }
                             }]
 			}

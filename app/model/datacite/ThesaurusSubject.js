@@ -17,14 +17,18 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
                     var gcmd1=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(NASA/Global Change Master Directory)',descriptivekeywords);                     
                     var gcmd2=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(GCMD)',descriptivekeywords);                     
                     var gcmd3=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(Earth Science Keywords)',descriptivekeywords);                                         
-                    if (gcmd1 && gcmd2 && gcmd3)
-                        return "GCMD";                    
+                    if (gcmd1 && gcmd2 && gcmd3){
+			var title=Ext.DomQuery.selectNode('gmd|title',gcmd3);
+                        return title.firstChild.textContent;
+		    }
                     var gemet=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(GEMET - INSPIRE themes)',descriptivekeywords);                     
                     if (gemet)
                         return "GEMET";
                     var epos=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(EPOS WP16)',descriptivekeywords);                     
-                    if (epos)
-                        return "EPOS WP16";                    
+                    if (epos){
+			var title=Ext.DomQuery.selectNode('gmd|title',epos);
+                        return title.firstChild.textContent;
+		    }
                     return "";
                 }},
 		{name: 'subjectSchemeURI',   type: 'string', mapping:function(data){
