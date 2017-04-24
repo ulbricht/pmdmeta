@@ -9,7 +9,7 @@
 // Determine if the form is editable 
 var urlparameter=Ext.Object.fromQueryString(location.search.substring(1));
 var disabled = (urlparameter.editable == 'False');
-
+var dataset = urlparameter.dataset;
 Ext.define('PMDMeta.view.main.DataCiteForm', {
     extend: 'Ext.form.Panel',
     requires: [
@@ -46,7 +46,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
     ],
 
 	xtype: 'DataCite-Form',
-	title: 'DataCite Metadata',
+	title: 'DataCite Metadata for Dataset: ' + dataset,
 	autoScroll: true,
 	bodyPadding: 10,
 	defaults:{margin: '0 0 10 0'},   
@@ -184,7 +184,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 				xtype: 'panel',
 				height: 182,
 				frame: true,
-				title: 'Nevilles Resource Information',
+				title: 'Resource Information',
                 disabled: disabled,
 				items:[
                                     {

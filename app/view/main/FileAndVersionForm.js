@@ -176,31 +176,39 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     },{
                                     xtype: 'button',
                                     scale: 'large',                                                
-                                    text: 'Commit',
-                                    tooltip: 'Commit metadata changes',
+                                    text: 'Save',
+                                    tooltip: 'Save metadata changes',
                                     disabled: disabled,
                                     handler: function() {    
                                         var xml=Ext.getStore('Item').marshal();
                                         var item=Ext.getStore('Item').getAt(0);
                                         if (!item) return;
-                                        var itemhref=item.get("href");
-                                        //var itemdir=itemhref.substr(0,itemhref.lastIndexOf("/")+1);
-                                        //var itemfile=itemhref.substr(itemhref.lastIndexOf("/")+1,itemhref.length-1);
-                                        var commit_file=itemhref;//itemdir+"commit_"+itemfile;
+                                        var save_file=item.get("href");
 
                                         Ext.Ajax.request({
                                             url: 'resources/upload/write_to_file.php',  
                                             method: 'POST',
                                             params:{
                                                 storedata: xml,
-                                                file: commit_file
-                                            },                                                        
+                                                file: save_file
+                                            }, 
                                             success: function(response, opts) {
-                                                alert("XML committed to file " + commit_file);
-                                            },
+                                                    Ext.Msg.show({
+                                                        title: 'Save Metadata',
+                                                        msg: 'Metadata successfully saved.',
+                                                        icon: Ext.Msg.INFO,
+                                                        buttons: Ext.Msg.OK
+                                                    });
+                                            },                                                       
                                             failure: function(response, opts) {
-                                                alert("XML FAILED to commit to file " + commit_file);
-                                              console.log('server-side failure with status code ' + response.status);
+
+                                                Ext.Msg.show({
+                                                    title: 'Save Error',
+                                                    msg: 'Failed to save metadata. Please use the Save As option to save the XML file and send it to hub@iedadata.org',
+                                                    icon: Ext.Msg.ERROR,
+                                                    buttons: Ext.Msg.OK
+                                                });
+                                                console.log('server-side failure with status code ' + response.status);
                                             }            
                                         });   
                                     }
@@ -208,8 +216,8 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     xtype: 'button',
                                     scale: 'large',                                                
                                     text: 'Sync',
-				    id:   'syncbutton',
-//hidden: true,
+				                    id:   'syncbutton',
+                                    //hidden: true,
                                     tooltip: 'Sync data to eSciDoc repository',
                                     handler: function() {	  
                                             Ext.getStore('Item').synccontent();
@@ -218,34 +226,39 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     xtype: 'button',
                                     scale: 'large',                                                
                                     text: 'Submit',
-                                    disabled: true,
-                                    handler: function() {	  
-                                        var xml=Ext.getStore('Item').marshal();
+                                    disabled: disabled,
+                                    handler: function() {
+                                        var xml=Ext.getStore('Item').marshal();	  
+                                        var item=Ext.getStore('Item').getAt(0);
+                                        if (!item) return;
+                                        var meta_file=item.get("href");
                                         Ext.Ajax.request({
-                                            url: 'resources/upload/submitmail.php',	
+                                            url: 'resources/upload/submit.php',	
                                             method: 'POST',
                                             params:{
-                                                mailcontent: xml
+                                                storedata: xml,
+                                                file: meta_file
                                             },                                                        
                                             success: function(response, opts) {
-                                                var responseData = Ext.decode(response.responseText);
-                                                if(!responseData.success) {
-                                                    Ext.Msg.show({
-                                                        title: 'Submit mail',
-                                                        msg: 'Submission failed. Please save the XML file and send it via mail.',
-                                                        icon: Ext.Msg.ERROR,
-                                                        buttons: Ext.Msg.OK
-                                                    });
-                                                }else{
-                                                    Ext.Msg.show({
-                                                        title: 'Submit mail',
-                                                        msg: 'Submission mail sent successfully.',
+                                                Ext.Msg.show({
+                                                    title: 'Submit',
+                                                    msg: 'Metadata successfully submitted.',
+                                                    icon: Ext.Msg.INFO,
+                                                    buttons: Ext.Msg.OK,
+                                                    fn: function(btn, text){
+                                                    if (btn === 'ok'){                                        
+                                                        window.location.href='?object='+meta_file+'&editable=False';                                  
+                                                    }
+                                                }
+                                                });    
+                                            },
+                                            failure: function(response, opts) {
+                                                Ext.Msg.show({
+                                                        title: 'Submit',
+                                                        msg: 'Metadata submission unsuccessful. Please email hub@iedadata.org',
                                                         icon: Ext.Msg.INFO,
                                                         buttons: Ext.Msg.OK
                                                     });
-                                                }
-                                            },
-                                            failure: function(response, opts) {
                                               console.log('server-side failure with status code ' + response.status);
                                             }            
                                         });                                                                
