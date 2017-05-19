@@ -15,11 +15,6 @@
     <xsl:template match="*[local-name()='resource']">
 
 
-	<xsl:call-template name="check">
-		<xsl:with-param name="entity" select="./*[local-name()='identifier' and starts-with(.,'10.')]"/>
-		<xsl:with-param name="errmsg">DOI is missing or in wrong format (must start with "10.") </xsl:with-param>
-		<xsl:with-param name="class">error</xsl:with-param>
-	</xsl:call-template>
 
 	<xsl:call-template name="check">
 		<xsl:with-param name="entity" select="./*[local-name()='publisher']"/>
@@ -45,11 +40,11 @@
 		<xsl:with-param name="class">error</xsl:with-param>		
 	</xsl:call-template >
 
-	<xsl:call-template name="check">
+<!-- 	<xsl:call-template name="check">
 		<xsl:with-param name="entity"  select="./*[local-name()='rightsList']/*[local-name()='rights']"/>
 		<xsl:with-param name="errmsg">License is missing!</xsl:with-param>
 		<xsl:with-param name="class">error</xsl:with-param>
-	</xsl:call-template>
+	</xsl:call-template> -->
 
 	<xsl:call-template name="check">
 		<xsl:with-param name="entity" select="./*[local-name()='creators']/*[local-name()='creator']/*[local-name()='creatorName']"/>
@@ -81,7 +76,7 @@
 	</xsl:call-template>
 	</xsl:for-each>
 
-	<xsl:call-template name="check">
+<!-- 	<xsl:call-template name="check">
 		<xsl:with-param name="entity" select="./*[local-name()='descriptions']/*[local-name()='description']"/>
 		<xsl:with-param name="errmsg">Abstract is missing!</xsl:with-param>
 		<xsl:with-param name="class">error</xsl:with-param>
@@ -91,7 +86,7 @@
 		<xsl:with-param name="entity" select="./*[local-name()='subjects']/*[local-name()='subject']"/>
 		<xsl:with-param name="errmsg">Please provide Keywords!</xsl:with-param>
 		<xsl:with-param name="class">error</xsl:with-param>
-	</xsl:call-template>
+	</xsl:call-template> -->
 
 
     </xsl:template>

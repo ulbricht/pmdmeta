@@ -32,14 +32,13 @@ Ext.define('PMDMeta.view.datacite.Resource', {
                 header: 'DOI (will be generated in the publishing process)',
                 dataIndex: 'identifier',
                 flex: 1,    
-		sortable: false,		
+		        sortable: false,	
                 menuDisabled: true,			    
                 editor: {
-                    allowBlank: false
+                    disabled: true
                 },
                 renderer: function(value, metaData, record, rowIdx, colIdx, store) {
                     var qtip="The DOI is a unique string that identifies a resource.";
-                    qtip+=" Format should be <b>10.5880/GFZ.</b>";
                     metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
                     return value;
                 }
@@ -58,10 +57,10 @@ Ext.define('PMDMeta.view.datacite.Resource', {
                 header: 'Publisher',
                 dataIndex: 'publisher',
                 flex: 1, 
-		sortable: false,		
+		        sortable: false,		
                 menuDisabled: true,			    
                 editor: new PMDMeta.view.main.ComboBox({
-		    store: 'PublisherCombo',
+		        store: 'PublisherCombo',
                     editable: true                  
 		}),
                 renderer: function(value, metaData, record, rowIdx, colIdx, store) {
@@ -78,7 +77,6 @@ Ext.define('PMDMeta.view.datacite.Resource', {
 		sortable: false,		
                 menuDisabled: true,			    
                 editor: new Ext.form.field.Text({
-                    allowBlank: false,
                     vtype: 'DataCitePublicationYear'
                 }),
                 renderer: function(value, metaData, record, rowIdx, colIdx, store) {

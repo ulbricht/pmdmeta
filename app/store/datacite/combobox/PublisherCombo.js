@@ -3,9 +3,10 @@ Ext.define('PMDMeta.store.datacite.combobox.PublisherCombo', {
     model:  'PMDMeta.model.Combobox',
     storeId: 'PublisherCombo',
     data: [
-			{abbr:'GFZ Data Services',name:'GFZ Data Services'},
-			{abbr:'GFZ German Research Center for Geosciences',name:'GFZ German Research Center for Geosciences'},
-			{abbr:'Deutsches GeoForschungsZentrum GFZ',name:'Deutsches GeoForschungsZentrum GFZ'}
+			{abbr:'IEDA Hub',name:'IEDA Hub'},
+			{abbr:'ECL',name:'EarthChem Library'},
+			{abbr:'MGDS',name:'Marine Geoscience Data System'},
+			{abbr:'USAP-DC',name:'United States Antarctic Program Data Center'}
 
 ]});			
 

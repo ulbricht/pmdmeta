@@ -7,6 +7,10 @@
  */
 var urlparameter=Ext.Object.fromQueryString(location.search.substring(1));
 var disabled = (urlparameter.editable == 'False');
+var dataset = urlparameter.dataset;
+var curator_id = urlparameter.curator_id;
+var submitText = curator_id == "" ? "Submit" : "Send to Submitter";
+
 Ext.define('PMDMeta.view.main.FileAndVersionForm', {
     extend: 'Ext.container.Container',
     requires: [
@@ -225,7 +229,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                 },{
                                     xtype: 'button',
                                     scale: 'large',                                                
-                                    text: 'Submit',
+                                    text: submitText,
                                     disabled: disabled,
                                     handler: function() {
                                         var xml=Ext.getStore('Item').marshal();	  
@@ -237,7 +241,8 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                             method: 'POST',
                                             params:{
                                                 storedata: xml,
-                                                file: meta_file
+                                                file: meta_file, 
+                                                curator_id: curator_id
                                             },                                                        
                                             success: function(response, opts) {
                                                 Ext.Msg.show({
@@ -247,7 +252,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                                     buttons: Ext.Msg.OK,
                                                     fn: function(btn, text){
                                                     if (btn === 'ok'){                                        
-                                                        window.location.href='?object='+meta_file+'&editable=False';                                  
+                                                        window.location.href='?object='+meta_file+'&editable=False'+'&curator_id='+curator_id+'&dataset='+dataset;                                  
                                                     }
                                                 }
                                                 });    

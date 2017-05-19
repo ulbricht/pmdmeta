@@ -271,19 +271,19 @@ Ext.define('PMDMeta.view.main.Main', {
         var helpformular=new Ext.Action({
                         text: 'Help on formular',
                         handler: function(){
-                            window.open("resources/pdf/GFZ-Metadata-Editor_functionality_20161002.pdf","_blank");
+                            window.open("http://dataservices.gfz-potsdam.de/panmetaworks/metaedit/resources/pdf/GFZ-Metadata-Editor_functionality_20161002.pdf","_blank");
                         }
                     });
         var helpmetadatafields=new Ext.Action({
                         text: 'Help on metadata fields',
                         handler: function(){
-                            window.open("resources/pdf/Metadata-Form-Documentation_20161002.pdf","_blank");
+                            window.open("http://dataservices.gfz-potsdam.de/panmetaworks/metaedit/resources/pdf/Metadata-Form-Documentation_20161002.pdf","_blank");
                         }
                     });  
         var quickstart=new Ext.Action({
                         text: 'Quick Start Guide',
                         handler: function(){
-                            window.open("resources/pdf/Quick-Start-Guide-fo-Data-Publications-GFZ-Data-Services.pdf","_blank");
+                            window.open("http://dataservices.gfz-potsdam.de/panmetaworks/metaedit/resources/pdf/Quick-Start-Guide-fo-Data-Publications-GFZ-Data-Services.pdf","_blank");
                         }
                     });                   
         

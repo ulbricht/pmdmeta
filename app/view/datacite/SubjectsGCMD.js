@@ -11,9 +11,9 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
         'Ext.data.*',
         'Ext.util.*',
         'Ext.form.*',
-	'PMDMeta.model.datacite.Subject',
+	    'PMDMeta.model.datacite.Subject',
         'PMDMeta.store.datacite.SubjectGCMD',
-	'PMDMeta.view.main.ComboBox'
+	    'PMDMeta.view.main.ComboBox'
     ],
     xtype: 'DataCite-SubjectsGCMD',
     title: 'NASA GCMD Science Keywords',
@@ -21,6 +21,7 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
     layout: 'fit',
     modelname: 'PMDMeta.model.datacite.Subject',
     initComponent: function() {
+
         this.cellEditing = new Ext.grid.plugin.CellEditing({
             clicksToEdit: 1
         });

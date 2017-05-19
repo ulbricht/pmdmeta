@@ -48,7 +48,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 	xtype: 'DataCite-Form',
 	title: 'DataCite Metadata for Dataset: ' + dataset,
 	autoScroll: true,
-	bodyPadding: 10,
+	bodyPadding: 0,
 	defaults:{margin: '0 0 10 0'},   
 	layout:  {type: 'vbox', align: 'stretch'},
 	initComponent: function() {
