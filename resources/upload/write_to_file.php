@@ -32,6 +32,7 @@ if (isset($_POST) && isset($_POST['storedata']) && isset($_POST['file'])){
 
 function saveMetadata($data, $fname){
     error_log("\nsaving\n", 3, "/var/www/html/pmdmeta/php_logfile.log");
+    error_log($fname, 3, "/var/www/html/pmdmeta/php_logfile.log");
     $file = fopen($fname, 'w');//creates new file
     fwrite($file, $data);
     fclose($file); 

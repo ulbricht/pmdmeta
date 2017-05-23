@@ -183,10 +183,18 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     text: 'Save',
                                     tooltip: 'Save metadata changes',
                                     disabled: disabled,
-                                    handler: function() {    
+                                    handler: function() {   
                                         var xml=Ext.getStore('Item').marshal();
                                         var item=Ext.getStore('Item').getAt(0);
-                                        if (!item) return;
+                                        if (!item) {
+                                            Ext.Msg.show({
+                                                title: 'Save Error',
+                                                msg: 'Failed to save metadata. Please use the Save As option to save the XML file and send it to hub@iedadata.org',
+                                                icon: Ext.Msg.ERROR,
+                                                buttons: Ext.Msg.OK
+                                            });
+                                            return;
+                                        }
                                         var save_file=item.get("href");
 
                                         Ext.Ajax.request({
@@ -234,7 +242,15 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     handler: function() {
                                         var xml=Ext.getStore('Item').marshal();	  
                                         var item=Ext.getStore('Item').getAt(0);
-                                        if (!item) return;
+                                        if (!item) {
+                                            Ext.Msg.show({
+                                                title: 'Submit Error',
+                                                msg: 'Failed to submit metadata. Please use the Save As option to save the XML file and send it to hub@iedadata.org',
+                                                icon: Ext.Msg.ERROR,
+                                                buttons: Ext.Msg.OK
+                                            });
+                                            return;
+                                        }
                                         var meta_file=item.get("href");
                                         Ext.Ajax.request({
                                             url: 'resources/upload/submit.php',	

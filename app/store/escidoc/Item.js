@@ -34,6 +34,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         var store=Ext.getStore('Item');
         if (!store.changefuncon)
             return;
+
         var xml=store.marshal();
         var elem=store.getAt(0);
         if (!elem || elem.get('local')!=xml){
