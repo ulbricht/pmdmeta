@@ -238,6 +238,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     xtype: 'button',
                                     scale: 'large',                                                
                                     text: submitText,
+                                    tooltip: 'Submit the metadata form',
                                     disabled: disabled,
                                     handler: function() {
                                         var xml=Ext.getStore('Item').marshal();	  
@@ -298,6 +299,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
 					xtype: 'button',
 					scale: 'large',
 					text: 'Form Errors',
+                    tooltip: 'Validate the metadata form',
 					handler: function(){
 						if (!me.validationwindow)
 							me.validationwindow=Ext.create("PMDMeta.view.main.ValidationWindow");

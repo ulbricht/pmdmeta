@@ -122,7 +122,6 @@ Ext.define('PMDMeta.store.escidoc.Item', {
     },  
     loaddata: function(data){
 	var me=this;
- 
         var item=new PMDMeta.model.escidoc.Item(data);
  
         var href=false;
