@@ -245,17 +245,26 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                                 curator_id: curator_id
                                             },                                                        
                                             success: function(response, opts) {
-                                                Ext.Msg.show({
-                                                    title: 'Submit',
-                                                    msg: 'Metadata successfully submitted.',
-                                                    icon: Ext.Msg.INFO,
-                                                    buttons: Ext.Msg.OK,
-                                                    fn: function(btn, text){
-                                                    if (btn === 'ok'){                                        
-                                                        window.location.href='?object='+meta_file+'&editable=False'+'&curator_id='+curator_id+'&dataset='+dataset;                                  
+
+                                                var responseData = Ext.decode(response.responseText);
+                                                if (!responseData.validated) {
+                                                    if (!me.validationwindow)
+                                                        me.validationwindow=Ext.create("PMDMeta.view.main.ValidationWindow");
+                                                    me.validationwindow.show();
+                                                } else {
+
+                                                    Ext.Msg.show({
+                                                        title: 'Submit',
+                                                        msg: 'Metadata successfully submitted.',
+                                                        icon: Ext.Msg.INFO,
+                                                        buttons: Ext.Msg.OK,
+                                                        fn: function(btn, text){
+                                                        if (btn === 'ok'){                                        
+                                                            window.location.href='?object='+meta_file+'&editable=False'+'&curator_id='+curator_id+'&dataset='+dataset;                                  
+                                                        }
                                                     }
-                                                }
-                                                });    
+                                                    }); 
+                                                }   
                                             },
                                             failure: function(response, opts) {
                                                 Ext.Msg.show({

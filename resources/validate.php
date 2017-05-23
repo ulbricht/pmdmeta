@@ -1,29 +1,30 @@
 <?php
-
-//used to temporarily store xml data for download
+error_log("\nin validate.php", 3, "/var/www/html/pmdmeta/php_logfile.log"); 
 try{
-
-	$xml=new DOMDocument(); 
-	$xml->loadXML($_POST['validationdata']); 
-	$xsl = new XSLTProcessor();    
-        $xsldom=new DOMDocument();
-        $xsldom->load("checkentries.xslt");
-        $xsl->importStyleSheet($xsldom);    
-        $validationresult=$xsl->transformToXML($xml);
-
-        $validated = true;
-        if (strpos($validationresult, 'class="error"') !== false) {
-        	$validated = false;
-        }  
-        error_log("\nsuccess: true", 3, "/var/www/html/pmdmeta/php_logfile.log"); 
-        error_log("\n$validationresult", 3, "/var/www/html/pmdmeta/php_logfile.log"); 
-        error_log("\n$validated", 3, "/var/www/html/pmdmeta/php_logfile.log");     
-	echo json_encode(array("success"=>true, "message"=>$validationresult), "validated"=>validated);
+    if (isset($_POST) && isset($_POST['validationdata'])){
+        validateForm($_POST['validationdata'], "checkentries.xslt") ;
+    }
 }catch (Exception $e){ 
 	error_log("\nsuccess: false", 3, "/var/www/html/pmdmeta/php_logfile.log");  
-    echo json_encode(array("success"=>false, "message"=>$e->getMessage()));                 
+    echo json_encode(array("success"=>false, "message"=>$e->getMessage())); 
+    return false;                
 }
 
+function validateForm($validationdata, $xslfile){
+    $xml=new DOMDocument(); 
+    $xml->loadXML($validationdata);
+    $xsl = new XSLTProcessor();    
+    $xsldom=new DOMDocument();
+    $xsldom->load($xslfile);
+    $xsl->importStyleSheet($xsldom);    
+    $validationresult=$xsl->transformToXML($xml);
 
-
+    $validated = false;
+    if (strpos($validationresult, 'class="error"') === false) {
+        error_log("\nno errors", 3, "/var/www/html/pmdmeta/php_logfile.log"); 
+        $validated = true;
+    }  
+    echo json_encode(array("success"=>true, "message"=>$validationresult, "validated"=>$validated));
+    return $validated; 
+}
 ?>

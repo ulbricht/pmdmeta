@@ -79,7 +79,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
 	},   
     listeners:{
  
-        load: function (store){   
+        load: function (store){  
                 var item=store.getAt(0);
                 var itemstore=Ext.getStore('Item'); 
                 
@@ -190,6 +190,12 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                });                  
            }
 
+            Ext.each(store.eventListeningStores, function(storename){
+                Ext.getStore(storename).on('datachanged',store.changefunc);
+                Ext.getStore(storename).on('update',store.changefunc);            
+            });    
+            Ext.getStore('DataCiteContributor').on('datachanged',store.changefunc);
+            Ext.getStore('DataCiteContributor').on('update',store.changefunc);
 
        }      
     },
