@@ -2,15 +2,22 @@
 	include 'write_to_file.php';
 	include '../validate.php';
 
+	ob_start();
+
 	error_log("\nin submit\n", 3, "/var/www/html/pmdmeta/php_logfile.log");
 
-	$data=$_POST['storedata'];
+	$data=$_POST['submitdata'];
 	$meta_file=$_POST['file'];
 	$curator_id = $_POST['curator_id'];
 	//first save the metadata
-	saveMetadata($data, $meta_file);
+	$saved = saveMetadata($data, $meta_file);
+	if ($saved === false) {
+		error_log("\nexiting submit early\n", 3, "/var/www/html/pmdmeta/php_logfile.log");
+		return;
+	}
 
 	//now validate the data
+	ob_end_clean();
 	if (validateForm($data, "../checkentries.xslt") === false) {
 		error_log("\nnot validated\n", 3, "/var/www/html/pmdmeta/php_logfile.log");
 		return;

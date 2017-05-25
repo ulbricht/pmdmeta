@@ -9,6 +9,7 @@ var urlparameter=Ext.Object.fromQueryString(location.search.substring(1));
 var disabled = (urlparameter.editable == 'False');
 var dataset = urlparameter.dataset;
 var curator_id = urlparameter.curator_id;
+var xml_file = urlparameter.object;
 var submitText = curator_id == "" ? "Submit" : "Send to Submitter";
 
 Ext.define('PMDMeta.view.main.FileAndVersionForm', {
@@ -185,8 +186,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     disabled: disabled,
                                     handler: function() {   
                                         var xml=Ext.getStore('Item').marshal();
-                                        var item=Ext.getStore('Item').getAt(0);
-                                        if (!item) {
+                                        if (!xml_file) {
                                             Ext.Msg.show({
                                                 title: 'Save Error',
                                                 msg: 'Failed to save metadata. Please use the Save As option to save the XML file and send it to hub@iedadata.org',
@@ -195,22 +195,31 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                             });
                                             return;
                                         }
-                                        var save_file=item.get("href");
-
                                         Ext.Ajax.request({
                                             url: 'resources/upload/write_to_file.php',  
                                             method: 'POST',
                                             params:{
                                                 storedata: xml,
-                                                file: save_file
+                                                file: xml_file
                                             }, 
                                             success: function(response, opts) {
+                                                var responseData = Ext.decode(response.responseText);
+                                                if (!responseData.success) {
                                                     Ext.Msg.show({
-                                                        title: 'Save Metadata',
-                                                        msg: 'Metadata successfully saved.',
-                                                        icon: Ext.Msg.INFO,
+                                                        title: 'Save Error',
+                                                        msg: 'Failed to save metadata. Please use the Save As option to save the XML file and send it to hub@iedadata.org',
+                                                        icon: Ext.Msg.ERROR,
                                                         buttons: Ext.Msg.OK
                                                     });
+                                                    return;
+                                                }
+
+                                                Ext.Msg.show({
+                                                    title: 'Save Metadata',
+                                                    msg: 'Metadata successfully saved.',
+                                                    icon: Ext.Msg.INFO,
+                                                    buttons: Ext.Msg.OK
+                                                });
                                             },                                                       
                                             failure: function(response, opts) {
 
@@ -242,8 +251,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     disabled: disabled,
                                     handler: function() {
                                         var xml=Ext.getStore('Item').marshal();	  
-                                        var item=Ext.getStore('Item').getAt(0);
-                                        if (!item) {
+                                        if (!xml_file) {
                                             Ext.Msg.show({
                                                 title: 'Submit Error',
                                                 msg: 'Failed to submit metadata. Please use the Save As option to save the XML file and send it to hub@iedadata.org',
@@ -252,18 +260,28 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                             });
                                             return;
                                         }
-                                        var meta_file=item.get("href");
                                         Ext.Ajax.request({
                                             url: 'resources/upload/submit.php',	
                                             method: 'POST',
                                             params:{
-                                                storedata: xml,
-                                                file: meta_file, 
+                                                submitdata: xml,
+                                                file: xml_file, 
                                                 curator_id: curator_id
                                             },                                                        
                                             success: function(response, opts) {
 
                                                 var responseData = Ext.decode(response.responseText);
+
+                                                if (!responseData.success) {
+                                                    Ext.Msg.show({
+                                                        title: 'Submit Error',
+                                                        msg: 'Failed to save metadata. Please use the Save As option to save the XML file and send it to hub@iedadata.org',
+                                                        icon: Ext.Msg.ERROR,
+                                                        buttons: Ext.Msg.OK
+                                                    });
+                                                    return;
+                                                }
+
                                                 if (!responseData.validated) {
                                                     if (!me.validationwindow)
                                                         me.validationwindow=Ext.create("PMDMeta.view.main.ValidationWindow");
@@ -277,7 +295,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                                         buttons: Ext.Msg.OK,
                                                         fn: function(btn, text){
                                                         if (btn === 'ok'){                                        
-                                                            window.location.href='?object='+meta_file+'&editable=False'+'&curator_id='+curator_id+'&dataset='+dataset;                                  
+                                                            window.location.href='?object='+xml_file+'&editable=False'+'&curator_id='+curator_id+'&dataset='+dataset;                                  
                                                         }
                                                     }
                                                     }); 

@@ -3,10 +3,14 @@
 //write xml data to file
 error_log("\nin write_to_file\n", 3, "/var/www/html/pmdmeta/php_logfile.log");
 session_start();
-if (isset($_POST) && isset($_POST['storedata']) && isset($_POST['file'])){
-    $data=$_POST['storedata'];
-    $fname=$_POST['file'];
-    saveMetadata($data, $fname);
+if (isset($_POST)){
+
+    if (isset($_POST['storedata']) && isset($_POST['file'])){
+        error_log("\ni am here\n", 3, "/var/www/html/pmdmeta/php_logfile.log");
+        $data=$_POST['storedata'];
+        $fname=$_POST['file'];
+        saveMetadata($data, $fname);
+    }
 }else{
  
     if (isset($_GET) && isset($_GET['file']) && strlen(isset($_GET['file']))>0)
@@ -32,8 +36,12 @@ if (isset($_POST) && isset($_POST['storedata']) && isset($_POST['file'])){
 
 function saveMetadata($data, $fname){
     error_log("\nsaving\n", 3, "/var/www/html/pmdmeta/php_logfile.log");
-    error_log($fname, 3, "/var/www/html/pmdmeta/php_logfile.log");
     $file = fopen($fname, 'w');//creates new file
+    if ($file === false) {
+        error_log("\nerror saving\n", 3, "/var/www/html/pmdmeta/php_logfile.log");
+        echo json_encode(array("success"=>false));
+        return false;
+    }
     fwrite($file, $data);
     fclose($file); 
 
@@ -45,6 +53,9 @@ function saveMetadata($data, $fname){
     $jsonData['last saved timestamp'] = date("Y-m-d H:i:s");
     $newJsonString = json_encode($jsonData);
     file_put_contents($jsonFname, $newJsonString);
+
+    echo json_encode(array("success"=>true));
+    return true;
 }
 
 ?>
