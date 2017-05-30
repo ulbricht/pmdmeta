@@ -33,8 +33,7 @@ Ext.define('PMDMeta.view.datacite.Descriptions', {
             plugins: [this.cellEditing],
             store: 'DataCiteDescription',
             columns: [
-        {
-		cls: 'PMDrequired',		
+        {	
                 header: 'Type',
                 dataIndex: 'descriptionType',
                 width: 130,
@@ -53,8 +52,7 @@ Ext.define('PMDMeta.view.datacite.Descriptions', {
                 editor: new PMDMeta.view.main.ComboBox({
                     store: 'LanguageCombo'
 		})
-            }, {
-		cls: 'PMDrequired',		    
+            }, {    
                 header: 'Description',
                 flex: 1,		    
                 dataIndex: 'description',

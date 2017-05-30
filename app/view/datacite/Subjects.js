@@ -31,8 +31,7 @@ Ext.define('PMDMeta.view.datacite.Subjects', {
             plugins: [this.cellEditing],
             store: 'DataCiteSubject',
             columns: [
-		{
-		cls: 'PMDrequired',			
+		{		
                 header: 'Keyword',
                 dataIndex: 'subject',
                 flex: 1,

@@ -28,7 +28,7 @@ Ext.define('PMDMeta.view.datacite.Resource', {
             store: 'DataCiteResource',
             columns: [
 	    {
-		cls: 'PMDrequired',
+		
                 header: 'DOI (will be generated in the publishing process)',
                 dataIndex: 'identifier',
                 flex: 1,    

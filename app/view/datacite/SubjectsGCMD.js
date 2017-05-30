@@ -43,8 +43,7 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
 		    handler: this.onAddViaThesaurus
 		}]
 		},		
-		{
-		cls: 'PMDrequired',			
+		{		
                 header: 'Keyword',
                 dataIndex: 'subject',
                 flex: 1,

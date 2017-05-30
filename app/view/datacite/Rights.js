@@ -48,8 +48,7 @@ Ext.define('PMDMeta.view.datacite.Rights', {
             plugins: [this.cellEditing],
             store: 'DataCiteRight',
             columns: [
-		{
-		cls: 'PMDrequired',			
+		{		
                 header: 'Licence',
                 flex: 1,		    
                 dataIndex: 'right',	
