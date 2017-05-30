@@ -6,10 +6,10 @@ session_start();
 if (isset($_POST)){
 
     if (isset($_POST['storedata']) && isset($_POST['file'])){
-        error_log("\ni am here\n", 3, "/var/www/html/pmdmeta/php_logfile.log");
         $data=$_POST['storedata'];
         $fname=$_POST['file'];
-        saveMetadata($data, $fname);
+        $editor_metafile=$_POST['editor_metafile'];
+        saveMetadata($data, $fname, $editor_metafile, "manual metadata edit");
     }
 }else{
  
@@ -34,7 +34,32 @@ if (isset($_POST)){
 
 }
 
-function saveMetadata($data, $fname){
+function getEditorNameFromMetafile($editor_metafile) {
+    error_log("\n$editor_metafile\n", 3, "/var/www/html/pmdmeta/php_logfile.log");
+    $jsonString = file_get_contents($editor_metafile);
+    $jsonData = json_decode($jsonString, true);
+    return $jsonData['user_name'];
+}
+
+function updateProvenance($jsonData, $editor_metafile, $action) {
+    error_log("\nupdate provenance\n", 3, "/var/www/html/pmdmeta/php_logfile.log");
+    //get editor name from the metafile
+    $editor = getEditorNameFromMetafile($editor_metafile);
+
+    $newProvenance = array('timestamp'=> date("Y-m-d H:i:s"),
+                      'editor'=> $editor,
+                      'action'=> $action);
+    if (array_key_exists('provenance', $jsonData)) {
+        array_push($jsonData['provenance'], $newProvenance);
+    } else {
+        $jsonData['provenance'] = array($newProvenance);
+    }
+
+    return $jsonData;
+}
+
+
+function saveMetadata($data, $fname, $editor_metafile, $action){
     error_log("\nsaving\n", 3, "/var/www/html/pmdmeta/php_logfile.log");
     $file = fopen($fname, 'w');//creates new file
     if ($file === false) {
@@ -50,7 +75,10 @@ function saveMetadata($data, $fname){
     $jsonString = file_get_contents($jsonFname);
     $jsonData = json_decode($jsonString, true);
     $jsonData['status'] = "In Progress";
-    $jsonData['last saved timestamp'] = date("Y-m-d H:i:s");
+
+    //update provenance record
+    $jsonData = updateProvenance($jsonData, $editor_metafile, $action);
+
     $newJsonString = json_encode($jsonData);
     file_put_contents($jsonFname, $newJsonString);
 

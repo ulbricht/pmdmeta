@@ -8,9 +8,10 @@
 var urlparameter=Ext.Object.fromQueryString(location.search.substring(1));
 var disabled = (urlparameter.editable == 'False');
 var dataset = urlparameter.dataset;
-var curator_id = urlparameter.curator_id;
+var editor_metafile = urlparameter.editor_metafile;
+var curator = urlparameter.curator;
 var xml_file = urlparameter.object;
-var submitText = curator_id == "" ? "Submit" : "Send to Submitter";
+var submitText = curator == "False" ? "Submit" : "Send to Submitter";
 
 Ext.define('PMDMeta.view.main.FileAndVersionForm', {
     extend: 'Ext.container.Container',
@@ -200,7 +201,8 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                             method: 'POST',
                                             params:{
                                                 storedata: xml,
-                                                file: xml_file
+                                                file: xml_file,
+                                                editor_metafile: editor_metafile
                                             }, 
                                             success: function(response, opts) {
                                                 var responseData = Ext.decode(response.responseText);
@@ -266,7 +268,8 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                             params:{
                                                 submitdata: xml,
                                                 file: xml_file, 
-                                                curator_id: curator_id
+                                                curator: curator,
+                                                editor_metafile: editor_metafile
                                             },                                                        
                                             success: function(response, opts) {
 
@@ -295,7 +298,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                                         buttons: Ext.Msg.OK,
                                                         fn: function(btn, text){
                                                         if (btn === 'ok'){                                        
-                                                            window.location.href='?object='+xml_file+'&editable=False'+'&curator_id='+curator_id+'&dataset='+dataset;                                  
+                                                            window.location.href='?object='+xml_file+'&editable=False'+'&editor_metafile='+editor_metafile+'&dataset='+dataset+'&curator='+curator;                                  
                                                         }
                                                     }
                                                     }); 
