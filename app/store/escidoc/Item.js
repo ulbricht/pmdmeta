@@ -18,6 +18,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
 				'DataCiteSubjectGCMD3','DataCiteSubjectGCMD4','DataCiteSubjectGCMD5','DataCiteSubjectGCMD6',
 				'DataCiteSubjectGCMD7','DataCiteSubjectGCMD8','DataCiteSubjectGCMD9',
 				'DataCiteSubjectGCMD10','DataCiteSubjectGCMD11','DataCiteSubjectGCMD12','DataCiteSubjectGCMD13'
+
                             //ISO    
                             ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent',
                             'difSpatialCoverage','difProject'
