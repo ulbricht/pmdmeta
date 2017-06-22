@@ -1,5 +1,6 @@
 http://epos/WP16Vocabulary/AnalogueMaterial/Air
 http://epos/WP16Vocabulary/AnalogueMaterial/AluminaPowder
+http://epos/WP16Vocabulary/AnalogueMaterial/BariumSulphate
 http://epos/WP16Vocabulary/AnalogueMaterial/Carbopol
 http://epos/WP16Vocabulary/AnalogueMaterial/Cement
 http://epos/WP16Vocabulary/AnalogueMaterial/Clay
@@ -19,6 +20,7 @@ http://epos/WP16Vocabulary/AnalogueMaterial/Paraffin
 http://epos/WP16Vocabulary/AnalogueMaterial/Plastic
 http://epos/WP16Vocabulary/AnalogueMaterial/Plasticine
 http://epos/WP16Vocabulary/AnalogueMaterial/PolycristallineCaTiO3
+http://epos/WP16Vocabulary/AnalogueMaterial/Polytungstate
 http://epos/WP16Vocabulary/AnalogueMaterial/PVCRoods
 http://epos/WP16Vocabulary/AnalogueMaterial/Pyrex
 http://epos/WP16Vocabulary/AnalogueMaterial/RubberPellet
@@ -29,6 +31,6 @@ http://epos/WP16Vocabulary/AnalogueMaterial/VegetableOil
 http://epos/WP16Vocabulary/AnalogueMaterial/Water
 http://epos/WP16Vocabulary/AnalogueMaterial/WatSaturatedPaste
 http://epos/WP16Vocabulary/AnalogueMaterial/Gelatine,http://epos/WP16Vocabulary/AnalogueMaterial/Gelatine/PigSkin,http://epos/WP16Vocabulary/AnalogueMaterial/Gelatine/K-caragean,http://epos/WP16Vocabulary/AnalogueMaterial/Gelatine/GellanGum,http://epos/WP16Vocabulary/AnalogueMaterial/Gelatine/Xantan
-http://epos/WP16Vocabulary/AnalogueMaterial/Flour,http://epos/WP16Vocabulary/AnalogueMaterial/Flour/Rise
-http://epos/WP16Vocabulary/AnalogueMaterial/Sand,http://epos/WP16Vocabulary/AnalogueMaterial/Sand/Corundum,http://epos/WP16Vocabulary/AnalogueMaterial/Sand/Quartz
+http://epos/WP16Vocabulary/AnalogueMaterial/Flour,http://epos/WP16Vocabulary/AnalogueMaterial/Flour/Rice
+http://epos/WP16Vocabulary/AnalogueMaterial/Sand,http://epos/WP16Vocabulary/AnalogueMaterial/Sand/Corundum,http://epos/WP16Vocabulary/AnalogueMaterial/Sand/Quartz,http://epos/WP16Vocabulary/AnalogueMaterial/Sand/Feldspar
 http://epos/WP16Vocabulary/AnalogueMaterial/Microsphere,http://epos/WP16Vocabulary/AnalogueMaterial/Microsphere/Glassy,http://epos/WP16Vocabulary/AnalogueMaterial/Microsphere/Siliceus
