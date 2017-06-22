@@ -1,8 +1,8 @@
-Ext.define('PMDMeta.store.datacite.SubjectGCMD12', {
+Ext.define('PMDMeta.store.datacite.SubjectGCMD13', {
     extend: 'Ext.data.Store',
     model:  'PMDMeta.model.datacite.ThesaurusSubject',
-    storeId: 'DataCiteSubjectGCMD12',
-    subjectScheme: 'EPOS WP16 Rock Physics Monitoring Device',
+    storeId: 'DataCiteSubjectGCMD13',
+    subjectScheme: 'EPOS WP16 Analogue Measured Property',
     isvalidscheme: function(subjectScheme){
 	return (subjectScheme==this.subjectScheme);
     },

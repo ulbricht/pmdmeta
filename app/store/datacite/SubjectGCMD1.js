@@ -2,6 +2,10 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD1', {
     extend: 'Ext.data.Store',
     model:  'PMDMeta.model.datacite.ThesaurusSubject',
     storeId: 'DataCiteSubjectGCMD1',
+    subjectScheme: 'EPOS WP16 Analogue Main Setting',
+    isvalidscheme: function(subjectScheme){
+	return (subjectScheme==this.subjectScheme);
+    },
     proxy:{
             type: 'memory',
 
@@ -28,14 +32,20 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD1', {
         var gemets=new Array();
         var eposwp16s=new Array();
         
+var me=this;
+
         this.each(function(elem){
             if (elem.get('subjectScheme')=='GCMD')
                 gcmds.push(elem);
             else if (elem.get('subjectScheme')=='GEMET')
                 gemets.push(elem);
-	    else if (elem.get('subjectScheme')=='EPOS WP16')
+	    else if (elem.get('subjectScheme')==me.subjectScheme)
                 eposwp16s.push(elem);
+
+
+
         })
+
         
         var gcmd='<gmd:thesaurusName>';
         gcmd+='<gmd:CI_Citation>';
@@ -78,7 +88,7 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD1', {
         var eposwp16='<gmd:thesaurusName>';
         eposwp16+='<gmd:CI_Citation>';
         eposwp16+='<gmd:title>';
-        eposwp16+='<gco:CharacterString>EPOS WP16</gco:CharacterString>';
+        eposwp16+='<gco:CharacterString>'+this.subjectScheme+'</gco:CharacterString>';
         eposwp16+='</gmd:title>';
         eposwp16+='<gmd:date>';
         eposwp16+='<gmd:CI_Date>';

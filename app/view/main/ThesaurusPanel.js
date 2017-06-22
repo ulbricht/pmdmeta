@@ -13,6 +13,9 @@ Ext.define('PMDMeta.view.main.ThesaurusPanel',{
                 this.getStore().getProxy().extraParams = thesauruses;
 		this.getStore().load();
 	},
+	setWalktreeup: function(walktreeup){
+		this.walktreeup=walktreeup;
+	},
 	xtype: 'thesauruspanel',
 	initComponent: function (arguments){
 		Ext.create('PMDMeta.store.Thesaurus');	
@@ -20,6 +23,7 @@ Ext.define('PMDMeta.view.main.ThesaurusPanel',{
 		var me=this;
 		
 		Ext.apply(this,{
+		    walktreeup: true,
 		    width: 600,
 		    height: 500,
 		    rootVisible: false,
@@ -37,8 +41,40 @@ Ext.define('PMDMeta.view.main.ThesaurusPanel',{
                                 scope: me,
                                 handler: function(grid, rowIndex){
                                     var elem=grid.getStore().getAt(rowIndex);
-				    if (elem.get("keyword").length >0)
-				   	 me.exchangeStore.insert(0,{"subject":elem.get("keyword"),"lang":"en","subjectScheme":elem.get("thesaurusname"),"subjectSchemeURI":elem.get("thesaurusuri")});
+				    var keyword="";
+				    var lang="";
+				    var thesaurusname="";
+				    var thesaurusuri="";
+
+
+
+				    if (!me.walktreeup){
+					    if (elem && elem.get && elem.get("keyword") && elem.get("keyword").length >0){
+						keyword=elem.get("keyword");
+						lang="en";
+						thesaurusname=elem.get("thesaurusname");
+						thesaurusuri=elem.get("thesaurusuri");
+
+					    }
+				    }else{
+					    keyword="";
+					    lang="en";
+					    thesaurusname=elem.get("thesaurusname");
+					    thesaurusuri=elem.get("thesaurusuri");
+					    
+					    while ( elem && elem.get && elem.get("keyword")){
+						if (elem.get("keyword").length >0){
+							if (keyword.length >0)
+								keyword=elem.get("keyword")+" > "+keyword
+							keyword=elem.get("keyword")+keyword
+						}
+						elem=elem.parentNode;
+					   }
+				   }
+
+				   if (keyword.length>0) 
+					   me.exchangeStore.insert(0,{"subject":keyword,"lang":lang,"subjectScheme":thesaurusname,"subjectSchemeURI":thesaurusuri});
+
                                 }
                             }]
 			}

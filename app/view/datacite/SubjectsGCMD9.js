@@ -15,7 +15,7 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD9', {
         'PMDMeta.store.datacite.SubjectGCMD9',
 	'PMDMeta.view.main.ComboBox'
     ],
-    xtype: 'DataCite-SubjectsGCMD1',
+    xtype: 'DataCite-SubjectsGCMD9',
     title: 'NASA GCMD Science Keywords',
     frame: true,
     layout: 'fit',

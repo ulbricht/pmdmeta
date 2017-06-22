@@ -18,6 +18,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 	'PMDMeta.view.datacite.ResourceOpt',	
 	'PMDMeta.view.datacite.Titles',
 	'PMDMeta.view.datacite.Subjects',
+	'PMDMeta.view.datacite.SubjectsGCMD',
 	'PMDMeta.view.datacite.SubjectsGCMD1',
 	'PMDMeta.view.datacite.SubjectsGCMD2',
 	'PMDMeta.view.datacite.SubjectsGCMD3',
@@ -26,6 +27,11 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 	'PMDMeta.view.datacite.SubjectsGCMD6',
 	'PMDMeta.view.datacite.SubjectsGCMD7',
 	'PMDMeta.view.datacite.SubjectsGCMD8',
+	'PMDMeta.view.datacite.SubjectsGCMD9',
+	'PMDMeta.view.datacite.SubjectsGCMD10',
+	'PMDMeta.view.datacite.SubjectsGCMD11',
+	'PMDMeta.view.datacite.SubjectsGCMD12',
+	'PMDMeta.view.datacite.SubjectsGCMD13',
 //	'PMDMeta.view.datacite.SubjectsGEMET',	
 	'PMDMeta.view.datacite.AlternateIdentifiers',
 	'PMDMeta.view.datacite.RelatedIdentifiers',
@@ -59,6 +65,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 		new PMDMeta.store.datacite.Title();
 		new PMDMeta.store.datacite.AlternateIdentifier();
 		new PMDMeta.store.datacite.Subject();
+		new PMDMeta.store.datacite.SubjectGCMD();
 		new PMDMeta.store.datacite.SubjectGCMD1();
 		new PMDMeta.store.datacite.SubjectGCMD2();
 		new PMDMeta.store.datacite.SubjectGCMD3();
@@ -67,6 +74,11 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 		new PMDMeta.store.datacite.SubjectGCMD6();
 		new PMDMeta.store.datacite.SubjectGCMD7();
 		new PMDMeta.store.datacite.SubjectGCMD8();
+		new PMDMeta.store.datacite.SubjectGCMD9();
+		new PMDMeta.store.datacite.SubjectGCMD10();
+		new PMDMeta.store.datacite.SubjectGCMD11();
+		new PMDMeta.store.datacite.SubjectGCMD12();
+		new PMDMeta.store.datacite.SubjectGCMD13();
 //		new PMDMeta.store.datacite.SubjectGEMET();		
 		new PMDMeta.store.datacite.Size();
 		new PMDMeta.store.datacite.Date();
@@ -223,64 +235,102 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 			},{
 				xtype: 'panel',
 				frame: true,
-      	                        title: 'Rock Physics',
+      	                        title: 'Analogue Models',
 				layout: {type: 'hbox'},
 				items:[{
 						xtype: 'DataCite-SubjectsGCMD1',
 	      	                       		 title: '',
-cls: 'PMD-grid-border',
-flex:1,
+						cls: 'PMD-grid-border',
+						flex:1,
 						frame: false
 					},{
 						xtype: 'DataCite-SubjectsGCMD2',
-flex:1,
-cls: 'PMD-grid-border',
+						flex:1,
+						cls: 'PMD-grid-border',
 	      	                       		 title: '',
 						frame: false
-				},{
+					},{
 						xtype: 'DataCite-SubjectsGCMD3',
-flex:1,
-cls: 'PMD-grid-border',
+						flex:1,
+						cls: 'PMD-grid-border',
 	      	                       		 title: '',
 						frame: false
-				},{
+					},{
 						xtype: 'DataCite-SubjectsGCMD4',
-flex:1,
-cls: 'PMD-grid-border',
+						flex:1,
+						cls: 'PMD-grid-border',
 	      	                       		 title: '',
 						frame: false
 				}]
-			}/*,{
+			},{
 				xtype: 'panel',
 				frame: true,
       	                        title: 'Analogue Models - Experimental Setup',
 				layout: {type: 'hbox'},
 				items:[{
 						xtype: 'DataCite-SubjectsGCMD5',
-flex:1,
-cls: 'PMD-grid-border',
+						flex:1,
+						cls: 'PMD-grid-border',
 	      	                       		 title: '',
 						frame: false
 				},{
 						xtype: 'DataCite-SubjectsGCMD6',
-flex:1,
-cls: 'PMD-grid-border',
+						flex:1,
+						cls: 'PMD-grid-border',
 	      	                       		 title: '',
 						frame: false
 				},{
 						xtype: 'DataCite-SubjectsGCMD7',
-flex:1,
-cls: 'PMD-grid-border',
+						flex:1,
+						cls: 'PMD-grid-border',
 	      	                       		 title: '',
 						frame: false
 				},{
 						xtype: 'DataCite-SubjectsGCMD8',
-flex:1,
-cls: 'PMD-grid-border',
+						flex:1,
+						cls: 'PMD-grid-border',
+	      	                       		 title: '',
+						frame: false
+				},{
+						xtype: 'DataCite-SubjectsGCMD13',
+						flex:1,
+						cls: 'PMD-grid-border',
 	      	                       		 title: '',
 						frame: false
 				}]
-			}*/,{
+			},{
+				xtype: 'panel',
+				frame: true,
+      	                        title: 'Rock Physics',
+				layout: {type: 'hbox'},
+				items:[{
+						xtype: 'DataCite-SubjectsGCMD9',
+	      	                       		 title: '',
+						cls: 'PMD-grid-border',
+						flex:1,
+						frame: false
+					},{
+						xtype: 'DataCite-SubjectsGCMD10',
+						flex:1,
+						cls: 'PMD-grid-border',
+	      	                       		 title: '',
+						frame: false
+				},{
+						xtype: 'DataCite-SubjectsGCMD11',
+						flex:1,
+						cls: 'PMD-grid-border',
+	      	                       		 title: '',
+						frame: false
+				},{
+						xtype: 'DataCite-SubjectsGCMD12',
+						flex:1,
+						cls: 'PMD-grid-border',
+	      	                       		 title: '',
+						frame: false
+				}]
+			},{
+				xtype: 'DataCite-SubjectsGCMD'
+			},{
 				xtype: 'DataCite-Subjects',
                                 title: 'Free Keywords (Supply as many keywords as you want)'
 			},{                            

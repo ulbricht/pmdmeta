@@ -3,7 +3,7 @@
  * editing is not recommeded on keyboardless touch devices.
  */
  
-Ext.define('PMDMeta.view.datacite.SubjectsGCMD12', {
+Ext.define('PMDMeta.view.datacite.SubjectsGCMD13', {
     extend: 'PMDMeta.view.datacite.Grid',
     requires: [
         'Ext.selection.CellModel',
@@ -12,10 +12,10 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD12', {
         'Ext.util.*',
         'Ext.form.*',
 	'PMDMeta.model.datacite.Subject',
-        'PMDMeta.store.datacite.SubjectGCMD12',
+        'PMDMeta.store.datacite.SubjectGCMD13',
 	'PMDMeta.view.main.ComboBox'
     ],
-    xtype: 'DataCite-SubjectsGCMD12',
+    xtype: 'DataCite-SubjectsGCMD13',
     title: 'NASA GCMD Science Keywords',
     frame: true,
     layout: 'fit',
@@ -39,11 +39,11 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD12', {
         Ext.apply(this, {
             height: 200,
             plugins: [this.cellEditing],
-            store: 'DataCiteSubjectGCMD12',
+            store: 'DataCiteSubjectGCMD13',
             columns: [	
 		{
 		cls: 'PMDrequired',			
-                header: 'Monitoring Device',
+                header: 'Measured Property',
                 dataIndex: 'subject',
                 flex: 1,
 		sortable: false,		
@@ -75,7 +75,7 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD12', {
 	var me=this;
 	if (!me.thesaurus)
 	    me.thesaurus=Ext.create('PMDMeta.view.main.ThesaurusWindow');
-	me.thesaurus.setThesauruses({thesaurus3: 'eposwp16rockmonitoring'});
+	me.thesaurus.setThesauruses({thesaurus3: 'eposwp16analogmeasuredproperties'});
         me.thesaurus.setExchangeStore(me.getStore());
         me.thesaurus.show();
     },

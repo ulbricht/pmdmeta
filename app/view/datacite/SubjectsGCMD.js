@@ -3,7 +3,7 @@
  * editing is not recommeded on keyboardless touch devices.
  */
  
-Ext.define('PMDMeta.view.datacite.SubjectsGCMD12', {
+Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
     extend: 'PMDMeta.view.datacite.Grid',
     requires: [
         'Ext.selection.CellModel',
@@ -12,47 +12,79 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD12', {
         'Ext.util.*',
         'Ext.form.*',
 	'PMDMeta.model.datacite.Subject',
-        'PMDMeta.store.datacite.SubjectGCMD12',
+        'PMDMeta.store.datacite.SubjectGCMD',
 	'PMDMeta.view.main.ComboBox'
     ],
-    xtype: 'DataCite-SubjectsGCMD12',
+    xtype: 'DataCite-SubjectsGCMD',
     title: 'NASA GCMD Science Keywords',
     frame: true,
     layout: 'fit',
     modelname: 'PMDMeta.model.datacite.Subject',
     initComponent: function() {
-
-	var me=this;
-
         this.cellEditing = new Ext.grid.plugin.CellEditing({
-            clicksToEdit: 1,
-		listeners: {
-		    beforeedit: function(editor,context){
-			if (context.field==='subject'){
-				me.onAddViaThesaurus(context.grid, context.rowIdx);                                 
-			}
-			return  false;
-		    }
-		}
+            clicksToEdit: 1
         });
 
         Ext.apply(this, {
             height: 200,
             plugins: [this.cellEditing],
-            store: 'DataCiteSubjectGCMD12',
-            columns: [	
+            store: 'DataCiteSubjectGCMD',
+            columns: [
+		{
+		xtype: 'actioncolumn',
+		width: 30,
+		sortable: false,
+		menuDisabled: true,
+		items: [{
+		    icon: 'resources/images/icons/fam/page_white_edit.png',
+		    tooltip: 'Add via Thesaurus',
+		    scope: this,
+		    handler: this.onAddViaThesaurus
+		}]
+		},		
 		{
 		cls: 'PMDrequired',			
-                header: 'Monitoring Device',
+                header: 'Keyword',
                 dataIndex: 'subject',
-                flex: 1,
+                flex: 2,
 		sortable: false,		
 		menuDisabled: true,				
                 editor: {
                     allowBlank: false,
- 		    emptyText: 'click here'
+                    editable: false
+                }	
+            },{
+                header: 'Thesaurus',
+                dataIndex: 'subjectScheme',
+		flex: 1,
+		sortable: false,		
+		menuDisabled: true,			    
+                editor: {
+                    allowBlank: false,
+                    editable: false
+                }	
+            },{
+                header: 'Scheme URI',
+                dataIndex: 'subjectSchemeURI',
+                width: 130,					    
+		sortable: false,		
+		menuDisabled: true,
+		hidden:true,	
+                editor: {
+                    allowBlank: false,
+                    editable: false
+                }	
+            },{
+                header: 'Language',
+                dataIndex: 'lang',   
+                width: 130,
+		hidden:true,	
+		sortable: false,		
+		menuDisabled: true,			    
+                editor: {
+                    allowBlank: false,
+                    editable: false
                 }
-	
             },{
                 xtype: 'actioncolumn',
                 width: 30,
@@ -75,7 +107,8 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD12', {
 	var me=this;
 	if (!me.thesaurus)
 	    me.thesaurus=Ext.create('PMDMeta.view.main.ThesaurusWindow');
-	me.thesaurus.setThesauruses({thesaurus3: 'eposwp16rockmonitoring'});
+	me.thesaurus.setThesauruses({thesaurus3: 'gcmd'});
+	me.thesaurus.setWalktreeup(false);
         me.thesaurus.setExchangeStore(me.getStore());
         me.thesaurus.show();
     },

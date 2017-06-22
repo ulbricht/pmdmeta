@@ -14,6 +14,8 @@ Ext.define('PMDMeta.view.main.ThesaurusWindow',{
 	},
 	setThesauruses:function(thesauruses){
 		this.down("thesauruspanel").setThesauruses(thesauruses);
+	},
+	setWalktreeup:function(walktreeup){
+		this.down("thesauruspanel").setWalktreeup(walktreeup);
 	}
-
 });
