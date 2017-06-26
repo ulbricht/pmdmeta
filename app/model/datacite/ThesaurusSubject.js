@@ -22,9 +22,6 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
                     var gemet=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(GEMET - INSPIRE themes)',descriptivekeywords);                     
                     if (gemet)
                         return "GEMET";
-                    var epos=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(EPOS WP16)',descriptivekeywords);                     
-                    if (epos)
-                        return "EPOS WP16";                    
                     return "";
                 }},
 		{name: 'subjectSchemeURI',   type: 'string', mapping:function(data){
@@ -37,10 +34,7 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
                         return 'http://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/sciencekeywords';                                                
                     var gemet=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(GEMET - INSPIRE themes)',descriptivekeywords);                     
                     if (gemet)
-                        return 'http://www.eionet.europa.eu/gemet/';
-                    var epos=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(EPOS WP16)',descriptivekeywords);                     
-                    if (epos)
-                        return "http://epos-ip.org/WP16";                    
+                        return 'http://www.eionet.europa.eu/gemet/';                   
                     return "";
                 }},
 		{name: 'lang', type: 'string', mapping: function(data){

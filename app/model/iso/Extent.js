@@ -436,7 +436,7 @@ Ext.define('PMDMeta.model.iso.Extent', {
             ret+="<gmd:EX_TemporalExtent>";
             ret+="<gmd:extent>";                
             if (from != to){
-                ret+='<gml:TimePeriod gml:id="t3'+Date.now()+'">';
+                ret+='<gml:TimePeriod gml:id="'+Ext.id()+'">';
                 ret+="<gml:beginPosition>"+from+"</gml:beginPosition>";
                 if (to.length>0){
                     ret+="<gml:endPosition>"+to+"</gml:endPosition>";
@@ -445,7 +445,7 @@ Ext.define('PMDMeta.model.iso.Extent', {
                 }
                 ret+="</gml:TimePeriod>";
             }else if (from == to){
-                ret+='<gml:TimeInstant gml:id="t4'+Date.now()+'">';
+                ret+='<gml:TimeInstant gml:id="'+Ext.id()+'">';
                 ret+='<gml:timePosition>'+from+'</gml:timePosition>';
                 ret+='</gml:TimeInstant>'
             }

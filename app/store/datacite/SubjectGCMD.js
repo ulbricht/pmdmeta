@@ -26,15 +26,12 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
 
         var gcmds=new Array();
         var gemets=new Array();
-        var eposwp16s=new Array();
         
         this.each(function(elem){
             if (elem.get('subjectScheme')=='GCMD')
                 gcmds.push(elem);
             else if (elem.get('subjectScheme')=='GEMET')
                 gemets.push(elem);
-	    else if (elem.get('subjectScheme')=='EPOS WP16')
-                eposwp16s.push(elem);
         })
         
         var gcmd='<gmd:thesaurusName>';
@@ -75,24 +72,6 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
         gemet+='</gmd:CI_Citation>';
         gemet+='</gmd:thesaurusName>';
 
-        var eposwp16='<gmd:thesaurusName>';
-        eposwp16+='<gmd:CI_Citation>';
-        eposwp16+='<gmd:title>';
-        eposwp16+='<gco:CharacterString>EPOS WP16</gco:CharacterString>';
-        eposwp16+='</gmd:title>';
-        eposwp16+='<gmd:date>';
-        eposwp16+='<gmd:CI_Date>';
-        eposwp16+='<gmd:date>';
-        eposwp16+='<gco:Date>2016-08-31</gco:Date>';
-        eposwp16+='</gmd:date>';
-        eposwp16+='<gmd:dateType>';
-        eposwp16+='<gmd:CI_DateTypeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" >publication</gmd:CI_DateTypeCode>';
-        eposwp16+='</gmd:dateType>';
-        eposwp16+='</gmd:CI_Date>';
-        eposwp16+='</gmd:date>';
-        eposwp16+='</gmd:CI_Citation>';
-        eposwp16+='</gmd:thesaurusName>';
-
         var ret="";
         
         if (gemets.length>0){
@@ -113,17 +92,6 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
                 ret+=keyword.asISOXML();
             });
             ret+=gcmd;            
-            ret+='</gmd:MD_Keywords>';
-            ret+='</gmd:descriptiveKeywords>';
-        }
-
-        if (eposwp16s.length>0){
-            ret+='<gmd:descriptiveKeywords>';
-            ret+='<gmd:MD_Keywords>';
-            Ext.each(eposwp16s, function(keyword){
-                ret+=keyword.asISOXML();
-            });
-            ret+=eposwp16;            
             ret+='</gmd:MD_Keywords>';
             ret+='</gmd:descriptiveKeywords>';
         }

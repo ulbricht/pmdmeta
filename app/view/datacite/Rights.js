@@ -72,7 +72,7 @@ Ext.define('PMDMeta.view.datacite.Rights', {
                 dataIndex: 'uri',
 		sortable: false,		
 		menuDisabled: true,
-                hidden: true,                
+       //         hidden: true,                
                 editor: {
                     allowBlank: true
                 },
