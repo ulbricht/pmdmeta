@@ -48,28 +48,24 @@ Ext.define('PMDMeta.view.main.ThesaurusPanel',{
 
 
 
-				    if (!me.walktreeup){
-					    if (elem && elem.get && elem.get("keyword") && elem.get("keyword").length >0){
-						keyword=elem.get("keyword");
-						lang="en";
-						thesaurusname=elem.get("thesaurusname");
-						thesaurusuri=elem.get("thesaurusuri");
 
-					    }
-				    }else{
-					    keyword="";
-					    lang="en";
-					    thesaurusname=elem.get("thesaurusname");
-					    thesaurusuri=elem.get("thesaurusuri");
-					    
-					    while ( elem && elem.get && elem.get("keyword")){
-						if (elem.get("keyword").length >0){
-							if (keyword.length >0)
-								keyword=elem.get("keyword")+" > "+keyword
-							keyword=elem.get("keyword")+keyword
+				    if (elem && elem.get && elem.get("keyword") && elem.get("keyword").length >0){
+					lang="en";
+					thesaurusname=elem.get("thesaurusname");
+					thesaurusuri=elem.get("thesaurusuri");
+
+				    }
+
+				    while ( elem  && elem.get && elem.get("keyword")){
+					if (elem.get("keyword").length >0 ){
+						if (keyword.length >0){
+							keyword=" > "+keyword;
 						}
-						elem=elem.parentNode;
-					   }
+						keyword=elem.get("keyword")+keyword;
+					}
+					if (!me.walktreeup)
+						break;	 
+					elem=elem.parentNode;
 				   }
 
 				   if (keyword.length>0) 

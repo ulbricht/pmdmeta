@@ -280,13 +280,13 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 	      	                       		 title: '',
 						frame: false
 				},{
-						xtype: 'DataCite-SubjectsGCMD7',
+						xtype: 'DataCite-SubjectsGCMD8',
 						flex:1,
 						cls: 'PMD-grid-border',
 	      	                       		 title: '',
 						frame: false
 				},{
-						xtype: 'DataCite-SubjectsGCMD8',
+						xtype: 'DataCite-SubjectsGCMD7',
 						flex:1,
 						cls: 'PMD-grid-border',
 	      	                       		 title: '',
