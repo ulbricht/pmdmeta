@@ -54,7 +54,7 @@ Ext.define('PMDMeta.model.iso.ResponsibleParty', {
                 var linkage=Ext.DomQuery.selectNode('gmd|linkage',onlineresource);                   
                 var ret=Ext.DomQuery.selectValue('gmd|URL',linkage);                        
                 if (ret)
-                    return ret;
+                    return ret.replace(/&amp;/gi,"&");
                 else
                     return "";
         }}
@@ -110,7 +110,7 @@ Ext.define('PMDMeta.model.iso.ResponsibleParty', {
                ret+='</gmd:address>';
             }
             if (this.get('internet').length>0){
-                var internet=this.get('internet');
+                var internet=this.get('internet').replace(/&/g,"&amp;");
                 if (internet.substring(0,7)!=="http://")
                     internet="http://"+internet;
                 ret+='<gmd:onlineResource>';

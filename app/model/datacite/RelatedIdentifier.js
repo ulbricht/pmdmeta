@@ -2,8 +2,8 @@ Ext.define('PMDMeta.model.datacite.RelatedIdentifier', {
 	extend: 'Ext.data.Model',
 	fields: [
 		{name: 'identifier',  type: 'string', mapping :function(data) {
-                            if (data.firstChild)
-				    return data.firstChild.textContent.replace('&amp;','&');
+                            if (data.firstChild && data.firstChild.textContent && data.firstChild.textContent.length >0)
+				    return data.firstChild.textContent.replace(/&amp;/g,'&');
 				}},
 		{name: 'identifierType',   type: 'string', mapping: '@relatedIdentifierType'},
 		{name: 'relation',  type: 'string', mapping: '@relationType'},
@@ -23,7 +23,7 @@ Ext.define('PMDMeta.model.datacite.RelatedIdentifier', {
 			relation=' relationType="'+this.get('relation')+'"';		
 		var result="";
 		if (type.length>0 || relation.length>0 || this.get('identifier').length>0)
-			result='<relatedIdentifier'+type+relation+'>'+this.get('identifier').replace('&','&amp;').trim()+'</relatedIdentifier>';
+			result='<relatedIdentifier'+type+relation+'>'+this.get('identifier').replace(/&/g,'&amp;').trim()+'</relatedIdentifier>';
 		return result;
 	}
 });

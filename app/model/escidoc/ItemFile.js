@@ -4,15 +4,15 @@ Ext.define('PMDMeta.model.escidoc.ItemFile', {
         {name: 'content',  type: 'string', mapping: function(data){
                 var content=Ext.DomQuery.selectNode('components|content',data);
 		for (var i=0;i<content.attributes.length;i++){			
-			if (content.attributes.item(i).localName=='href')
-				return content.attributes.item(i).value.replace('&amp;','&');
+			if (content.attributes.item(i).localName=='href' && content.attributes.item(i).value && content.attributes.item(i).value.length >0)
+				return content.attributes.item(i).value.replace(/&amp;/g,'&');
 		}		
 		return null;
 		}},
         {name: 'href',  type: 'string', mapping: function(data){
 		for (var i=0;i<data.attributes.length;i++){			
-			if (data.attributes.item(i).localName=='href')
-				return data.attributes.item(i).value
+			if (data.attributes.item(i).localName=='href' && data.attributes.item(i).value && data.attributes.item(i).value.length >0)
+				return data.attributes.item(i).value.replace(/&amp;/g,'&');
 		}		
 		return null;
 		}},            
@@ -26,7 +26,7 @@ Ext.define('PMDMeta.model.escidoc.ItemFile', {
 		}},
         {name: 'name',   type: 'string',mapping: function(data){
 		var ret=Ext.DomQuery.selectValue('prop|file-name',data);
-		return ret.replace('&amp;','&');;
+		return ret.replace(/&amp;/g,'&');;
 		}},
         {name: 'type',   type: 'string',mapping: function(data){
 		var ret=Ext.DomQuery.selectValue('prop|mime-type',data);
@@ -82,12 +82,12 @@ Ext.define('PMDMeta.model.escidoc.ItemFile', {
         component.content+='<prop:content-category>'+this.get('content-category')+'</prop:content-category>';
         component.content+='<prop:mime-type>'+this.get('type')+'</prop:mime-type>';
         component.content+='</escidocComponents:properties>';
-        component.content+='<escidocComponents:content  xlink:href="'+this.get('content').replace('&','&amp;').trim()+'" storage="'+this.get('storage')+'"/>';
+        component.content+='<escidocComponents:content  xlink:href="'+this.get('content').replace(/&/g,'&amp;').trim()+'" storage="'+this.get('storage')+'"/>';
         component.content+='</escidocComponents:component>'    
         component.mdrecords=new Array();
         var mdrecord=new Object();
         mdrecord['escidoc']='<file:file xmlns:file="http://purl.org/escidoc/metadata/profiles/0.1/file">';
-        mdrecord['escidoc']+='<dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">'+this.get('name').replace('&','&amp;').trim()+'</dc:title>';
+        mdrecord['escidoc']+='<dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">'+this.get('name').replace(/&/g,'&amp;').trim()+'</dc:title>';
         if (this.get('description') && this.get('description').length >0)
             mdrecord['escidoc']+='<dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">'+this.get('description')+'</dc:description>';
         mdrecord['escidoc']+='<dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">'+this.get('type')+'</dc:format>';
