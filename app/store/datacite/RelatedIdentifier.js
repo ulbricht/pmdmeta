@@ -21,6 +21,18 @@ Ext.define('PMDMeta.store.datacite.RelatedIdentifier', {
                     result="<relatedIdentifiers>"+ret+"</relatedIdentifiers>";
 
             return result;
+    },
+    asISOXML: function (){
+            var ret="";
+            var result="";
+            this.each(function(data){			
+                    ret+=data.asISOXML();
+            });
+
+            if (ret.length>0)
+                    result=ret;
+
+            return result;
     }/*,
     listeners: {
         add: function (store, records, index, eOpts){

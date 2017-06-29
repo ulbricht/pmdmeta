@@ -638,7 +638,8 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         iso+=datasetcontact.asXML();
         iso+=Ext.getStore('DataCiteSubject').asISOXML();
         iso+=Ext.getStore('DataCiteSubjectGCMD').asISOXML();
-        iso+=Ext.getStore('DataCiteRight').asISOXML();        
+        iso+=Ext.getStore('DataCiteRight').asISOXML(); 
+        iso+=Ext.getStore('DataCiteRelatedIdentifier').asISOXML(); 
         iso+=identificationinfo.asXML('language');
         iso+=identificationinfo.asXML('isotopic');
 //        iso+=Ext.getStore('DataCiteGeoLocation').asISOXML();
