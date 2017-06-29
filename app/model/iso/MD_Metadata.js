@@ -65,6 +65,18 @@ Ext.define('PMDMeta.model.iso.MD_Metadata', {
                 ret+='</gco:CharacterString>';
                 ret+='</gmd:fileIdentifier>';                
                 break;
+            case 'resourceidentifier':  
+                var identifier='doi:'+Ext.getStore('DataCiteResource').getAt(0).get('identifier');
+                ret+='<gmd:identifier>';
+                ret+='<gmd:MD_Identifier>';
+                ret+='<gmd:code>';
+                ret+='<gco:CharacterString>';
+                ret+=identifier;
+                ret+='</gco:CharacterString>';
+                ret+='</gmd:code>';
+                ret+='</gmd:MD_Identifier>';
+                ret+='</gmd:identifier>';
+                break;
             case 'language':  
                // var language=this.get('language');
                 var language='eng';

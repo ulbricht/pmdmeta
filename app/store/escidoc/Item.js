@@ -629,6 +629,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
             iso+=revisiondate;
         }
         
+        iso+=mdmeta.asXML('resourceidentifier');
        // iso+=Ext.getStore('isoCitedResponsibleParty').asXML();
         iso+=Ext.getStore('DataCiteAuthor').asISOXML();
         iso+="</gmd:CI_Citation></gmd:citation>";
