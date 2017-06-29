@@ -28,7 +28,10 @@ Ext.define('PMDMeta.model.datacite.Right', {
             if (right.length==0)
                 return ret;
 
-            ret+='<gmd:resourceConstraints>';
+            ret+='<gmd:resourceConstraints ';
+	    if (this.get('uri').length >0)
+		ret+='xlink:href="'+this.get('uri').replace(/&/g,'&amp;')+'"';
+	    ret+=' >';
             ret+='<gmd:MD_Constraints>';
             ret+='<gmd:useLimitation>';
             ret+='<gco:CharacterString>'+Ext.String.htmlEncode(right)+'</gco:CharacterString>';

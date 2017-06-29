@@ -38,7 +38,7 @@ Ext.define('PMDMeta.model.datacite.Author', {
 				uri=' schemeURI="'+this.get('nameIdentifierSchemeURI')+'"';			
 
 			if (scheme.length>0 || uri.length>0 || this.get('nameIdentifier').length>0)
-				result+='<nameIdentifier'+scheme+uri+'>'+this.get('nameIdentifier')+'</nameIdentifier>'
+				result+='<nameIdentifier'+scheme+uri+'>'+this.get('nameIdentifier').trim()+'</nameIdentifier>'
 		}
 		if (this.get('affiliation') && this.get('affiliation').length>0){
 			result+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation'))+'</affiliation>'
@@ -69,7 +69,7 @@ Ext.define('PMDMeta.model.datacite.Author', {
 			if (this.get('nameIdentifierSchemeURI') && this.get('nameIdentifierSchemeURI').length>0)
 				uri=' schemeURI="'+this.get('nameIdentifierSchemeURI')+'"';
 			if (scheme.length>0 || uri.length>0 || this.get('nameIdentifier').length>0)
-				nameidentifier+='<nameIdentifier'+scheme+uri+'>'+this.get('nameIdentifier')+'</nameIdentifier>'
+				nameidentifier+='<nameIdentifier'+scheme+uri+'>'+this.get('nameIdentifier').trim()+'</nameIdentifier>'
 		}
 		if (this.get('affiliation') && this.get('affiliation').length>0){
 			affiliation+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation'))+'</affiliation>'
@@ -96,8 +96,27 @@ Ext.define('PMDMeta.model.datacite.Author', {
             
             if (this.get('name').length==0 && this.get('name').length==0)
                 return ret;
+
+	    var iduri="";
+
+            if (this.get('nameIdentifierScheme') && this.get('nameIdentifier')){
+	 	    var scheme=this.get('nameIdentifierScheme').toUpperCase();
+ 		    var identifier=this.get('nameIdentifier').trim()
+		    if (scheme=='ORCID'){
+			iduri="http://orcid.org/"+identifier;
+		    }else if (scheme=='ISNI'){
+			iduri="http://isni.org/isni/"+identifier;
+		    }else if (scheme=='SCOPUS'){
+			iduri="https://www.scopus.com/authid/detail.uri?authorId="+identifier;
+		    }else if (scheme=='RESEARCHER.ID'){
+			iduri="www.researcherid.com/rid/"+identifier;
+		    }
+
+		    if (iduri.length >0)
+			iduri='xlink:href="'+iduri+'"';	
+	     }
             
-             ret+='<gmd:citedResponsibleParty>';
+             ret+='<gmd:citedResponsibleParty '+iduri+' >';
              ret+='<gmd:CI_ResponsibleParty>';
              if (this.get('name').length>0){             
                 ret+='<gmd:individualName>';
