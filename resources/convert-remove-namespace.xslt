@@ -8,7 +8,7 @@ xmlns:difalt="http://gcmd.gsfc.nasa.gov/Aboutus/xml/dif"
 >
 
     <xsl:output  method="xml" encoding="utf-8" omit-xml-declaration="no"/>
-
+<xsl:strip-space elements="*"/>
 <!-- template to copy elements -->
     <xsl:template match="*">
         <xsl:element name="{local-name()}" namespace="{namespace-uri()}">
