@@ -44,6 +44,7 @@ Ext.define('PMDMeta.view.datacite.Subjects', {
             },{
                 header: 'Scheme',
                 dataIndex: 'subjectScheme',
+		hidden:true,
                 width: 130,
 		sortable: false,		
 		menuDisabled: true,			    
@@ -53,6 +54,7 @@ Ext.define('PMDMeta.view.datacite.Subjects', {
             },{
                 header: 'Scheme URI',
                 dataIndex: 'subjectSchemeURI',
+		hidden:true,
                 width: 130,					    
 		sortable: false,		
 		menuDisabled: true,	
@@ -62,6 +64,7 @@ Ext.define('PMDMeta.view.datacite.Subjects', {
             },{
                 header: 'Language',
                 dataIndex: 'lang',   
+		hidden:true,
                 width: 130,
 		sortable: false,		
 		menuDisabled: true,			    

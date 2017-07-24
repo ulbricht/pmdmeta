@@ -17,11 +17,19 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
                     var gcmd1=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(NASA/Global Change Master Directory)',descriptivekeywords);                     
                     var gcmd2=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(GCMD)',descriptivekeywords);                     
                     var gcmd3=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(Earth Science Keywords)',descriptivekeywords);                                         
-                    if (gcmd1 && gcmd2 && gcmd3)
-                        return "GCMD";                    
+                    if (gcmd1 && gcmd2 && gcmd3){
+			var title=Ext.DomQuery.selectNode('gmd|title',gcmd3);
+                        return title.firstChild.textContent;
+		    }
                     var gemet=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(GEMET - INSPIRE themes)',descriptivekeywords);                     
                     if (gemet)
                         return "GEMET";
+                    var epos=Ext.DomQuery.selectNode('gmd|thesaurusName',descriptivekeywords);                     
+                    if (epos){
+			var title=Ext.DomQuery.selectNode('gmd|title',epos);
+                        var text=title.firstChild.textContent;
+			return text;
+		    }
                     return "";
                 }},
 		{name: 'subjectSchemeURI',   type: 'string', mapping:function(data){
@@ -34,12 +42,27 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
                         return 'http://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/sciencekeywords';                                                
                     var gemet=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(GEMET - INSPIRE themes)',descriptivekeywords);                     
                     if (gemet)
-                        return 'http://www.eionet.europa.eu/gemet/';                   
+                        return 'http://www.eionet.europa.eu/gemet/';
+//                    var epos=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(EPOS WP16)',descriptivekeywords);                     
+//                    if (epos)
+//                        return "http://epos-ip.org/WP16";                    
                     return "";
                 }},
 		{name: 'lang', type: 'string', mapping: function(data){
                      return "en";
-		}}	
+		}},
+		{name: 'date',  type: 'string', mapping:function(data){
+                    var mdkeyword=data.parentNode;
+                    var descriptivekeywords=mdkeyword.parentNode;
+                    var thesaurus=Ext.DomQuery.selectNode('gmd|thesaurusName',descriptivekeywords); 
+                    var cidate=Ext.DomQuery.selectNode('gmd|CI_Date',data);
+		    if (thesaurus && cidate){
+			var date=Ext.DomQuery.selectNode('gco|Date',cidate);
+                  	if (date)
+                       	    return Ext.String.htmlDecode(date.firstChild.textContent);
+		    }
+                    return "";
+                }}	
 	],
 	validators: {
 		subject: { type: 'length', min: 1 }
@@ -65,8 +88,7 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
             if (this.get("subject").length>0){
                 ret+='<gmd:keyword>';
                 ret+='<gco:CharacterString>'+Ext.String.htmlEncode(this.get("subject"))+'</gco:CharacterString>';
-                ret+='</gmd:keyword>';
-                
+                ret+='</gmd:keyword>';     
             }
             return ret;
         },
