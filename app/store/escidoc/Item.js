@@ -224,37 +224,40 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         });                        
     },    
     unmarshal: function (response){
-
-        var itemstore=Ext.getStore('Item')
+        var itemstore=Ext.getStore('Item');
         itemstore.changefuncon=false;
            
         Ext.each(itemstore.parsers, function(storename){   
            var store=Ext.getStore(storename);
-           store.loadRawData(response)
+           store.loadRawData(response);
         }); 
         var contributorstore=Ext.getStore('DataCiteContributor');
-        contributorstore.loadRawData(response)
+        contributorstore.loadRawData(response);
                 
         var contributorroles=new Object();
+        var citedpartyroles=new Object();
         var authorkeys=new Object();
                
         var titleindex;
         var titleremove=new Array();
         for (titleindex=1;titleindex<Ext.getStore('DataCiteTitle').getCount();titleindex++)
-            titleremove.push(titleindex);        
+            titleremove.push(titleindex);       
         Ext.getStore('DataCiteTitle').remove(titleremove);
         
-        //collect roles
-        contributorstore.each(function(contributor){                         
-            var key=contributor.getKey();             
-            if (key){
-                if (!contributorroles[key])
-                    contributorroles[key]=new Array();
-                var role=contributor.get('role').trim();
+        //collect cited responsible party roles
+        var isoCitedResponsiblePartyStore = Ext.getStore('isoCitedResponsibleParty');
+        isoCitedResponsiblePartyStore.loadRawData(response);
+        isoCitedResponsiblePartyStore.each(function(citedparty){                         
+        var key=citedparty.get('name').trim()+citedparty.get('affiliation');           
+        if (key){
+            if (!citedpartyroles[key])
+                citedpartyroles[key]=new Array();
+                var role=citedparty.get('isorole').trim();
                 if (role.length>0)
-                    contributorroles[key].push(role);                 
+                    citedpartyroles[key].push(role);                 
             }
         });
+
         //collect author keys
         Ext.getStore('DataCiteAuthor').each(function(author){
             var key=author.getKey();
@@ -263,10 +266,11 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         });
         //set roles for authors
         Ext.getStore('DataCiteAuthor').each(function(author){
-            var key=author.getKey();
-            if (contributorroles[key] && contributorroles[key].length>0){
+            var key=author.get('name').trim()+author.get('affiliation').trim();
+
+            if (citedpartyroles[key] && citedpartyroles[key].length>0){
                 var role="";
-                Ext.each(contributorroles[key], function(rolename){
+                Ext.each(citedpartyroles[key], function(rolename){
                     if (role.length>0)
                         role+=",";
                     role+=rolename;
@@ -274,10 +278,21 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                 author.set("role",role);
             }
         });	
-   
+
+        //collect contributor roles
+        contributorstore.each(function(contributor){                         
+            var key=contributor.getKey();           
+            if (key){
+                if (!contributorroles[key])
+                    contributorroles[key]=new Array();
+                var role=contributor.get('role').trim();
+                if (role.length>0)
+                    contributorroles[key].push(role);           
+            }
+        });
+
         //delete contributors that are authors
         var delcontrib=new Array();
-
         contributorstore.each(function(contributor){
             var key=contributor.getKey();
             if (authorkeys[key]){
@@ -286,7 +301,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         });
         contributorstore.remove(delcontrib);
 
-        var contributorgroup=new Object()
+        var contributorgroup=new Object();
         contributorstore.each(function(contributor){
             var key=contributor.getKey();
             if (!contributorgroup[key])
@@ -544,7 +559,6 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         return resource;
     },
     marshalDataCite: function(){
-        
         var dcgeostore=Ext.getStore('DataCiteGeoLocation');
         dcgeostore.removeAll(true);
         Ext.getStore('isoExtent').each(function (isogeo){
@@ -597,7 +611,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         return resource;
      },
   marshalISO: function(){
-         var mdmeta=Ext.getStore('isoMD_Metadata');
+        var mdmeta=Ext.getStore('isoMD_Metadata');
         var datasetcontact=Ext.getStore('isoDatasetContact');
         var identificationinfo=Ext.getStore('isoIdentificationInfo');
         var iso='<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd" >';

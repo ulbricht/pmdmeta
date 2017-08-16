@@ -74,21 +74,19 @@ Ext.define('PMDMeta.model.datacite.Author', {
 		if (this.get('affiliation') && this.get('affiliation').length>0){
 			affiliation+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation'))+'</affiliation>'
 		}
-
-                if (!this.get('role') || this.get('role').length==0){
-                    if (contributorname.length>0 || nameidentifier.length>0 || affiliation.length>0)                    
-                        result+='<contributor>'+contributorname+nameidentifier+affiliation+'</contributor>';                    
-                }else{
-                    Ext.each(this.get('role').split(","), function (role){
-                        var type="";
-                        if (role.length>0)
-                            type=' contributorType="'+role+'"';
-                        if (contributorname.length>0 || nameidentifier.length>0 || affiliation.length>0 || type.length>0)                    
-                            result+='<contributor'+type+'>'+contributorname+nameidentifier+affiliation+'</contributor>';
-                    });
-                }
-                
-                
+                // if (!this.get('role') || this.get('role').length==0){
+                //     if (contributorname.length>0 || nameidentifier.length>0 || affiliation.length>0)                    
+                //         result+='<contributor>'+contributorname+nameidentifier+affiliation+'</contributor>';                    
+                // }else{
+                //     Ext.each(this.get('role').split(","), function (role){
+                //         var type="";
+                //         if (role.length>0)
+                //             type=' contributorType="'+role+'"';
+                //         if (contributorname.length>0 || nameidentifier.length>0 || affiliation.length>0 || type.length>0)                    
+                //             result+='<contributor'+type+'>'+contributorname+nameidentifier+affiliation+'</contributor>';
+                //     });
+                // }
+                     
 		return result;
 	},
         asISOXML: function(){
@@ -113,14 +111,20 @@ Ext.define('PMDMeta.model.datacite.Author', {
              if (this.get('position').length>0){
                 ret+='<gmd:positionName><gco:CharacterString>';
                 ret+=this.get('position');
-                ret+='</gco:CharacterString></gmd:positionName>'
+                ret+='</gco:CharacterString></gmd:positionName>';
              }             
-             
-             ret+='<gmd:role>';
-             ret+='<gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="author" >author</gmd:CI_RoleCode>';
-             ret+='</gmd:role>';
-             ret+='</gmd:CI_ResponsibleParty>';
-             ret+='</gmd:citedResponsibleParty>';
+
+             if (this.get('role').length>0) {
+                   Ext.each(this.get('role').split(","), function (role){
+                        if (role.length>0) {
+                             ret+='<gmd:role>';
+                             ret+='<gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="author">'+role+'</gmd:CI_RoleCode>';
+                             ret+='</gmd:role>';
+                        }
+                    });
+             } 
+            ret+='</gmd:CI_ResponsibleParty>';
+            ret+='</gmd:citedResponsibleParty>';
             
             return ret;
         },

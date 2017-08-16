@@ -11,18 +11,18 @@ Ext.define('PMDMeta.view.datacite.Authors', {
         'Ext.data.*',
         'Ext.util.*',
         'Ext.form.*',
-	'PMDMeta.model.datacite.Author',
+    'PMDMeta.model.datacite.Author',
         'PMDMeta.store.datacite.Author',
-	'PMDMeta.store.datacite.combobox.AuthorIDCombo',
-	'PMDMeta.store.datacite.combobox.ContributortypeCombo',
-	'PMDMeta.view.main.ComboBox',
+    'PMDMeta.store.datacite.combobox.AuthorIDCombo',
+    'PMDMeta.store.datacite.combobox.AuthortypeCombo',
+    'PMDMeta.view.main.ComboBox',
         'PMDMeta.view.main.CheckComboBox'
     ],
     xtype: 'DataCite-Authors',
     title: 'Authors',
     frame: true,
     layout: 'fit',
-    modelname:'PMDMeta.model.datacite.Author',	
+    modelname:'PMDMeta.model.datacite.Author',  
     initComponent: function() {
         var me=this;
         this.cellEditing = new Ext.grid.plugin.CellEditing({
@@ -44,20 +44,20 @@ Ext.define('PMDMeta.view.datacite.Authors', {
             }
         });
 
-	Ext.create('PMDMeta.store.datacite.combobox.AuthorIDCombo');
-	Ext.create('PMDMeta.store.datacite.combobox.ContributortypeCombo');
+    Ext.create('PMDMeta.store.datacite.combobox.AuthorIDCombo');
+    Ext.create('PMDMeta.store.datacite.combobox.AuthortypeCombo');
         Ext.apply(this, {
             height: 300,
             plugins: [this.cellEditing],
             store: 'DataCiteAuthor',
             columns: [
-	    {
-		cls: 'PMDrequired',		    
+        {
+        cls: 'PMDrequired',         
                 header: 'Author (Lastname, Firstname)',
                 dataIndex: 'name',
                 flex: 1,
-		sortable: false,	
-                menuDisabled: true,		    
+                sortable: false,    
+                menuDisabled: true,         
                 editor: {
                     allowBlank: false
                 },
@@ -72,18 +72,18 @@ Ext.define('PMDMeta.view.datacite.Authors', {
                 header: 'Role',
                 dataIndex: 'role',
                 width: 160,
-		sortable: false,
-                menuDisabled: true,		    
+                sortable: false,
+                menuDisabled: true,         
                 getEditor: function(record, defaultfield){
                     var value=record.get('role');
                     var editor=new PMDMeta.view.main.CheckComboBox(
-                            {store: 'ContributortypeCombo',multiSelect: true}
+                            {store: 'AuthortypeCombo',multiSelect: false}
                         );
                     return editor;
                 },
                 renderer: function(value, metaData, record, rowIdx, colIdx, store) {
                     if (record.get('role').indexOf('Other')>-1){
-                        var qtip
+                        var qtip;
                         if (record.get('position').length==0)
                             qtip="Currently there is no addtional role set.";                    
                         else 
@@ -96,11 +96,11 @@ Ext.define('PMDMeta.view.datacite.Authors', {
                 header: 'Author ID Type',
                 dataIndex: 'nameIdentifierScheme',
                 width: 130,
-		sortable: false,	
-                menuDisabled: true,		    
-		editor: new PMDMeta.view.main.ComboBox({
-		    store: 'AuthorIDCombo'	
-		}),
+        sortable: false,    
+                menuDisabled: true,         
+        editor: new PMDMeta.view.main.ComboBox({
+            store: 'AuthorIDCombo'  
+        }),
                 renderer: function(value, metaData, record, rowIdx, colIdx, store) {
                     var qtip="Due to varying spellings of author names it is difficult to find all works of a specific researcher in catalogue systems.";
                     qtip+=" Several solutions were developed to cope with this problem by assigning an unique identifier to authors and contributors of";
@@ -113,29 +113,29 @@ Ext.define('PMDMeta.view.datacite.Authors', {
                 header: 'Author Identifier (ID)',
                 dataIndex: 'nameIdentifier',
                 flex: 1,
-		sortable: false,	
-                menuDisabled: true,		    
-		editor: {
+        sortable: false,    
+                menuDisabled: true,         
+        editor: {
                     allowBlank: true
-                }		    
+                }           
             }, {
                 header: 'ID Type URI',
                 dataIndex: 'nameIdentifierSchemeURI',
-		hidden: true,
-		sortable: false,		
-                menuDisabled: true,		    
+        hidden: true,
+        sortable: false,        
+                menuDisabled: true,         
                 editor: {
                     allowBlank: true
-                }	
+                }   
             },{
                 header: 'Affiliation',
                 dataIndex: 'affiliation',
                 flex: 1,                
-		sortable: false,			    
+        sortable: false,                
                 menuDisabled: true,
-  	        editor: {
+            editor: {
                     allowBlank: true
-                }	
+                }   
             }, {
                 xtype: 'actioncolumn',
                 width: 30,
@@ -172,7 +172,7 @@ Ext.define('PMDMeta.view.datacite.Authors', {
                     },
                     drop: function(){
                         var store=me.getStore();
-                        store.fireEvent('pmdafterdrop',store)
+                        store.fireEvent('pmdafterdrop',store);
                     }
                 }
             }
@@ -184,7 +184,7 @@ Ext.define('PMDMeta.view.datacite.Authors', {
     },
     onRemoveClick: function(grid, rowIndex){
         var me=this;
-	me.getStore().removeAt(rowIndex);
-	me.newEntry();
+    me.getStore().removeAt(rowIndex);
+    me.newEntry();
     }
 });
