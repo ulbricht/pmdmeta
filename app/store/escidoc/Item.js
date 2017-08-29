@@ -737,7 +737,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         ret+='<gmd:contact>';
         ret+='<gmd:CI_ResponsibleParty>';
         ret+='<gmd:organisationName>';
-        ret+='<gco:CharacterString>GFZ German Research Center for Geosciences</gco:CharacterString>';
+        ret+='<gco:CharacterString>GFZ German Research Centre for Geosciences</gco:CharacterString>';
         ret+='</gmd:organisationName>';
         ret+='<gmd:contactInfo>';         
         ret+='<gmd:CI_Contact>';         
