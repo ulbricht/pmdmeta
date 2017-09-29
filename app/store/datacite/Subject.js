@@ -25,15 +25,11 @@ Ext.define('PMDMeta.store.datacite.Subject', {
     asISOXML: function(){
         var ret="";
         this.each(function(keyword){
-	    var subject=keyword.get("subject");
-	    ret+='<gmd:descriptiveKeywords><gmd:MD_Keywords>';
-	    if (subject.length>0){
-		ret+='<gmd:keyword>';
-		ret+='<gco:CharacterString>'+Ext.String.htmlEncode(subject)+'</gco:CharacterString>';
-		ret+='</gmd:keyword>';
-            }
-	    ret+='</gmd:MD_Keywords></gmd:descriptiveKeywords>';
+	    ret+=keyword.asISOXML();
         });
+	if (ret.trim().length>0){
+	    ret='<gmd:descriptiveKeywords><gmd:MD_Keywords>'+ret+'</gmd:MD_Keywords></gmd:descriptiveKeywords>';
+	}
         return ret;
 
     },
