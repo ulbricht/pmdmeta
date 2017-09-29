@@ -18,9 +18,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
     requires: [
 	'PMDMeta.view.fileupload.FileUpload',
 	'PMDMeta.view.main.ItemVersions',
-        'PMDMeta.view.main.FileDownloader',
-        'Ext.window.MessageBox',
-        'PMDMeta.view.main.DOIregistration',
+    'Ext.window.MessageBox',
 	'PMDMeta.store.publish.ValidationResult',
 	'PMDMeta.view.main.ValidationWindow'
     ],
@@ -50,47 +48,6 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                 },{
                                     xtype: 'button',
                                     scale: 'large',                                                
-                                    text: 'DOI',
-				    id:   'doibutton',
-//hidden:true,
-                                    tooltip: 'register a DOI or update metadata',
-                                    handler: function() {
-                                        if (!me.doiregistration)
-                                            me.doiregistration=new PMDMeta.view.main.DOIregistration();
-                                        me.doiregistration.setup();
-                                        me.doiregistration.show();
-                                    }
-                                },{
-                                    xtype: 'button',
-                                    scale: 'large',
-				    id:   'previewbutton',
-//hidden: true,
-                                    text: 'Preview',
-                                    tooltip: 'preview Dataset in new Window',
-                                    handler: function() {
-                                        
-                                        var item=Ext.getStore('Item').getAt(0);
-                                        if (!item) return;
-                                        var itemhref=item.get("href");
-                                        if (!itemhref) return;
-                                        var itemid=itemhref.substr(itemhref.lastIndexOf("/")+1,itemhref.length-1);
-                                        if (!itemid) return;
-                                        
-                                        var href=window.location.href;
-                                        var url;
-                                        if (href.indexOf("?")>0)
-                                            url=href.substr(0,href.indexOf("?"));
-                                        else
-                                            url=href;                                        
-                                        var root=url.substr(0,url.lastIndexOf("/"));
-                                        if (root.length===url.length-1) //trailing slash
-                                            root=root.substr(0,root.lastIndexOf("/"))
-
-                                        window.open(root+"/preview.php?id="+itemid,"_blank");
-                                    }
-                                },{
-                                    xtype: 'button',
-                                    scale: 'large',                                                
                                     text: 'Clear',
                                     tooltip: 'Load default metadata',
                                     disabled: disabled,
@@ -109,6 +66,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                          scale: 'large'
                                     },                                           
                                     buttonText: 'Load',
+                                    id:   'loadbutton',
 
                                     listeners:{
                                         change: function( elem, value, eOpts ) {
@@ -234,16 +192,6 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                                 console.log('server-side failure with status code ' + response.status);
                                             }            
                                         });   
-                                    }
-                                },{
-                                    xtype: 'button',
-                                    scale: 'large',                                                
-                                    text: 'Sync',
-				                    id:   'syncbutton',
-                                    //hidden: true,
-                                    tooltip: 'Sync data to eSciDoc repository',
-                                    handler: function() {	  
-                                            Ext.getStore('Item').synccontent();
                                     }
                                 },{
                                     xtype: 'button',

@@ -24,11 +24,9 @@ Ext.define('PMDMeta.Application', {
 		
 	}else{
 		var tabs=Ext.ComponentQuery.query("tab");
-		tabs[1].hide();
-		tabs[2].hide();
-		Ext.getCmp('doibutton').hide();
-		Ext.getCmp('syncbutton').hide();
-		Ext.getCmp('previewbutton').hide();
+		 tabs[1].hide();
+		 tabs[2].hide();
+		Ext.getCmp('loadbutton').hide();
 	}
 	    
         if (urlparameter.action==="new"){
