@@ -151,7 +151,7 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
         var gemets=new Array();
         
         this.each(function(elem){
-            if (elem.get('subjectScheme')=='GCMD')
+            if (elem.get('subjectScheme')=='GCMD' || elem.get('subjectScheme')=='NASA/GCMD Earth Science Keywords')
                 gcmds.push(elem);
             else if (elem.get('subjectScheme')=='GEMET')
                 gemets.push(elem);
