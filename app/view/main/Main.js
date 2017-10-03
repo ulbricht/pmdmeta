@@ -9,8 +9,8 @@ Ext.define('PMDMeta.view.main.Main', {
     extend: 'Ext.panel.Panel',
     requires: [
        'PMDMeta.view.main.DataCiteForm',
-//       'PMDMeta.view.main.IsoForm',
-	'PMDMeta.view.main.FileAndVersionForm',
+       'PMDMeta.view.main.IsoForm',
+	'PMDMeta.view.main.FileAndVersionForm'
 //	'PMDMeta.view.fileupload.FileUpload'     
     ],
 

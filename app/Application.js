@@ -6,7 +6,9 @@
 Ext.define('PMDMeta.Application', {
     extend: 'Ext.app.Application',
     requires: [
-	'PMDMeta.store.escidoc.Item'
+	'PMDMeta.store.escidoc.Item',
+    'PMDMeta.view.main.MainController',
+    'PMDMeta.view.main.MainModel'
     ],    
     name: 'PMDMeta',
 
