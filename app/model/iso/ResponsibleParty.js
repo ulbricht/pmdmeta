@@ -5,7 +5,7 @@ Ext.define('PMDMeta.model.iso.ResponsibleParty', {
                 var name=Ext.DomQuery.selectNode('gmd|individualName',data);
                 var ret=Ext.DomQuery.selectValue('gco|CharacterString ',name);         
                 if (ret)
-                    return ret;
+                    return ret.replace(/&amp;/gi,"&");
                 else
                     return "";
         }},
@@ -13,7 +13,7 @@ Ext.define('PMDMeta.model.iso.ResponsibleParty', {
                 var name=Ext.DomQuery.selectNode('gmd|organisationName',data);
                 var ret=Ext.DomQuery.selectValue('gco|CharacterString ',name);                        
                 if (ret)
-                    return ret;
+                    return ret.replace(/&amp;/gi,"&");
                 else
                     return "";
         }},
@@ -73,13 +73,13 @@ Ext.define('PMDMeta.model.iso.ResponsibleParty', {
          ret+='<gmd:CI_ResponsibleParty>';
          if (this.get('name').length>0){             
             ret+='<gmd:individualName>';
-            ret+='<gco:CharacterString>'+this.get('name')+'</gco:CharacterString>';
+            ret+='<gco:CharacterString>'+this.get('name').replace(/&/g,"&amp;")+'</gco:CharacterString>';
             ret+='</gmd:individualName>';
          }
 
          if (this.get('affiliation').length>0){
             ret+='<gmd:organisationName>';
-            ret+='<gco:CharacterString>'+this.get('affiliation')+'</gco:CharacterString>';
+            ret+='<gco:CharacterString>'+this.get('affiliation').replace(/&/g,"&amp;")+'</gco:CharacterString>';
             ret+='</gmd:organisationName>';
          }
          if (this.get('isoposition').length>0){
