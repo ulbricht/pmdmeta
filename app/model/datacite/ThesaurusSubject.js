@@ -24,7 +24,7 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
                         return "GEMET";
                     var epos=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(EPOS WP16)',descriptivekeywords);                     
                     if (epos)
-                        return "EPOS WP16";                    
+                        return "EPOS WP16";                                              
                     return "";
                 }},
 		{name: 'subjectSchemeURI',   type: 'string', mapping:function(data){
@@ -40,7 +40,7 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
                         return 'http://www.eionet.europa.eu/gemet/';
                     var epos=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(EPOS WP16)',descriptivekeywords);                     
                     if (epos)
-                        return "http://epos-ip.org/WP16";                    
+                        return "http://epos-ip.org/WP16";                 
                     return "";
                 }},
 		{name: 'lang', type: 'string', mapping: function(data){

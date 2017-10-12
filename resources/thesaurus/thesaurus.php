@@ -1,12 +1,14 @@
 <?php
-
+error_log("in thesaurus\n", 3, "/Users/Neville/software/pmdmeta/php_logfile.log");
 
 $thesauruses=array();
 
 foreach ($_REQUEST as $key => $value){
-
-	if (substr($key,0,strlen("thesaurus"))==="thesaurus")
+	if (substr($key,0,strlen("thesaurus"))==="thesaurus"){
 		$thesauruses[$value]=$value;
+		error_log("$key\n", 3, "/Users/Neville/software/pmdmeta/php_logfile.log");
+		error_log("$value\n", 3, "/Users/Neville/software/pmdmeta/php_logfile.log");
+	}
 }
 //$thesauruses=array("gcmd");
 
@@ -20,7 +22,6 @@ foreach ($thesauruses as $thesaurus){
 		continue;
 
 	$def=readfromfile($thesaurus,"_labels.csv");
-
 	foreach (readfromfile($thesaurus,"_index.csv") as $uri =>$name){
 		$thesaurusuri=$uri;
 		$thesaurusname=array_shift($name);
@@ -47,7 +48,7 @@ function walktree ($relations, $definitions, $keys, $thesaurusuri, $thesaurusnam
 		$obj['id']=$element;
 		$obj["name"]=$definitions[$element][0];
 		$obj["qtip"]=$definitions[$element][1];
-	
+
 //		$obj["qtip"]=preg_replace("/[\n\r]/","<br>",$obj["qtip"]);
 
                 if ($element=='1eb0ea0a-312c-4d74-8d42-6f1ad758f999')//expand science keywords

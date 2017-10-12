@@ -33,9 +33,9 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
                 gcmds.push(elem);
             else if (elem.get('subjectScheme')=='GEMET')
                 gemets.push(elem);
-	    else if (elem.get('subjectScheme')=='EPOS WP16')
+	        else if (elem.get('subjectScheme')=='EPOS WP16')
                 eposwp16s.push(elem);
-        })
+        });
         
         var gcmd='<gmd:thesaurusName>';
         gcmd+='<gmd:CI_Citation>';
@@ -141,7 +141,7 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
                 gcmds.push(elem);
             else if (elem.get('subjectScheme')=='GEMET')
                 gemets.push(elem);
-        }) 
+        });
         
         var ret="";
         
@@ -150,11 +150,11 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
                 var sciparam=keyword.asDifXML(param);
                 if (sciparam.length>0)
                     ret+='<dif:Parameters>'+sciparam+'</dif:Parameters>';
-            })
+            });
         }else if (param=='keyword'){
             Ext.each(gemets, function(keyword){
                 ret+=keyword.asDifXML(param);
-            })            
+            });            
         }
         return ret;
     }

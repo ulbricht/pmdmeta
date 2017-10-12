@@ -2,7 +2,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
     extend: 'Ext.data.Store',
     model:  'PMDMeta.model.escidoc.Item',
     storeId: 'Item',
-    autoSync: true,
+    autoSync: false,
     requires:['PMDMeta.store.datacite.Contributor',
 	'PMDMeta.model.publish.Htmlcontent'],
 //    autoLoad: true,
@@ -14,7 +14,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                                 'DataCiteAuthor','DataCiteTitle','DataCiteAlternateIdentifier','DataCiteSubject',
                                 'DataCiteSize','DataCiteDate','DataCiteRight','DataCiteResourceOpt','DataCiteResource',
                                 'DataCiteRelatedIdentifier','DataCiteGeoLocation','DataCiteFormat','DataCiteDescription',
-                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD'
+                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD','DataTypes'
                             //ISO    
                             ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent',
                             'difSpatialCoverage','difProject'
@@ -24,7 +24,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                                 'DataCiteAuthor','DataCiteTitle','DataCiteAlternateIdentifier','DataCiteSubject',
                                 'DataCiteSize','DataCiteDate','DataCiteRight','DataCiteResourceOpt','DataCiteResource',
                                 'DataCiteRelatedIdentifier'/*,'DataCiteGeoLocation'*/,'DataCiteFormat','DataCiteDescription',
-                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD','DataCiteResourceOptAndTitle'
+                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD','DataCiteResourceOptAndTitle','DataTypes'
                             //ISO    
                             ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent'
                            ),
@@ -326,18 +326,46 @@ Ext.define('PMDMeta.store.escidoc.Item', {
             
             Ext.each(contributorgroup[key], function(elem){
                 delcontrib.push(elem);
-            })
+            });
         }
         contributorstore.remove(delcontrib);
         
-       var delkeywords=new Array();
+        //Thesaurus Keywords
+        var delkeywords=[];
         Ext.getStore('DataCiteSubjectGCMD').each(function(keyword){
            var subject=keyword.get('subject');
-           if (!subject || (subject && subject.length==0))
+           var subjectScheme=keyword.get('subjectScheme');
+           if (!subject || (subject && subject.length===0) || (subjectScheme.length===0))
                 delkeywords.push(keyword);   
         });
         Ext.getStore('DataCiteSubjectGCMD').remove(delkeywords);
         
+        //IEDA Keywords
+        delkeywords = [];
+        Ext.getStore('DataTypes').each(function(keyword){
+           subject=keyword.get('subject');
+           subjectScheme=keyword.get('subjectScheme');
+           if (subjectScheme.indexOf("IEDA") === -1 || !subject || (subject && subject.length===0) || (subjectScheme.length===0))
+                delkeywords.push(keyword);   
+        });
+        Ext.getStore('DataTypes').remove(delkeywords);
+
+        //Free Keywords
+        delkeywords = [];
+        Ext.getStore('DataCiteSubject').each(function(keyword){
+           subject=keyword.get('subject');
+           subjectScheme=keyword.get('subjectScheme');
+           //Remove any IEDA keywords
+           if (subjectScheme.indexOf("IEDA") !== -1 || !subject || (subject && subject.length===0) || (subjectScheme.length===0))
+                delkeywords.push(keyword);
+           // Ext.getStore('DataTypes').each(function(IEDAkeyword){
+           //      IEDAsubject=IEDAkeyword.get('subject');
+           //      if (subject == IEDAsubject)
+           //          delkeywords.push(keyword); 
+           //  }); 
+        });
+        Ext.getStore('DataCiteSubject').remove(delkeywords);
+
 
        //points only have "min"-Values
         var extentstore=Ext.getStore('isoExtent'); 
@@ -578,12 +606,15 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         resource+=Ext.getStore('DataCiteTitle').asXML();
         resource+=dcrs.asXML('publisher');
         resource+=dcrs.asXML('publicationYear');
-        resource+=Ext.getStore('DataCiteSubject').asXML();	
-        
+        var subjects="";
+        subjects+=Ext.getStore('DataCiteSubject').asXML();  
+        subjects+=Ext.getStore('DataTypes').asXML();
+        if (subjects.length>0)
+            resource+="<subjects>"+subjects+"</subjects>";
+
         var contributors="";
         contributors+=Ext.getStore('DataCiteAuthor').asContributorXML();
-	contributors+=Ext.getStore('DataCiteContributor').asXML();
-    //    console.log(contributors);
+	    contributors+=Ext.getStore('DataCiteContributor').asXML();
         if (contributors.length>0)
             resource+="<contributors>"+contributors+"</contributors>";
 
@@ -665,6 +696,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
 //        iso+=Ext.getStore('DataCiteGeoLocation').asISOXML();
         iso+=Ext.getStore('isoExtent').asXML();
         iso+=Ext.getStore('DataCiteDate').asISOXML('coverage');
+        iso+=Ext.getStore('DataTypes').asISOXML();
         iso+='</gmd:MD_DataIdentification>';
         iso+='</gmd:identificationInfo>';             
 	
@@ -692,7 +724,8 @@ Ext.define('PMDMeta.store.escidoc.Item', {
     dif+=Ext.getStore('DataCiteSubjectGCMD').asDifXML('keyword');
     dif+=Ext.getStore('DataCiteSubject').asDifXML('keyword');
     dif+=Ext.getStore('isoExtent').asDifXML(); 
-    dif+=Ext.getStore('difProject').asDifXML();    
+    dif+=Ext.getStore('difProject').asDifXML();  
+    dif+=Ext.getStore('DataTypes').asDifXML('scienceparamenters');  
     dif+='<dif:Data_Center>';
     dif+='<dif:Data_Center_Name>';
     dif+='<dif:Short_Name>Deutsches GeoForschungsZentrum GFZ</dif:Short_Name>';

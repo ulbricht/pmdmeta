@@ -2,8 +2,12 @@
 Ext.define('PMDMeta.view.main.ThesaurusWindow',{		
 	extend: 'Ext.window.Window',
 	requires:['PMDMeta.view.main.ThesaurusPanel'],
-        title: 'Thesaurus',
-	closeAction: 'hide',		
+	config: {
+        thesaurusList: []
+    },
+	xtype: 'thesauruswindow',
+    title: 'Thesaurus',
+	closeAction: 'hide',
 	items:[
 		{
 			xtype: 'thesauruspanel'
@@ -11,6 +15,8 @@ Ext.define('PMDMeta.view.main.ThesaurusWindow',{
 	],
 	setExchangeStore:function(store){
 		this.down("thesauruspanel").setExchangeStore(store);
+	},
+	getThesaurusList:function(){
+		return this.thesaurusList;
 	}
-
 });

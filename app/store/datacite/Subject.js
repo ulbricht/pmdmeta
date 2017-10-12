@@ -12,38 +12,27 @@ Ext.define('PMDMeta.store.datacite.Subject', {
     },
     asXML: function (){
         var ret="";
-        var result="";
-        this.each(function(data){			
-                ret+=data.asXML();
-        });
-
-        if (ret.length>0)
-                result="<subjects>"+ret+"</subjects>";
-
-        return result;
+        this.each(function(data){	
+            ret+=data.asXML();
+        }); 
+        return ret;
     },
     asISOXML: function(){
-      
-
         var ret="";
         this.each(function(keyword){
             ret+=keyword.asISOXML();
         });
-
-
-	if (ret.length>0)
+	    if (ret.length>0)
         	ret='<gmd:descriptiveKeywords><gmd:MD_Keywords>'+ret+'</gmd:MD_Keywords></gmd:descriptiveKeywords>';
         return ret;
         
     },
     asDifXML:function(param){
-        
         var ret="";
-        
         if (param=='keyword'){
             this.each(function(keyword){
                 ret+=keyword.asDifXML(param);
-            })            
+            });            
         }
         return ret;
     }    

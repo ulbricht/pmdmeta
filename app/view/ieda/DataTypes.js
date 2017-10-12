@@ -3,7 +3,7 @@
  * editing is not recommeded on keyboardless touch devices.
  */
  
-Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
+Ext.define('PMDMeta.view.ieda.DataTypes', {
     extend: 'PMDMeta.view.datacite.Grid',
     requires: [
         'Ext.selection.CellModel',
@@ -11,18 +11,16 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
         'Ext.data.*',
         'Ext.util.*',
         'Ext.form.*',
-	    'PMDMeta.model.datacite.ThesaurusSubject',
-        'PMDMeta.store.datacite.SubjectGCMD',
-	    'PMDMeta.view.main.ComboBox',
-         'PMDMeta.view.main.ThesaurusWindow'
+        'PMDMeta.model.ieda.DataTypesModel',
+        'PMDMeta.store.ieda.DataTypes',
+        'PMDMeta.view.main.ComboBox'
     ],
-    xtype: 'DataCite-SubjectsGCMD',
-    title: 'NASA GCMD Science Keywords',
+    xtype: 'IEDA-DataTypes',
+    title: 'IEDA Data Types',
     frame: true,
     layout: 'fit',
-    modelname: 'PMDMeta.model.datacite.ThesaurusSubject',
+    modelname: 'PMDMeta.model.ieda.DataTypesModel',
     initComponent: function() {
-
         this.cellEditing = new Ext.grid.plugin.CellEditing({
             clicksToEdit: 1
         });
@@ -30,56 +28,56 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
         Ext.apply(this, {
             height: 200,
             plugins: [this.cellEditing],
-            store: 'DataCiteSubjectGCMD',
+            store: 'DataTypes',
             columns: [
-		{
-		xtype: 'actioncolumn',
-		width: 30,
-		sortable: false,
-		menuDisabled: true,
-		items: [{
-		    icon: 'resources/images/icons/fam/page_white_edit.png',
-		    tooltip: 'Add via Thesaurus',
-		    scope: this,
-		    handler: this.onAddViaThesaurus
-		}]
-		},		
-		{		
+        {
+        xtype: 'actioncolumn',
+        width: 30,
+        sortable: false,
+        menuDisabled: true,
+        items: [{
+            icon: 'resources/images/icons/fam/page_white_edit.png',
+            tooltip: 'Add via Thesaurus',
+            scope: this,
+            handler: this.onAddViaThesaurus
+        }]
+        },      
+        {       
                 header: 'Keyword',
                 dataIndex: 'subject',
                 flex: 1,
-		sortable: false,		
-		menuDisabled: true,				
+                sortable: false,        
+                menuDisabled: true,             
                 editor: {
                     allowBlank: false,
                     editable: false
-                }	
+                }   
             },{
                 header: 'Scheme',
                 dataIndex: 'subjectScheme',
                 width: 130,
-		sortable: false,		
-		menuDisabled: true,			    
+                sortable: false,        
+                menuDisabled: true,             
                 editor: {
                     allowBlank: false,
                     editable: false
-                }	
+                }   
             },{
                 header: 'Scheme URI',
                 dataIndex: 'subjectSchemeURI',
-                width: 130,					    
-		sortable: false,		
-		menuDisabled: true,	
+                width: 130,                     
+                sortable: false,        
+                menuDisabled: true, 
                 editor: {
                     allowBlank: false,
                     editable: false
-                }	
+                }   
             },{
                 header: 'Language',
                 dataIndex: 'lang',   
                 width: 130,
-		sortable: false,		
-		menuDisabled: true,			    
+                sortable: false,        
+                menuDisabled: true,             
                 editor: {
                     allowBlank: false,
                     editable: false
@@ -103,17 +101,17 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
         this.callParent();
    },
     onAddViaThesaurus:function (grid, rowIndex){
-	var me=this;
-    if (!me.thesaurus)
-        me.thesaurus=Ext.create('PMDMeta.view.main.ThesaurusWindow', {
-                                        thesaurusList: ['gcmd', 'gemet']});
+        var me=this;
+        if (!me.thesaurus) {
+            me.thesaurus=Ext.create('PMDMeta.view.main.ThesaurusWindow', {
+                                    thesaurusList: me.thesaurusList});
+        }
         me.thesaurus.setExchangeStore(me.getStore());
         me.thesaurus.show();
     },
     onRemoveClick: function(grid, rowIndex){
         var me=this;
-	me.getStore().removeAt(rowIndex);
-	me.newEntry();	    
+        me.getStore().removeAt(rowIndex);
+        me.newEntry();      
     }
-
 });

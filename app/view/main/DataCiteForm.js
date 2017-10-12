@@ -10,28 +10,111 @@
 var urlparameter=Ext.Object.fromQueryString(location.search.substring(1));
 var disabled = (urlparameter.editable == 'False');
 var dataset = urlparameter.dataset;
+var extra_fields = JSON.parse(urlparameter.extra.replace(/\'/g, '"'));
+
+// set up the items to display on the form
+var items = [ {
+                xtype: 'panel',
+                height: 182,
+                frame: true,
+                title: 'Resource Information',
+                disabled: disabled,
+                items:[
+                    {
+                        xtype: 'DataCite-Resource'
+                    },{
+                        xtype: 'DataCite-ResourceOpt',
+                        hidden:true
+                    },{
+                        xtype: 'DataCite-ResourceOptAndTitle'   
+                    }
+                ]
+            },{
+                disabled: disabled,
+                xtype: 'DataCite-Rights',
+                title: 'Licenses and Rights'
+            },{
+                disabled: disabled,
+                xtype: 'DataCite-Authors',
+                title: 'Authors (Persons and/or Institutions)'
+            },{
+                disabled: disabled,
+                xtype: 'isoviewDatasetContact',
+                title: 'Contact Person(s) / Point of Contact'
+            },{
+                disabled: disabled,
+                xtype: 'DataCite-Contributors',
+                title: 'Contributors (Persons and/or Institutions)'
+            },{
+                disabled: disabled,
+                xtype: 'DataCite-Descriptions'
+            },{
+                disabled: disabled,
+                xtype: 'DataCite-SubjectsGCMD',
+                title: 'Thesaurus Keywords'
+            },{
+                disabled: disabled,
+                xtype: 'DataCite-Subjects',
+                title: 'Free Keywords (Supply as many keywords as you want)'
+            },{                            
+                disabled: disabled,
+                xtype: 'ISO-Extent'
+            },{
+                disabled: disabled,
+                xtype: 'DataCite-PMDDates'
+            },{
+                disabled: disabled,
+                xtype: 'DataCite-RelatedIdentifiers'                    
+            }
+    ];
+
+    // add extra items described in the URL
+    for (var extra_field in extra_fields) {
+        items.push({
+                disabled: disabled,
+                xtype: extra_fields[extra_field].xtype,
+                title: extra_fields[extra_field].title,
+                thesaurusList: extra_fields[extra_field].thesaurusList
+        });
+    }
+
+    items.push({
+                disabled: disabled,
+                xtype: 'DataCite-AlternateIdentifiers',
+                hidden:true
+            },{ 
+                disabled: disabled,   
+                xtype: 'DataCite-Sizes',
+                hidden:true
+            },{
+                disabled: disabled,
+                xtype: 'DataCite-Formats',
+                hidden:true
+            },{
+                html:'<h2>The metadata are stored inside your browser. Please save a copy using the Save As button in the upper right of the form. <br><br></h2>'                
+            }           
+    );
+
+
 Ext.define('PMDMeta.view.main.DataCiteForm', {
     extend: 'Ext.form.Panel',
     requires: [
-	'PMDMeta.view.datacite.Rights'	,
-	'PMDMeta.view.datacite.Formats',
-	'PMDMeta.view.datacite.Sizes',
-	'PMDMeta.view.datacite.Authors',
-	'PMDMeta.view.datacite.Contributors',	
-	'PMDMeta.view.datacite.Resource',
-	'PMDMeta.view.datacite.ResourceOpt',	
-	'PMDMeta.view.datacite.Titles',
-	'PMDMeta.view.datacite.Subjects',
-	'PMDMeta.view.datacite.SubjectsGCMD',
-//	'PMDMeta.view.datacite.SubjectsGEMET',	
-	'PMDMeta.view.datacite.AlternateIdentifiers',
-	'PMDMeta.view.datacite.RelatedIdentifiers',
-	'PMDMeta.view.datacite.Descriptions',
-	'PMDMeta.view.datacite.GeoLocations',
-	'PMDMeta.view.datacite.Dates',
+        'PMDMeta.view.datacite.Rights'  ,
+        'PMDMeta.view.datacite.Formats',
+        'PMDMeta.view.datacite.Sizes',
+        'PMDMeta.view.datacite.Authors',
+        'PMDMeta.view.datacite.Contributors',   
+        'PMDMeta.view.datacite.Resource',
+        'PMDMeta.view.datacite.ResourceOpt',    
+        'PMDMeta.view.datacite.Titles',
+        'PMDMeta.view.datacite.Subjects',
+        'PMDMeta.view.datacite.SubjectsGCMD',
+        'PMDMeta.view.datacite.AlternateIdentifiers',
+        'PMDMeta.view.datacite.RelatedIdentifiers',
+        'PMDMeta.view.datacite.Descriptions',
+        'PMDMeta.view.datacite.GeoLocations',
+        'PMDMeta.view.datacite.Dates',
         'PMDMeta.view.datacite.ResourceOptAndTitle',
-//	'PMDMeta.view.iso.TemporalCoverage',	
-	'PMDMeta.view.main.ThesaurusWindow',
         'PMDMeta.store.escidoc.Author',
         'PMDMeta.store.escidoc.Title',
         'PMDMeta.store.escidoc.Date',
@@ -42,37 +125,36 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
         'PMDMeta.store.iso.Extent',
         'PMDMeta.view.iso.Extent',
         'PMDMeta.store.dif.SpatialCoverage',
-        'PMDMeta.store.dif.Project'
+        'PMDMeta.store.dif.Project',
+        'PMDMeta.view.ieda.DataTypes'
     ],
 
-	xtype: 'DataCite-Form',
-	title: 'DataCite Metadata for Dataset: ' + dataset,
-	autoScroll: true,
-	bodyPadding: 0,
-	defaults:{margin: '0 0 10 0'},   
-	layout:  {type: 'vbox', align: 'stretch'},
-	initComponent: function() {
-		new PMDMeta.store.datacite.Author();
-		new PMDMeta.store.datacite.Title();
-		new PMDMeta.store.datacite.AlternateIdentifier();
-		new PMDMeta.store.datacite.Subject();
-		new PMDMeta.store.datacite.SubjectGCMD();
-//		new PMDMeta.store.datacite.SubjectGEMET();		
-		new PMDMeta.store.datacite.Size();
-		new PMDMeta.store.datacite.Date();
-		new PMDMeta.store.datacite.Right(); 
-		new PMDMeta.store.datacite.ResourceOpt();
-		new PMDMeta.store.datacite.Resource();
-		new PMDMeta.store.datacite.RelatedIdentifier();
-		new PMDMeta.store.datacite.GeoLocation();
-		new PMDMeta.store.datacite.Format();
-		new PMDMeta.store.datacite.Description();
-		new PMDMeta.store.datacite.Contributor();
-
-//		new PMDMeta.store.iso.TemporalCoverage();
-		new PMDMeta.store.escidoc.Author();
-		new PMDMeta.store.escidoc.Title();
-		new PMDMeta.store.escidoc.Date();
+    xtype: 'DataCite-Form',
+    title: 'DataCite Metadata for Dataset: ' + dataset,
+    autoScroll: true,
+    bodyPadding: 0,
+    defaults:{margin: '0 0 10 0'},   
+    layout:  {type: 'vbox', align: 'stretch'},
+    initComponent: function() {
+        new PMDMeta.store.datacite.Author();
+        new PMDMeta.store.datacite.Title();
+        new PMDMeta.store.datacite.AlternateIdentifier();
+        new PMDMeta.store.datacite.Subject();
+        new PMDMeta.store.datacite.SubjectGCMD();     
+        new PMDMeta.store.datacite.Size();
+        new PMDMeta.store.datacite.Date();
+        new PMDMeta.store.datacite.Right(); 
+        new PMDMeta.store.datacite.ResourceOpt();
+        new PMDMeta.store.datacite.Resource();
+        new PMDMeta.store.datacite.RelatedIdentifier();
+        new PMDMeta.store.datacite.GeoLocation();
+        new PMDMeta.store.datacite.Format();
+        new PMDMeta.store.datacite.Description();
+        new PMDMeta.store.datacite.Contributor();
+        new PMDMeta.store.ieda.DataTypes();
+        new PMDMeta.store.escidoc.Author();
+        new PMDMeta.store.escidoc.Title();
+        new PMDMeta.store.escidoc.Date();
                 
                 if (!Ext.getStore('isoDatasetContact'))
                     new PMDMeta.store.iso.DatasetContact();
@@ -101,7 +183,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                             resOptTitle.get("titleType")!=title.get("titleType")||
                             resOptTitle.get("language")!=title.get("lang"))){                           
                         if (title) {
-                            title.beginEdit()
+                            title.beginEdit();
                             title.set('title',resOptTitle.get("title"));
                             title.set('titleType',resOptTitle.get("titleType"));
                             title.set('lang',resOptTitle.get("language"));
@@ -126,7 +208,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                                 resourceTypeGeneral:resOptTitle.get("resourceTypeGeneral")});
                         }
                     }                    
-                }
+                };
                 //pull information from associated stores
                 var harvestValues=function(){
                     var resOptTitle=resOptTitleStore.getAt(0);
@@ -167,7 +249,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                     resOptTitleStore.removeAll();
                     resOptTitleStore.insert(0,resOptTitle);
 
-                }
+                };
 
                 //sync stores
                 resOptTitleStore.on('update',distributeValues);
@@ -176,91 +258,10 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                 titleStore.on('datachanged',harvestValues);    
                 resOptStore.on('update',harvestValues);
                 resOptStore.on('datachanged',harvestValues);     
-                resOptStore.on('clear',function (){resOptTitleStore.removeAll()});
-                this.callParent();   		
-	},
+                resOptStore.on('clear',function (){resOptTitleStore.removeAll();});
+                this.callParent();          
+    },
 
-	items:[         {
-				xtype: 'panel',
-				height: 182,
-				frame: true,
-				title: 'Resource Information',
-                disabled: disabled,
-				items:[
-                                    {
-					xtype: 'DataCite-Resource'
-                                    },{
-					xtype: 'DataCite-ResourceOpt',
-                                        hidden:true
-                                    },{
-					xtype: 'DataCite-ResourceOptAndTitle'	
-                                    }
-                                ]
-			},{
-                disabled: disabled,
-				xtype: 'DataCite-Rights',
-				title: 'Licenses and Rights'
-			},{
-                disabled: disabled,
-				xtype: 'DataCite-Authors',
-				title: 'Authors (Persons and/or Institutions)'
-			},{
-                disabled: disabled,
-				xtype: 'isoviewDatasetContact',
-				title: 'Contact Person(s) / Point of Contact'
-			},{
-                disabled: disabled,
-				xtype: 'DataCite-Contributors',
-				title: 'Contributors (Persons and/or Institutions)'
-			},/*{
-				xtype: 'DataCite-Titles',
-                                hidden:true
-			},*/{
-                disabled: disabled,
-				xtype: 'DataCite-Descriptions'
-			},{
-                disabled: disabled,
-				xtype: 'DataCite-SubjectsGCMD',
-                                title: 'Thesaurus Keywords (Choose at least one keyword from each thesaurus)'
-			},{
-                disabled: disabled,
-				xtype: 'DataCite-Subjects',
-                                title: 'Free Keywords (Supply as many keywords as you want)'
-			},{                            
-/*				xtype: 'DataCite-SubjectsGEMET'
-			},{    
-				xtype: 'DataCite-GeoLocations'
-			},{    
-*/				disabled: disabled,
-                xtype: 'ISO-Extent'
-/*			},{
-				xtype: 'ISO-TemporalCoverage'				    
-*/			},{
-                disabled: disabled,
-				xtype: 'DataCite-PMDDates'
-			}/*,{
-				xtype: 'DataCite-Dates',
-                                disabled: false
-			}*/,{
-                disabled: disabled,
-				xtype: 'DataCite-RelatedIdentifiers'				    
-
-			},{
-                disabled: disabled,
-				xtype: 'DataCite-AlternateIdentifiers',
-				hidden:true
-			},{ 
-                disabled: disabled,   
-				xtype: 'DataCite-Sizes',
-				hidden:true
-			},{
-                disabled: disabled,
-				xtype: 'DataCite-Formats',
-				hidden:true
-			},{
-                            html:'<h2>The metadata are stored inside your browser. Please save a copy using the SAVE button in the upper right of the form. <br><br></h2> '
-                            
-                        }			
-	]
+    items: items
 
 });

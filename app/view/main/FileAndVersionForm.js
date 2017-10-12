@@ -13,6 +13,7 @@ var curator = urlparameter.curator;
 var xml_file = urlparameter.object;
 var submitText = curator == "False" ? "Submit" : "Send to Submitter";
 
+
 Ext.define('PMDMeta.view.main.FileAndVersionForm', {
     extend: 'Ext.container.Container',
     requires: [
