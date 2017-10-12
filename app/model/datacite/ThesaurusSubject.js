@@ -14,7 +14,7 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
 		{name: 'subjectScheme',   type: 'string', mapping:function(data){
                     var mdkeyword=data.parentNode;
                     var descriptivekeywords=mdkeyword.parentNode;
-                    var gcmd1=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(NASA/Global Change Master Directory)',descriptivekeywords);                     
+                    var gcmd1=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(NASA)',descriptivekeywords);                     
                     var gcmd2=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(GCMD)',descriptivekeywords);                     
                     var gcmd3=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(Earth Science Keywords)',descriptivekeywords);                                         
                     if (gcmd1 && gcmd2 && gcmd3){
@@ -35,7 +35,7 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
 		{name: 'subjectSchemeURI',   type: 'string', mapping:function(data){
                     var mdkeyword=data.parentNode;
                     var descriptivekeywords=mdkeyword.parentNode;
-                    var gcmd1=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(NASA/Global Change Master Directory)',descriptivekeywords);                     
+                    var gcmd1=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(NASA)',descriptivekeywords);                     
                     var gcmd2=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(GCMD)',descriptivekeywords);                     
                     var gcmd3=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(Earth Science Keywords)',descriptivekeywords);                                         
                     if (gcmd1 && gcmd2 && gcmd3)
