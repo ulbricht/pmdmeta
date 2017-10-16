@@ -17,6 +17,7 @@ foreach ($thesauruses as $thesaurus){
 
 	$thesaurusuri="";
 	$thesaurusname="";
+	$codelistvalue="Theme";
 
 	if (strlen($thesaurus)==0)
 		continue;
@@ -25,6 +26,8 @@ foreach ($thesauruses as $thesaurus){
 	foreach (readfromfile($thesaurus,"_index.csv") as $uri =>$name){
 		$thesaurusuri=$uri;
 		$thesaurusname=array_shift($name);
+		if (count($name) > 0) 
+			$codelistvalue=array_shift($name);
 	}
 	$rel=readfromfile($thesaurus,"_relations.csv");
 	$key=readfromfile($thesaurus,"_keywords.csv");
@@ -34,14 +37,14 @@ foreach ($thesauruses as $thesaurus){
 //var_dump($elements);return;
 
 $ret['success']='true';
-	foreach (walktree($rel,$def,$key,$thesaurusuri,$thesaurusname,$elements) as $child)
+	foreach (walktree($rel,$def,$key,$thesaurusuri,$thesaurusname,$codelistvalue,$elements) as $child)
 		$ret['children'][]=$child;
 }
 
 
 echo json_encode($ret);
 
-function walktree ($relations, $definitions, $keys, $thesaurusuri, $thesaurusname, $items,$searchkey=""){
+function walktree ($relations, $definitions, $keys, $thesaurusuri, $thesaurusname, $codelistvalue, $items,$searchkey=""){
 	$ret=array();
 	foreach ($items as $element){	
 		$obj=array();
@@ -58,12 +61,13 @@ function walktree ($relations, $definitions, $keys, $thesaurusuri, $thesaurusnam
 
 		$obj["thesaurusuri"]= $thesaurusuri;
 		$obj["thesaurusname"]= $thesaurusname;
+		$obj["codelistvalue"]= $codelistvalue;
 
 		if (count($relations[$element])==0){
 			$obj['leaf']='true';
 		}else{
 			$obj['leaf']='false';
-			$obj['children']=walktree($relations, $definitions, $keys, $thesaurusuri, $thesaurusname, $relations[$element]);
+			$obj['children']=walktree($relations, $definitions, $keys, $thesaurusuri, $thesaurusname, $codelistvalue, $relations[$element]);
 		}
 		array_push($ret,$obj);
 	}

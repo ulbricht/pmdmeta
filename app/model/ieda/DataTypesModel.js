@@ -1,40 +1,24 @@
 Ext.define('PMDMeta.model.ieda.DataTypesModel', {
 	extend: 'Ext.data.Model',
 	fields: [
-		// {name: 'subject',  type: 'string', mapping:function(data){
-  //                   var mdkeyword=data.parentNode;
-  //                   var descriptivekeywords=mdkeyword.parentNode;
-  //                   var thesaurus=Ext.DomQuery.selectNode('gmd|thesaurusName',descriptivekeywords); 
-  //                   var keyword=Ext.DomQuery.selectNode('gco|CharacterString',data);
-  //                   if (thesaurus && keyword)
-  //                       return Ext.String.htmlDecode(keyword.firstChild.textContent);
-  //                   else
-  //                       return "";
-  //               }},
-		// {name: 'subjectScheme',   type: 'string', mapping:function(data){
-  //                   var mdkeyword=data.parentNode;
-  //                   var descriptivekeywords=mdkeyword.parentNode;
-  //                   var ecl=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(EarthChem Library)',descriptivekeywords);                     
-  //                   if (ecl)
-  //                       return "IEDA data type categories";                     
-  //                   return "";
-  //               }},
-		// {name: 'subjectSchemeURI',   type: 'string', mapping:function(data){
-  //                   var mdkeyword=data.parentNode;
-  //                   var descriptivekeywords=mdkeyword.parentNode;
-  //                   var ecl=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(EarthChem Library)',descriptivekeywords);                     
-  //                   if (ecl)
-  //                       return "http://www.earthchem.org/library";               
-  //                   return "";
-  //               }},
-		// {name: 'lang', type: 'string', mapping: function(data){
-  //                    return "en";
-//		}}	
         {name: 'subject',  type: 'string', mapping :function(data) {
                 return Ext.String.htmlDecode(data.firstChild.textContent);
             }},
         {name: 'subjectScheme',   type: 'string', mapping: '@subjectScheme'},
         {name: 'subjectSchemeURI',   type: 'string', mapping: '@schemeURI'},
+        {name: 'codeListValue', type: 'string', mapping:function(data){
+            var codeListValue="Theme";
+            var subject=Ext.String.htmlDecode(data.firstChild.textContent);
+            var envelope=data.parentNode.parentNode.parentNode;
+            var iso=Ext.DomQuery.selectNode('gmd|MD_Metadata',envelope); 
+            var id_info=Ext.DomQuery.selectNode('gmd|identificationInfo',iso); 
+            var data_id=Ext.DomQuery.selectNode('gmd|MD_DataIdentification',id_info);
+            var descriptivekeywords=Ext.DomQuery.selectNode('gmd|descriptiveKeywords:contains('+subject+')',data_id);
+            var keyword_type_code=Ext.DomQuery.selectNode('gmd|MD_KeywordTypeCode',descriptivekeywords); 
+            if (keyword_type_code)
+                codeListValue=keyword_type_code.getAttribute("codeListValue");
+            return codeListValue;  
+        }},
         {name: 'lang', type: 'string', mapping: function(data){
         for (var i=0;i<data.attributes.length;i++){         
             if (data.attributes.item(i).localName=='lang')
@@ -64,22 +48,25 @@ Ext.define('PMDMeta.model.ieda.DataTypesModel', {
 	},
     asISOXML: function (){
         var ret=""; 
-        var scheme="";
-        var uri="";
-        if (this.get('subjectScheme') && this.get('subjectScheme').length>0)
-            scheme=this.get('subjectScheme'); 
-        if (this.get('subjectSchemeURI') && this.get('subjectSchemeURI').length>0)
-            uri=' schemeURI="'+this.get('subjectSchemeURI')+'"';    
-        if (this.get("subject").length>0 || uri.length>0){
+        // var scheme="";
+        // var uri="";
+        // var codeListValue="Theme";
+        // if (this.get('subjectScheme') && this.get('subjectScheme').length>0)
+        //     scheme=this.get('subjectScheme'); 
+        // if (this.get('subjectSchemeURI') && this.get('subjectSchemeURI').length>0)
+        //     uri=' schemeURI="'+this.get('subjectSchemeURI')+'"'; 
+        // if (this.get('codeListValue') && this.get('codeListValue').length>0)
+        //     codeListValue=this.get('codeListValue');       
+        if (this.get("subject").length>0){
             ret+='<gmd:keyword>';
             ret+='<gco:CharacterString>'+Ext.String.htmlEncode(this.get("subject"))+'</gco:CharacterString>';
             ret+='</gmd:keyword>';
-            if (scheme.length>0) {
-                ret+='<gmd:type>';
-                ret+='<gmd:MD_KeywordTypeCode codeList="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">';
-                ret+=scheme;
-                ret+='</gmd:MD_KeywordTypeCode>';
-                ret+='</gmd:type>';
+            // if (scheme.length>0) {
+            //     ret+='<gmd:type>';
+            //     ret+='<gmd:MD_KeywordTypeCode codeList="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="'+codeListValue+'">';
+            //     ret+=scheme;
+            //     ret+='</gmd:MD_KeywordTypeCode>';
+            //     ret+='</gmd:type>';
                 // ret+='<gmd:thesaurusName>';
                 // ret+='<gmd:CI_Citation>';
                 // ret+='<gmd:title>';
@@ -96,8 +83,7 @@ Ext.define('PMDMeta.model.ieda.DataTypesModel', {
                 // ret+='</gmd:identifier>';
                 // ret+='</gmd:CI_Citation>';
                 // ret+='</gmd:thesaurusName>';
-
-            }
+//            }
         }
         return ret;
     },

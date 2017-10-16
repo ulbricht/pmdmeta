@@ -6,10 +6,23 @@ Ext.define('PMDMeta.model.datacite.Subject', {
 			}},
 		{name: 'subjectScheme',   type: 'string', mapping: '@subjectScheme'},
 		{name: 'subjectSchemeURI',   type: 'string', mapping: '@schemeURI'},
+        {name: 'codeListValue', type: 'string', mapping:function(data){
+            var codeListValue="Theme";
+            var subject=Ext.String.htmlDecode(data.firstChild.textContent);
+            var envelope=data.parentNode.parentNode.parentNode;
+            var iso=Ext.DomQuery.selectNode('gmd|MD_Metadata',envelope); 
+            var id_info=Ext.DomQuery.selectNode('gmd|identificationInfo',iso); 
+            var data_id=Ext.DomQuery.selectNode('gmd|MD_DataIdentification',id_info);
+            var descriptivekeywords=Ext.DomQuery.selectNode('gmd|descriptiveKeywords:contains('+subject+')',data_id);
+            var keyword_type_code=Ext.DomQuery.selectNode('gmd|MD_KeywordTypeCode',descriptivekeywords); 
+            if (keyword_type_code)
+                codeListValue=keyword_type_code.getAttribute("codeListValue");
+            return codeListValue;  
+        }},
 		{name: 'lang', type: 'string', mapping: function(data){
 		for (var i=0;i<data.attributes.length;i++){			
 			if (data.attributes.item(i).localName=='lang')
-				return data.attributes.item(i).value
+				return data.attributes.item(i).value;
 		}		
 		return null;
 		}}	
@@ -38,14 +51,13 @@ Ext.define('PMDMeta.model.datacite.Subject', {
             if (this.get("subject").length>0){
                 ret+='<gmd:keyword>';
                 ret+='<gco:CharacterString>'+Ext.String.htmlEncode(this.get("subject"))+'</gco:CharacterString>';
-                ret+='</gmd:keyword>';
-                
+                ret+='</gmd:keyword>'; 
             }
             return ret;
         },
         asDifXML: function(param){           
             if (param=='scienceparamenters'){
-                var sciparams=this.get('subject').split('>')                
+                var sciparams=this.get('subject').split('>');                
                 var category="";
                 var topic="";
                 var term="";

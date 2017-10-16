@@ -10,7 +10,8 @@
 var urlparameter=Ext.Object.fromQueryString(location.search.substring(1));
 var disabled = (urlparameter.editable == 'False');
 var dataset = urlparameter.dataset;
-var extra_fields = JSON.parse(urlparameter.extra.replace(/\'/g, '"'));
+if(urlparameter && urlparameter.extra)
+    var extra_fields = JSON.parse(urlparameter.extra.replace(/\'/g, '"'));
 
 // set up the items to display on the form
 var items = [ {

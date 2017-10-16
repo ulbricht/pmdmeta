@@ -690,13 +690,13 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         iso+=datasetcontact.asXML();
         iso+=Ext.getStore('DataCiteSubject').asISOXML();
         iso+=Ext.getStore('DataCiteSubjectGCMD').asISOXML();
+        iso+=Ext.getStore('DataTypes').asISOXML();
         iso+=Ext.getStore('DataCiteRight').asISOXML();        
         iso+=identificationinfo.asXML('language');
         iso+=identificationinfo.asXML('isotopic');
 //        iso+=Ext.getStore('DataCiteGeoLocation').asISOXML();
         iso+=Ext.getStore('isoExtent').asXML();
         iso+=Ext.getStore('DataCiteDate').asISOXML('coverage');
-        iso+=Ext.getStore('DataTypes').asISOXML();
         iso+='</gmd:MD_DataIdentification>';
         iso+='</gmd:identificationInfo>';             
 	
@@ -723,9 +723,9 @@ Ext.define('PMDMeta.store.escidoc.Item', {
     dif+='<dif:ISO_Topic_Category>geoscientificInformation</dif:ISO_Topic_Category>'
     dif+=Ext.getStore('DataCiteSubjectGCMD').asDifXML('keyword');
     dif+=Ext.getStore('DataCiteSubject').asDifXML('keyword');
+    dif+=Ext.getStore('DataTypes').asDifXML('scienceparamenters'); 
     dif+=Ext.getStore('isoExtent').asDifXML(); 
-    dif+=Ext.getStore('difProject').asDifXML();  
-    dif+=Ext.getStore('DataTypes').asDifXML('scienceparamenters');  
+    dif+=Ext.getStore('difProject').asDifXML();   
     dif+='<dif:Data_Center>';
     dif+='<dif:Data_Center_Name>';
     dif+='<dif:Short_Name>Deutsches GeoForschungsZentrum GFZ</dif:Short_Name>';

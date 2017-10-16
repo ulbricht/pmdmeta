@@ -11,6 +11,7 @@ var dataset = urlparameter.dataset;
 var editor_metafile = urlparameter.editor_metafile;
 var curator = urlparameter.curator;
 var xml_file = urlparameter.object;
+var extra = urlparameter.extra;
 var submitText = curator == "False" ? "Submit" : "Send to Submitter";
 
 
@@ -247,7 +248,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                                         buttons: Ext.Msg.OK,
                                                         fn: function(btn, text){
                                                         if (btn === 'ok'){                                        
-                                                            window.location.href='?object='+xml_file+'&editable=False'+'&editor_metafile='+editor_metafile+'&dataset='+dataset+'&curator='+curator;                                  
+                                                            window.location.href='?object='+xml_file+'&editable=False'+'&editor_metafile='+editor_metafile+'&dataset='+dataset+'&curator='+curator+'extra'+extra;                                  
                                                         }
                                                     }
                                                     }); 
