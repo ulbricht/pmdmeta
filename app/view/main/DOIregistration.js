@@ -4,9 +4,9 @@ Ext.define('PMDMeta.view.main.DOIregistration', {
     width:600,
     bodyPadding: 10,
     title: 'DOI registration',
-	closeAction: 'hide',
+    closeAction: 'hide',
     layout: 'fit',
-    landingpageurl:'http://pmd.gfz-potsdam.de/',
+    landingpageurl:'http://dataservices.gfz-potsdam.de/',
     landingpagelayout: 'panmetaworks',
     landingpageappendix: '/showshort.php?id=',   
     setup: function(){
