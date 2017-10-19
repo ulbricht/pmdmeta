@@ -62,7 +62,11 @@ Ext.define('PMDMeta.view.datacite.FundingReference', {
                     store: 'FunderCombo',
                     editable: true,
 		    displayField: 'name',
-		    valueField: 'name'
+		    valueField: 'name',
+		    enableRegEx: true,
+		    anyMatch: true,
+		    typeAhead: true,
+		    minChars: 2
 		})
             },{
                 header: 'Funder ID',
