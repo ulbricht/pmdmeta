@@ -63,7 +63,6 @@ Ext.define('PMDMeta.view.datacite.FundingReference', {
                     editable: true,
 		    displayField: 'name',
 		    valueField: 'name',
-		    enableRegEx: true,
 		    anyMatch: true,
 		    typeAhead: true,
 		    minChars: 2
