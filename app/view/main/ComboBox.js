@@ -9,7 +9,9 @@ Ext.define('PMDMeta.view.main.ComboBox', {
     queryMode: 'local',
     emptyText: 'please choose',
     listConfig: {
-		getInnerTpL: function () {return '<div data-qtip="{name}: {qtip}">{name}</div>';}
+        getInnerTpl : function() {
+            return '<div class="x-combo-list-item" data-qtip="{name}: {qtip}">{name} </div>';
+        }
     },
     initComponent: function() {
         var me=this;
