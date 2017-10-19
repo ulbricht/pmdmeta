@@ -14,7 +14,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                                 'DataCiteAuthor','DataCiteTitle','DataCiteAlternateIdentifier','DataCiteSubject',
                                 'DataCiteSize','DataCiteDate','DataCiteRight','DataCiteResourceOpt','DataCiteResource',
                                 'DataCiteRelatedIdentifier','DataCiteGeoLocation','DataCiteFormat','DataCiteDescription',
-                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD'
+                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD','DataCiteFundingReference'
                             //ISO    
                             ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent',
                             'difSpatialCoverage','difProject'
@@ -24,7 +24,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                                 'DataCiteAuthor','DataCiteTitle','DataCiteAlternateIdentifier','DataCiteSubject',
                                 'DataCiteSize','DataCiteDate','DataCiteRight','DataCiteResourceOpt','DataCiteResource',
                                 'DataCiteRelatedIdentifier'/*,'DataCiteGeoLocation'*/,'DataCiteFormat','DataCiteDescription',
-                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD','DataCiteResourceOptAndTitle'
+                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD','DataCiteResourceOptAndTitle','DataCiteFundingReference'
                             //ISO    
                             ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent'
                            ),
@@ -546,7 +546,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                           place:isogeo.get('description')});      
         });
         
-        var resource='<resource xsi:schemaLocation="http://datacite.org/schema/kernel-3 http://schema.datacite.org/meta/kernel-3/metadata.xsd" xmlns="http://datacite.org/schema/kernel-3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+        var resource='<resource xmlns="http://datacite.org/schema/kernel-4" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4/metadata.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
         var dcrs=Ext.getStore('DataCiteResource');
         var dcrsopt=Ext.getStore('DataCiteResourceOpt');
         resource+=dcrs.asXML('identifier');
@@ -586,6 +586,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         resource+=Ext.getStore('DataCiteRight').asXML();
         resource+=Ext.getStore('DataCiteDescription').asXML();
         resource+=Ext.getStore('DataCiteGeoLocation').asXML();
+        resource+=Ext.getStore('DataCiteFundingReference').asXML();
         resource+='</resource>';
         return resource;
      },

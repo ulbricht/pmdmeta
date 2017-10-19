@@ -3,8 +3,19 @@ Ext.define('PMDMeta.model.datacite.Author', {
     fields: [
         {name: 'name',  type: 'string', mapping: function(data){
                     var name=Ext.DomQuery.selectValue('creatorName',data);
-                    if (name)
+                    var familyname=Ext.DomQuery.selectValue('familyName',data);
+
+		    if (familyname && familyname.length >0){ //prefer familyname
+			return Ext.String.htmlDecode(familyname);
+		    }else if (name && name.length > 0 )
                         return Ext.String.htmlDecode(name);
+                    else
+                        return "";
+                }},
+        {name: 'firstname',  type: 'string', mapping: function(data){
+                    var givenname=Ext.DomQuery.selectValue('givenName',data);
+                    if (givenname)
+                        return Ext.String.htmlDecode(givenname);
                     else
                         return "";
                 }},
@@ -23,12 +34,38 @@ Ext.define('PMDMeta.model.datacite.Author', {
     ],	validators: {
 		name: { type: 'length', min: 1 }
 	},
+	getFullName: function(){
+		var name=this.get('name');
+		var firstname=this.get('firstname');
+		if (firstname.length>0)
+		   return name+", "+firstname;
+		else
+		   return name;
+	},
+	getGivenName: function(){
+		return this.get('firstname');
+	},
+	getFamilyName: function(){
+		var name=this.get('name');
+		var firstname=this.get('firstname');
+		if (firstname.length >0)
+			return name;
+		else 
+			return "";
+	},
 	asXML: function(){
 		var type="";
 		var result="";
-		if (this.get('name').length>0)
-			result+='<creatorName>'+Ext.String.htmlEncode(this.get('name'))+'</creatorName>';
+		if (this.getFullName().length>0)
+			result+='<creatorName>'+Ext.String.htmlEncode(this.getFullName())+'</creatorName>';
 			
+		if (this.getGivenName().length>0)
+			result+='<givenName>'+Ext.String.htmlEncode(this.getGivenName())+'</givenName>';
+
+		if (this.getFamilyName().length>0)
+			result+='<familyName>'+Ext.String.htmlEncode(this.getFamilyName())+'</familyName>';
+
+
 		if (this.get('nameIdentifier') && this.get('nameIdentifier').length>0){
 			var scheme="";
 			var uri="";
@@ -58,8 +95,14 @@ Ext.define('PMDMeta.model.datacite.Author', {
                     return "";
             
             
-		if (this.get('name').length>0)
-		contributorname+='<contributorName>'+Ext.String.htmlEncode(this.get('name'))+'</contributorName>';
+		if (this.getFullName().length>0)
+			contributorname+='<contributorName>'+Ext.String.htmlEncode(this.getFullName())+'</contributorName>';
+
+		if (this.getGivenName().length>0)
+			result+='<givenName>'+Ext.String.htmlEncode(this.getGivenName())+'</givenName>';
+
+		if (this.getFamilyName().length>0)
+			result+='<familyName>'+Ext.String.htmlEncode(this.getFamilyName())+'</familyName>';
 			
 		if (this.get('nameIdentifier') && this.get('nameIdentifier').length>0){
 			var scheme="";
@@ -94,7 +137,7 @@ Ext.define('PMDMeta.model.datacite.Author', {
         asISOXML: function(){
             var ret="";
             
-            if (this.get('name').length==0 && this.get('name').length==0)
+            if (this.getFullName().length==0)
                 return ret;
 
 	    var iduri="";
@@ -118,9 +161,9 @@ Ext.define('PMDMeta.model.datacite.Author', {
             
              ret+='<gmd:citedResponsibleParty '+iduri+' >';
              ret+='<gmd:CI_ResponsibleParty>';
-             if (this.get('name').length>0){             
+             if (this.getFullName().length>0){             
                 ret+='<gmd:individualName>';
-                ret+='<gco:CharacterString>'+Ext.String.htmlEncode(this.get('name'))+'</gco:CharacterString>';
+                ret+='<gco:CharacterString>'+Ext.String.htmlEncode(this.getFullName())+'</gco:CharacterString>';
                 ret+='</gmd:individualName>';
              }
              
@@ -145,15 +188,15 @@ Ext.define('PMDMeta.model.datacite.Author', {
         },
         asEscidocXML: function(){
             var result="";
-            if (this.get('name').length>0) 
-                    result+='<dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">'+this.get('name')+'</dc:creator>';			
+            if (this.getFullName().length>0) 
+                    result+='<dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">'+this.getFullName()+'</dc:creator>';			
             return result;           
         }, 
         asDifXML: function(){
-            return Ext.String.htmlEncode(this.get('name'));
+            return Ext.String.htmlEncode(this.getFullName());
         },
         getKey: function(){
-            var ret=this.get('name').trim()+this.get('nameIdentifier').trim()+this.get('nameIdentifierScheme').trim()+this.get('nameIdentifierSchemeURI')+this.get('affiliation').trim();
+            var ret=this.getFullName().trim()+this.get('nameIdentifier').trim()+this.get('nameIdentifierScheme').trim()+this.get('nameIdentifierSchemeURI')+this.get('affiliation').trim();
             if (ret.length>0)
                 return ret;
             else

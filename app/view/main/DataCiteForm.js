@@ -26,6 +26,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 	'PMDMeta.view.datacite.GeoLocations',
 	'PMDMeta.view.datacite.Dates',
         'PMDMeta.view.datacite.ResourceOptAndTitle',
+        'PMDMeta.view.datacite.FundingReference',
 //	'PMDMeta.view.iso.TemporalCoverage',	
 	'PMDMeta.view.main.ThesaurusWindow',
         'PMDMeta.store.escidoc.Author',
@@ -64,6 +65,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 		new PMDMeta.store.datacite.Format();
 		new PMDMeta.store.datacite.Description();
 		new PMDMeta.store.datacite.Contributor();
+		new PMDMeta.store.datacite.FundingReference();
 
 //		new PMDMeta.store.iso.TemporalCoverage();
 		new PMDMeta.store.escidoc.Author();
@@ -227,6 +229,9 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                                 disabled: false
 			}*/,{
 				xtype: 'DataCite-RelatedIdentifiers'				    
+
+			},{
+				xtype: 'DataCite-FundingReference'				    
 
 			},{
 				xtype: 'DataCite-AlternateIdentifiers',

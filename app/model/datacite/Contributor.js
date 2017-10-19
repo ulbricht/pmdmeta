@@ -3,8 +3,19 @@ Ext.define('PMDMeta.model.datacite.Contributor', {
     fields: [
         {name: 'name',  type: 'string', mapping: function(data){
                     var name=Ext.DomQuery.selectValue('contributorName',data);
-                    if (name)
+                    var familyname=Ext.DomQuery.selectValue('familyName',data);
+
+		    if (familyname && familyname.length >0){
+			return Ext.String.htmlDecode(familyname);
+		    }else if (name && name.length > 0 )
                         return Ext.String.htmlDecode(name);
+                    else
+                        return "";
+                }},
+        {name: 'firstname',  type: 'string', mapping: function(data){
+                    var givenname=Ext.DomQuery.selectValue('givenName',data);
+                    if (givenname)
+                        return Ext.String.htmlDecode(givenname);
                     else
                         return "";
                 }},
@@ -21,15 +32,41 @@ Ext.define('PMDMeta.model.datacite.Contributor', {
             }
         }
         
-    ],	asXML: function(){
+    ],
+	getFullName: function(){
+		var name=this.get('name');
+		var firstname=this.get('firstname');
+		if (firstname.length>0)
+		   return name+", "+firstname;
+		else
+		   return name;
+	},
+	getGivenName: function(){
+		return this.get('firstname');
+	},
+	getFamilyName: function(){
+		var name=this.get('name');
+		var firstname=this.get('firstname');
+		if (firstname.length >0)
+			return name;
+		else 
+			return "";
+	},
+	asXML: function(){
 		var result="";
                 var contributorname="";
                 var nameidentifier="";
                 var affiliation="";
                                
-		if (this.get('name').length>0)
-		contributorname+='<contributorName>'+Ext.String.htmlEncode(this.get('name'))+'</contributorName>';
+		if (this.getFullName().length>0)
+			contributorname+='<contributorName>'+Ext.String.htmlEncode(this.getFullName())+'</contributorName>';
 			
+		if (this.getGivenName().length>0)
+			result+='<givenName>'+Ext.String.htmlEncode(this.getGivenName())+'</givenName>';
+
+		if (this.getFamilyName().length>0)
+			result+='<familyName>'+Ext.String.htmlEncode(this.getFamilyName())+'</familyName>';
+
 		if (this.get('nameIdentifier') && this.get('nameIdentifier').length>0){
 			var scheme="";
 			var uri="";
@@ -123,7 +160,7 @@ Ext.define('PMDMeta.model.datacite.Contributor', {
             
         },*/
         getKey: function(){
-            var ret=this.get('name').trim()+this.get('nameIdentifier').trim()+this.get('nameIdentifierScheme').trim()+this.get('nameIdentifierSchemeURI')+this.get('affiliation').trim();
+            var ret=this.getFullName().trim()+this.get('nameIdentifier').trim()+this.get('nameIdentifierScheme').trim()+this.get('nameIdentifierSchemeURI')+this.get('affiliation').trim();
             if (ret.length>0)
                 return ret;
             else

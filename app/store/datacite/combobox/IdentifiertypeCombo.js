@@ -10,8 +10,10 @@ Ext.define('PMDMeta.store.datacite.combobox.IdentifiertypeCombo', {
 					{abbr:'EAN13',name:'EAN13', qtip:'European Article Number, now renamed International Article Number, but retaining the original acronym, is a 13-digit barcoding standard which is a superset of the original 12-digit Universal Product Code (UPC) system. '},	
 					{abbr:'eISSN',name:'eISSN', qtip:'Electronic International Standard Serial Number; ISSN used to identify periodicals in electronic form (eISSN or e-ISSN). '},	
 					{abbr:'Handle',name:'Handle', qtip:'A handle is an abstract reference to a resource. '},	
+					{abbr:'IGSN',name:'IGSN', qtip:'International Geo Sample Number; an alphanumeric code that uniquely identifies samples from our natural environment and related sampling features.'},	
 					{abbr:'ISBN',name:'ISBN', qtip:'International Standard Book Number; a unique numeric book identifier. There are 2 formats: a 10-digit ISBN format and a 13-digit ISBN.'},	
-					{abbr:'ISSN',name:'ISSN', qtip:'International Standard Serial Number; a unique 8-digit number used to identify a print or electronic periodical publication.  '},						
+					{abbr:'ISSN',name:'ISSN', qtip:'International Standard Serial Number; a unique 8-digit number used to identify a print or electronic periodical publication.'},						
+				
 					{abbr:'ISTC',name:'ISTC', qtip:'International Standard Text Code; a unique "number" assigned to a textual work. An ISTC consists of 16 numbers and/or letters.'},	
 					{abbr:'LISSN',name:'LISSN', qtip:'The linking ISSN or ISSN-L enables collocation or linking among different media versions of a continuing resource.'},	
 					{abbr:'LSID',name:'LSID', qtip:'Life Science Identifiers; a unique identifier for data in the Life Science domain. Format: urn:lsid:authority:namespace:identifier:revision'},
