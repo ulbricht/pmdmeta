@@ -37,7 +37,7 @@ Ext.define('PMDMeta.view.datacite.Contributors', {
             store: 'DataCiteContributor',
             columns: [
 	    {
-                header: 'Contributor (Lastname, Firstname)',
+                header: 'Lastname',
                 dataIndex: 'name',
                 flex: 1,
 		sortable: false,	
@@ -47,9 +47,22 @@ Ext.define('PMDMeta.view.datacite.Contributors', {
                 },
                 renderer: function(value, metaData, record, rowIdx, colIdx, store) {
                     var qtip="The institution or person responsible for collecting, managing, distributing, or"; 
-                    qtip+=" otherwise contributing to the development of the resource.  The personal name format";
-                    qtip+=" should be: family, given.";
+                    qtip+=" otherwise contributing to the development of the resource.";
                     qtip+=" Non‐roman names may be transliterated according to the ALA‐LC schemes 10";
+                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
+                    return value;
+                } 
+            },{
+                header: 'Firstname',
+                dataIndex: 'firstname',
+                flex: 1,
+		sortable: false,	
+                menuDisabled: true,		    
+                editor: {
+                    allowBlank: false
+                },
+                renderer: function(value, metaData, record, rowIdx, colIdx, store) {
+                    var qtip="Put here the contributors given name."; 
                     metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
                     return value;
                 } 

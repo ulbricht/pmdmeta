@@ -53,7 +53,7 @@ Ext.define('PMDMeta.view.datacite.Authors', {
             columns: [
 	    {
 		cls: 'PMDrequired',		    
-                header: 'Author (Lastname, Firstname)',
+                header: 'Lastname',
                 dataIndex: 'name',
                 flex: 1,
 		sortable: false,	
@@ -63,8 +63,22 @@ Ext.define('PMDMeta.view.datacite.Authors', {
                 },
                 renderer: function(value, metaData, record, rowIdx, colIdx, store) {
                     var qtip="The main researchers involved in producing the data, or the authors of the publication, in priority order. ";
-                    qtip+=" May be a corporate/institutional or personal name. The personal name format should be: family, given.";
+                    qtip+=" May be a corporate/institutional name or a persons last name.";
                     qtip+=" Non‐roman names may be transliterated according to the ALA‐LC schemes 10";
+                    metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
+                    return value;
+                } 
+            },{
+                header: 'Firstname',
+                dataIndex: 'firstname',
+                flex: 1,
+		sortable: false,	
+                menuDisabled: true,		    
+                editor: {
+                    allowBlank: false
+                },
+                renderer: function(value, metaData, record, rowIdx, colIdx, store) {
+                    var qtip="Put here the authors given name. ";
                     metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(qtip) + '"';
                     return value;
                 } 
