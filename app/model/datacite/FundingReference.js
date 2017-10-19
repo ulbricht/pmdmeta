@@ -42,7 +42,7 @@ Ext.define('PMDMeta.model.datacite.FundingReference', {
                         return Ext.String.htmlDecode(name);
                     else
                         return "";
-                }},
+                }}
 	],
 	validators: {
 		funderName: { type: 'length', min: 1 }
