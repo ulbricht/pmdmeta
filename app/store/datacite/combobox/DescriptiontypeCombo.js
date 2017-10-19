@@ -7,6 +7,7 @@ Ext.define('PMDMeta.store.datacite.combobox.DescriptiontypeCombo', {
 				{abbr:'Methods',name:'Methods', qtip:'The methodology employed for the study or research. (Recommended for discovery.)'},	
 				{abbr:'SeriesInformation',name:'SeriesInformation', qtip:'Information about a repeating series, such as volume, issue, number. <br>For dataset series, indicate relationships below &quot;Related Work&quot; to other datasets. Use isPartOf or HasPart to characterise the relationship.<br>For use with grey literature. If providing an ISSN, use &quot;Related Work&quot; and characterize the relationship with an ISSN identifier.'},						
 				{abbr:'TableOfContents',name:'TableOfContents', qtip:'A listing of the Table of Contents. (Use &quot;&amp;lt;br&amp;gt;&quot; to indicate a line break for improved rendering of multiple paragraphs, but otherwise no html markup.) '},	
+				{abbr:'TechnicalInfo',name:'TechnicalInfo', qtip:'Detailed information that may be associated with design, implementation, operation, use, and/or maintenance of a process or system.'},	
 				{abbr:'Other',name:'Other', qtip:'Other description information that does not fit into an existing category.(Use for any other description type.)'}		
 ]});			
 
