@@ -1,10 +1,12 @@
-http://resource.geosciml.org/classifier/cgi/faulttype/oblique_slip_fault
-http://resource.geosciml.org/classifier/cgi/faulttype/reverse_fault
-http://resource.geosciml.org/classifier/cgi/faulttype/scissor_fault
+http://inspire.ec.europa.eu/codelist/FaultTypeValue/fault,http://resource.geosciml.org/classifier/cgi/faulttype/oblique_slip_fault,http://resource.geosciml.org/classifier/cgi/faulttype/reverse_fault,http://resource.geosciml.org/classifier/cgi/faulttype/scissor_fault,http://resource.geosciml.org/classifier/cgi/faulttype/strike_slip_fault
 http://resource.geosciml.org/classifier/cgi/faulttype/detachment_fault
 http://resource.geosciml.org/classifier/cgi/faulttype/normal_fault
 http://resource.geosciml.org/classifier/cgi/faulttype/thrust_fault
 http://resource.geosciml.org/classifier/cgi/faulttype/wrench_fault
+http://inspire.ec.europa.eu/codelist/FoldProfileTypeValue/anticline
+http://inspire.ec.europa.eu/codelist/FoldProfileTypeValue/antiform
+http://inspire.ec.europa.eu/codelist/FoldProfileTypeValue/syncline
+http://inspire.ec.europa.eu/codelist/FoldProfileTypeValue/synform
 http://epos/WP16Vocabulary/GeologicStructure/Boudin
 5d9d1d85-b402-4f84-ab5c-03a49fc68c25
 7c394040-91f1-4438-a50a-3118254f5989
@@ -42,7 +44,7 @@ http://epos/WP16Vocabulary/GeologicStructure/ShatterCone
 http://epos/WP16Vocabulary/GeologicStructure/ShearBand
 http://epos/WP16Vocabulary/GeologicStructure/Sill
 http://epos/WP16Vocabulary/GeologicStructure/ThrustSheet
-http://epos/WP16Vocabulary/GeologicStructure/Trenche
+http://epos/WP16Vocabulary/GeologicStructure/Trench
 a355aafc-f0ce-4774-afc3-82b41df5f022
 http://epos/WP16Vocabulary/GeologicStructure/Vein
 http://epos/WP16Vocabulary/GeologicStructure/VolcanicCrater

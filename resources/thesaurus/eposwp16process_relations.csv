@@ -1,3 +1,4 @@
+http://inspire.ec.europa.eu/codelist/EventProcessValue/deformation,http://inspire.ec.europa.eu/codelist/EventProcessValue/ductileFlow,http://inspire.ec.europa.eu/codelist/EventProcessValue/folding,http://inspire.ec.europa.eu/codelist/EventProcessValue/fracturing,http://inspire.ec.europa.eu/codelist/EventProcessValue/shearing
 http://resource.geosciml.org/classifier/cgi/eventprocess/geologic_process
 http://inspire.ec.europa.eu/codelist/NaturalHazardCategoryValue/geologicalHydrological
 http://resource.geosciml.org/classifier/cgi/eventprocess/magmatic_process
@@ -5,6 +6,7 @@ http://resource.geosciml.org/classifier/cgi/eventprocess/sedimentary_process
 http://resource.geosciml.org/classifier/cgi/eventprocess/tectonic_process
 http://resource.geosciml.org/classifier/cgi/eventprocess/weathering
 http://resource.geosciml.org/classifier/cgi/eventprocess/tectonic_process,http://resource.geosciml.org/classifier/cgi/eventprocess/accretion,http://resource.geosciml.org/classifier/cgi/eventprocess/continental_breakup,http://resource.geosciml.org/classifier/cgi/eventprocess/continental_collision,http://resource.geosciml.org/classifier/cgi/eventprocess/obduction,http://resource.geosciml.org/classifier/cgi/eventprocess/orogenic_process,http://resource.geosciml.org/classifier/cgi/eventprocess/spreading,http://resource.geosciml.org/classifier/cgi/eventprocess/subduction,http://resource.geosciml.org/classifier/cgi/eventprocess/transform_faulting
+http://resource.geosciml.org/classifier/cgi/eventprocess/continental_breakup,http://resource.geosciml.org/classifier/cgi/eventprocess/rifting
 http://resource.geosciml.org/classifier/cgi/eventprocess/geologic_process
 http://resource.geosciml.org/classifier/cgi/eventprocess/magmatic_process,http://resource.geosciml.org/classifier/cgi/eventprocess/eruption,http://resource.geosciml.org/classifier/cgi/eventprocess/intrusion
 http://resource.geosciml.org/classifier/cgi/eventprocess/eruption
@@ -23,3 +25,6 @@ http://inspire.ec.europa.eu/codelist/NaturalHazardCategoryValue/tsunami
 http://inspire.ec.europa.eu/codelist/NaturalHazardCategoryValue/snowAvalanche
 http://inspire.ec.europa.eu/codelist/NaturalHazardCategoryValue/volcanic
 http://inspire.ec.europa.eu/codelist/NaturalHazardCategoryValue/flood
+9c207e15-9947-4849-bdf4-c1893a7f800a
+ca464924-4299-46ea-8cae-fd9bad49c1b1
+4bc109b5-6788-4f64-8238-745bab3910dd
