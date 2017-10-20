@@ -203,6 +203,30 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                 this.callParent();   		
 	},
 	items:[         {
+                            xtype: 'button',
+                            scale: 'medium',
+                            text: 'Describe Analog Models',
+			    id: 'analogbutton',
+                            handler: function() {
+				Ext.getCmp('analogpanel1').show();
+				Ext.getCmp('analogpanel2').show();
+				Ext.getCmp('analogbutton').disable();
+				Ext.getCmp('rockphysicspanel1').hide();
+				Ext.getCmp('rockphysicspanelbutton').enable();
+                            }
+                        },{
+                            xtype: 'button',
+                            scale: 'medium',
+			    id: 'rockphysicspanelbutton',
+                            text: 'Describe Rock Physics',
+                            handler: function() {
+				Ext.getCmp('analogpanel1').hide();
+				Ext.getCmp('analogpanel2').hide();
+				Ext.getCmp('analogbutton').enable();
+				Ext.getCmp('rockphysicspanel1').show();
+				Ext.getCmp('rockphysicspanelbutton').disable();
+                            }
+                        },{
 				xtype: 'panel',
 				height: 182,
 				frame: true,
@@ -235,38 +259,40 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 			},*/{
 				xtype: 'DataCite-Descriptions'
 			},{
-				xtype: 'panel',
-				frame: true,
-      	                        title: 'Analogue Models',
-				layout: {type: 'hbox'},
-				items:[{
-						xtype: 'DataCite-SubjectsGCMD1',
-	      	                       		 title: '',
-						cls: 'PMD-grid-border',
-						flex:1,
-						frame: false
-					},{
-						xtype: 'DataCite-SubjectsGCMD2',
-						flex:1,
-						cls: 'PMD-grid-border',
-	      	                       		 title: '',
-						frame: false
-					},{
-						xtype: 'DataCite-SubjectsGCMD3',
-						flex:1,
-						cls: 'PMD-grid-border',
-	      	                       		 title: '',
-						frame: false
-					},{
-						xtype: 'DataCite-SubjectsGCMD4',
-						flex:1,
-						cls: 'PMD-grid-border',
-	      	                       		 title: '',
-						frame: false
-				}]
+			xtype: 'panel',
+			id: 'analogpanel1',
+			frame: true,
+                        title: 'Analogue Models',
+			layout: {type: 'hbox'},
+			items:[{
+					xtype: 'DataCite-SubjectsGCMD1',
+      	                       		 title: '',
+					cls: 'PMD-grid-border',
+					flex:1,
+					frame: false
+				},{
+					xtype: 'DataCite-SubjectsGCMD2',
+					flex:1,
+					cls: 'PMD-grid-border',
+      	                       		 title: '',
+					frame: false
+				},{
+					xtype: 'DataCite-SubjectsGCMD3',
+					flex:1,
+					cls: 'PMD-grid-border',
+      	                       		 title: '',
+					frame: false
+				},{
+					xtype: 'DataCite-SubjectsGCMD4',
+					flex:1,
+					cls: 'PMD-grid-border',
+      	                       		 title: '',
+					frame: false
+			}]
 			},{
 				xtype: 'panel',
 				frame: true,
+				id: 'analogpanel2',
       	                        title: 'Analogue Models - Experimental Setup',
 				layout: {type: 'hbox'},
 				items:[{
@@ -303,6 +329,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 			},{
 				xtype: 'panel',
 				frame: true,
+				id: 'rockphysicspanel1',
       	                        title: 'Rock Physics',
 				layout: {type: 'hbox'},
 				items:[{

@@ -323,7 +323,8 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                 delkeywords.push(keyword);   
         });
         Ext.getStore('DataCiteSubjectGCMD').remove(delkeywords);
-*/        
+*/    
+    
         var wp16stores=new Array('DataCiteSubjectGCMD','DataCiteSubjectGCMD1','DataCiteSubjectGCMD2',
 				'DataCiteSubjectGCMD3','DataCiteSubjectGCMD4','DataCiteSubjectGCMD5','DataCiteSubjectGCMD6',
 				'DataCiteSubjectGCMD7','DataCiteSubjectGCMD8','DataCiteSubjectGCMD9',
@@ -340,7 +341,56 @@ Ext.define('PMDMeta.store.escidoc.Item', {
 		});
 		thewp16store.remove(delkeywords);
 	});
+//--------
+	var isanalog = false;
+	var isrockphysics = false;
+        var analogstores=new Array('DataCiteSubjectGCMD1','DataCiteSubjectGCMD2',
+				'DataCiteSubjectGCMD3','DataCiteSubjectGCMD4','DataCiteSubjectGCMD5','DataCiteSubjectGCMD6',
+				'DataCiteSubjectGCMD7','DataCiteSubjectGCMD8','DataCiteSubjectGCMD13');
+	Ext.each(analogstores, function(analogstorename){
+		var thestore=Ext.getStore(analogstorename);
+			if (!isanalog){
+				thestore.each(function(keyword){
+					if (keyword.get('subject')!=''){
+						isanalog=true;
+					}
+				});
+			}
 
+	});
+
+        var rockphysstores=new Array('DataCiteSubjectGCMD9','DataCiteSubjectGCMD10','DataCiteSubjectGCMD11','DataCiteSubjectGCMD12');
+	Ext.each(rockphysstores, function(rockphystorename){
+		var thestore=Ext.getStore(rockphystorename);
+			if (!isrockphysics){
+				thestore.each(function(keyword){
+					if (keyword.get('subject')!=''){
+						isrockphysics=true;
+					}
+				});
+			}
+	});
+
+	if ((isrockphysics && isanalog) || (!isrockphysics && !isanalog)){
+		Ext.getCmp('analogpanel1').show(); //both analog and rock physics keywords - the user decides
+		Ext.getCmp('analogpanel2').show();
+		Ext.getCmp('analogbutton').enable();
+		Ext.getCmp('rockphysicspanel1').show();
+		Ext.getCmp('rockphysicspanelbutton').enable();
+	}else if (isanalog){
+		Ext.getCmp('analogpanel1').show();
+		Ext.getCmp('analogpanel2').show();
+		Ext.getCmp('analogbutton').disable();
+		Ext.getCmp('rockphysicspanel1').hide();
+		Ext.getCmp('rockphysicspanelbutton').enable();
+        }else if (isrockphysics){
+		Ext.getCmp('analogpanel1').hide();
+		Ext.getCmp('analogpanel2').hide();
+		Ext.getCmp('analogbutton').enable();
+		Ext.getCmp('rockphysicspanel1').show();
+		Ext.getCmp('rockphysicspanelbutton').disable();
+        }
+//--------
        //points only have "min"-Values
         var extentstore=Ext.getStore('isoExtent'); 
         extentstore.each( function (isogeo){                
