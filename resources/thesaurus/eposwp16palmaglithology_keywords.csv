@@ -1,0 +1,267 @@
+http://resource.geosciml.org/classifier/cgi/lithology/,"CGI Simple Lithology"
+http://resource.geosciml.org/classifier/cgi/lithology/acidic_igneous_material,"acidic igneous material"
+http://resource.geosciml.org/classifier/cgi/lithology/acidic_igneous_rock,"acidic igneous rock"
+http://resource.geosciml.org/classifier/cgi/lithology/alkali-olivine_basalt,"alkali olivine basalt"
+http://resource.geosciml.org/classifier/cgi/lithology/alkali_feldspar_granite,"alkali feldspar granite"
+http://resource.geosciml.org/classifier/cgi/lithology/alkali_feldspar_rhyolite,"alkali feldspar rhyolite"
+http://resource.geosciml.org/classifier/cgi/lithology/alkali_feldspar_syenite,"alkali feldspar syenite"
+http://resource.geosciml.org/classifier/cgi/lithology/alkali_feldspar_syenitic_rock,"alkali feldspar syenitic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/alkali_feldspar_trachyte,"alkali feldspar trachyte"
+http://resource.geosciml.org/classifier/cgi/lithology/alkali_feldspar_trachytic_rock,"alkali feldspar trachytic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/amphibolite,amphibolite
+http://resource.geosciml.org/classifier/cgi/lithology/andesite,andesite
+http://resource.geosciml.org/classifier/cgi/lithology/anorthosite,anorthosite
+http://resource.geosciml.org/classifier/cgi/lithology/anorthositic_rock,"anorthositic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/anthracite_coal,anthracite
+http://resource.geosciml.org/classifier/cgi/lithology/anthropogenic_material,"anthropogenic material"
+http://resource.geosciml.org/classifier/cgi/lithology/anthropogenic_unconsolidated_material,"anthropogenic unconsolidated material"
+http://resource.geosciml.org/classifier/cgi/lithology/aphanite,aphanite
+http://resource.geosciml.org/classifier/cgi/lithology/aplite,aplite
+http://resource.geosciml.org/classifier/cgi/lithology/arenite,arenite
+http://resource.geosciml.org/classifier/cgi/lithology/ash_and_lapilli,"ash and lapilli"
+http://resource.geosciml.org/classifier/cgi/lithology/ash_breccia_bomb_or_block_tephra,"ash breccia bomb or block tephra"
+http://resource.geosciml.org/classifier/cgi/lithology/ash_tuff_lapillistone_and_lapilli_tuff,"ash tuff lapillistone and lapilli tuff"
+http://resource.geosciml.org/classifier/cgi/lithology/basalt,basalt
+http://resource.geosciml.org/classifier/cgi/lithology/basanite,basanite
+http://resource.geosciml.org/classifier/cgi/lithology/basanitic_foidite,"basanitic foidite"
+http://resource.geosciml.org/classifier/cgi/lithology/basic_igneous_material,"basic igneous material"
+http://resource.geosciml.org/classifier/cgi/lithology/basic_igneous_rock,"basic igneous rock"
+http://resource.geosciml.org/classifier/cgi/lithology/bauxite,bauxite
+http://resource.geosciml.org/classifier/cgi/lithology/biogenic_sediment,"biogenic sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/biogenic_silica_sedimentary_rock,"biogenic silica sedimentary rock"
+http://resource.geosciml.org/classifier/cgi/lithology/bituminous_coal,"bituminous coal"
+http://resource.geosciml.org/classifier/cgi/lithology/boninite,boninite
+http://resource.geosciml.org/classifier/cgi/lithology/boulder_gravel_size_sediment,"boulder gravel size sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/boundstone,boundstone
+http://resource.geosciml.org/classifier/cgi/lithology/breccia,breccia
+http://resource.geosciml.org/classifier/cgi/lithology/breccia_gouge_series,"breccia gouge series"
+http://resource.geosciml.org/classifier/cgi/lithology/calcareous_carbonate_sediment,"calcareous carbonate sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/calcareous_carbonate_sedimentary_material,"calcareous carbonate sedimentary material"
+http://resource.geosciml.org/classifier/cgi/lithology/calcareous_carbonate_sedimentary_rock,"calcareous carbonate sedimentary rock"
+http://resource.geosciml.org/classifier/cgi/lithology/carbonate_mud,"carbonate mud"
+http://resource.geosciml.org/classifier/cgi/lithology/carbonate_mudstone,"carbonate mudstone"
+http://resource.geosciml.org/classifier/cgi/lithology/carbonate_ooze,"carbonate ooze"
+http://resource.geosciml.org/classifier/cgi/lithology/carbonate_rich_mud,"carbonate rich mud"
+http://resource.geosciml.org/classifier/cgi/lithology/carbonate_rich_mudstone,"carbonate rich mudstone"
+http://resource.geosciml.org/classifier/cgi/lithology/carbonate_sediment,"carbonate sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/carbonate_sedimentary_material,"carbonate sedimentary material"
+http://resource.geosciml.org/classifier/cgi/lithology/carbonate_sedimentary_rock,"carbonate sedimentary rock"
+http://resource.geosciml.org/classifier/cgi/lithology/carbonate_wackestone,"carbonate wackestone"
+http://resource.geosciml.org/classifier/cgi/lithology/carbonatite,carbonatite
+http://resource.geosciml.org/classifier/cgi/lithology/cataclasite_series,"cataclasite series"
+http://resource.geosciml.org/classifier/cgi/lithology/chalk,chalk
+http://resource.geosciml.org/classifier/cgi/lithology/chemical_sedimentary_material,"chemical sedimentary material"
+http://resource.geosciml.org/classifier/cgi/lithology/chlorite_actinolite_epidote_metamorphic_rock,"chlorite actinolite epidote metamorphic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/clastic_conglomerate,conglomerate
+http://resource.geosciml.org/classifier/cgi/lithology/clastic_mudstone,mudstone
+http://resource.geosciml.org/classifier/cgi/lithology/clastic_sandstone,sandstone
+http://resource.geosciml.org/classifier/cgi/lithology/clastic_sediment,"clastic sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/clastic_sedimentary_material,"clastic sedimentary material"
+http://resource.geosciml.org/classifier/cgi/lithology/clastic_sedimentary_rock,"clastic sedimentary rock"
+http://resource.geosciml.org/classifier/cgi/lithology/clay,clay
+http://resource.geosciml.org/classifier/cgi/lithology/claystone,claystone
+http://resource.geosciml.org/classifier/cgi/lithology/coal,coal
+http://resource.geosciml.org/classifier/cgi/lithology/cobble_gravel_size_sediment,"cobble gravel size sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/composite_genesis_material,"composite genesis material"
+http://resource.geosciml.org/classifier/cgi/lithology/composite_genesis_rock,"composite genesis rock"
+http://resource.geosciml.org/classifier/cgi/lithology/compound_material,"compound material"
+http://resource.geosciml.org/classifier/cgi/lithology/crystalline_carbonate,"crystalline carbonate"
+http://resource.geosciml.org/classifier/cgi/lithology/dacite,dacite
+http://resource.geosciml.org/classifier/cgi/lithology/diamictite,diamictite
+http://resource.geosciml.org/classifier/cgi/lithology/diamicton,diamicton
+http://resource.geosciml.org/classifier/cgi/lithology/diorite,diorite
+http://resource.geosciml.org/classifier/cgi/lithology/dioritic_rock,"dioritic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/dioritoid,dioritoid
+http://resource.geosciml.org/classifier/cgi/lithology/doleritic_rock,"doleritic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/dolomitic_or_magnesian_sedimentary_material,"dolomitic or magnesian sedimentary material"
+http://resource.geosciml.org/classifier/cgi/lithology/dolomitic_or_magnesian_sedimentary_rock,"dolomitic or magnesian sedimentary rock"
+http://resource.geosciml.org/classifier/cgi/lithology/dolomitic_sediment,"dolomitic sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/dolostone,dolomite
+http://resource.geosciml.org/classifier/cgi/lithology/duricrust,duricrust
+http://resource.geosciml.org/classifier/cgi/lithology/eclogite,eclogite
+http://resource.geosciml.org/classifier/cgi/lithology/evaporite,evaporite
+http://resource.geosciml.org/classifier/cgi/lithology/exotic_alkaline_rock,"exotic alkaline rock"
+http://resource.geosciml.org/classifier/cgi/lithology/exotic_composition_igneous_rock,"exotic composition igneous rock"
+http://resource.geosciml.org/classifier/cgi/lithology/exotic_evaporite,"exotic evaporite"
+http://resource.geosciml.org/classifier/cgi/lithology/fault_related_material,"fault related material"
+http://resource.geosciml.org/classifier/cgi/lithology/fine_grained_igneous_rock,"fine grained igneous rock"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_bearing_alkali_feldspar_syenite,"foid bearing alkali feldspar syenite"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_bearing_alkali_feldspar_trachyte,"foid bearing alkali feldspar trachyte"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_bearing_anorthosite,"foid bearing anorthosite"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_bearing_diorite,"foid bearing diorite"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_bearing_gabbro,"foid bearing gabbro"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_bearing_latite,"foid bearing latite"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_bearing_monzodiorite,"foid bearing monzodiorite"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_bearing_monzogabbro,"foid bearing monzogabbro"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_bearing_monzonite,"foid bearing monzonite"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_bearing_syenite,"foid bearing syenite"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_bearing_trachyte,"foid bearing trachyte"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_diorite,"foid diorite"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_dioritoid,"foid dioritoid"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_gabbro,"foid gabbro"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_gabbroid,"foid gabbroid"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_monzodiorite,"foid monzodiorite"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_monzogabbro,"foid monzogabbro"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_monzosyenite,"foid monzosyenite"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_syenite,"foid syenite"
+http://resource.geosciml.org/classifier/cgi/lithology/foid_syenitoid,"foid syenitoid"
+http://resource.geosciml.org/classifier/cgi/lithology/foidite,foidite
+http://resource.geosciml.org/classifier/cgi/lithology/foiditoid,foiditoid
+http://resource.geosciml.org/classifier/cgi/lithology/foidolite,foidolite
+http://resource.geosciml.org/classifier/cgi/lithology/foliated_metamorphic_rock,"foliated metamorphic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/fragmental_igneous_material,"fragmental igneous material"
+http://resource.geosciml.org/classifier/cgi/lithology/fragmental_igneous_rock,"fragmental igneous rock"
+http://resource.geosciml.org/classifier/cgi/lithology/framestone,framestone
+http://resource.geosciml.org/classifier/cgi/lithology/gabbro,gabbro
+http://resource.geosciml.org/classifier/cgi/lithology/gabbroic_rock,"gabbroic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/gabbroid,gabbroid
+http://resource.geosciml.org/classifier/cgi/lithology/generic_conglomerate,"generic conglomerate"
+http://resource.geosciml.org/classifier/cgi/lithology/generic_mudstone,"generic mudstone"
+http://resource.geosciml.org/classifier/cgi/lithology/generic_sandstone,"generic sandstone"
+http://resource.geosciml.org/classifier/cgi/lithology/glass_rich_igneous_rock,"glass rich igneous rock"
+http://resource.geosciml.org/classifier/cgi/lithology/glassy_igneous_rock,"glassy igneous rock"
+http://resource.geosciml.org/classifier/cgi/lithology/glaucophane_lawsonite_epidote_metamorphic_rock,Glaukophanschiefer
+http://resource.geosciml.org/classifier/cgi/lithology/gneiss,gneiss
+http://resource.geosciml.org/classifier/cgi/lithology/grainstone,grainstone
+http://resource.geosciml.org/classifier/cgi/lithology/granite,granite
+http://resource.geosciml.org/classifier/cgi/lithology/granitoid,granitoid
+http://resource.geosciml.org/classifier/cgi/lithology/granodiorite,granodiorite
+http://resource.geosciml.org/classifier/cgi/lithology/granofels,granofels
+http://resource.geosciml.org/classifier/cgi/lithology/granulite,granulite
+http://resource.geosciml.org/classifier/cgi/lithology/gravel,gravel
+http://resource.geosciml.org/classifier/cgi/lithology/gravel_size_sediment,"gravel size sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/high_magnesium_fine_grained_igneous_rocks,"high magnesium fine grained igneous rock"
+http://resource.geosciml.org/classifier/cgi/lithology/hornblendite,hornblendite
+http://resource.geosciml.org/classifier/cgi/lithology/hornfels,hornfels
+http://resource.geosciml.org/classifier/cgi/lithology/hybrid_sediment,"hybrid sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/hybrid_sedimentary_rock,"hybrid sedimentary rock"
+http://resource.geosciml.org/classifier/cgi/lithology/igneous_material,"igneous material"
+http://resource.geosciml.org/classifier/cgi/lithology/igneous_rock,"igneous rock"
+http://resource.geosciml.org/classifier/cgi/lithology/impact_generated_material,"impact generated material"
+http://resource.geosciml.org/classifier/cgi/lithology/impure_calcareous_carbonate_sediment,"impure calcareous carbonate sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/impure_carbonate_sediment,"impure carbonate sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/impure_carbonate_sedimentary_rock,"impure carbonate sedimentary rock"
+http://resource.geosciml.org/classifier/cgi/lithology/impure_dolomitic_sediment,"impure dolomitic sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/impure_dolostone,"impure dolomite"
+http://resource.geosciml.org/classifier/cgi/lithology/impure_limestone,"impure limestone"
+http://resource.geosciml.org/classifier/cgi/lithology/intermediate_composition_igneous_material,"intermediate composition igneous material"
+http://resource.geosciml.org/classifier/cgi/lithology/intermediate_composition_igneous_rock,"intermediate composition igneous rock"
+http://resource.geosciml.org/classifier/cgi/lithology/iron_rich_sediment,"iron rich sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/iron_rich_sedimentary_material,"iron rich sedimentary material"
+http://resource.geosciml.org/classifier/cgi/lithology/iron_rich_sedimentary_rock,"iron rich sedimentary rock"
+http://resource.geosciml.org/classifier/cgi/lithology/kalsilitic_and_melilitic_rock,"kalsilitic and melilitic rocks"
+http://resource.geosciml.org/classifier/cgi/lithology/komatiitic_rock,"komatiitic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/latite,latite
+http://resource.geosciml.org/classifier/cgi/lithology/latitic_rock,"latitic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/lignite,lignite
+http://resource.geosciml.org/classifier/cgi/lithology/limestone,limestone
+http://resource.geosciml.org/classifier/cgi/lithology/marble,marble
+http://resource.geosciml.org/classifier/cgi/lithology/material_formed_in_surficial_environment,"material formed in surficial environment"
+http://resource.geosciml.org/classifier/cgi/lithology/metamorphic_rock,"metamorphic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/metasomatic_rock,"metasomatic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/mica_schist,"mica schist"
+http://resource.geosciml.org/classifier/cgi/lithology/migmatite,migmatite
+http://resource.geosciml.org/classifier/cgi/lithology/monzodiorite,monzodiorite
+http://resource.geosciml.org/classifier/cgi/lithology/monzodioritic_rock,"monzodioritic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/monzogabbro,monzogabbro
+http://resource.geosciml.org/classifier/cgi/lithology/monzogabbroic_rock,"monzogabbroic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/monzogranite,monzogranite
+http://resource.geosciml.org/classifier/cgi/lithology/monzonite,monzonite
+http://resource.geosciml.org/classifier/cgi/lithology/monzonitic_rock,"monzonitic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/mud,mud
+http://resource.geosciml.org/classifier/cgi/lithology/mud_size_sediment,"mud size sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/mylonitic_rock,"mylonitic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/natural_unconsolidated_material,"natural unconsolidated material"
+http://resource.geosciml.org/classifier/cgi/lithology/non_clastic_siliceous_sediment,"non clastic siliceous sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/non_clastic_siliceous_sedimentary_material,"non clastic siliceous sedimentary material"
+http://resource.geosciml.org/classifier/cgi/lithology/non_clastic_siliceous_sedimentary_rock,"non clastic siliceous sedimentary rock"
+http://resource.geosciml.org/classifier/cgi/lithology/ooze,ooze
+http://resource.geosciml.org/classifier/cgi/lithology/organic_bearing_mudstone,"organic bearing mudstone"
+http://resource.geosciml.org/classifier/cgi/lithology/organic_rich_sediment,"organic rich sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/organic_rich_sedimentary_material,"organic rich sedimentary material"
+http://resource.geosciml.org/classifier/cgi/lithology/organic_rich_sedimentary_rock,"organic rich sedimentary rock"
+http://resource.geosciml.org/classifier/cgi/lithology/orthogneiss,orthogneiss
+http://resource.geosciml.org/classifier/cgi/lithology/packstone,packstone
+http://resource.geosciml.org/classifier/cgi/lithology/paragneiss,paragneiss
+http://resource.geosciml.org/classifier/cgi/lithology/peat,peat
+http://resource.geosciml.org/classifier/cgi/lithology/pebble_gravel_size_sediment,"pebble gravel size sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/pegmatite,pegmatite
+http://resource.geosciml.org/classifier/cgi/lithology/peridotite,peridotite
+http://resource.geosciml.org/classifier/cgi/lithology/phaneritic_igneous_rock,"phaneritic igneous rock"
+http://resource.geosciml.org/classifier/cgi/lithology/phonolilte,phonolite
+http://resource.geosciml.org/classifier/cgi/lithology/phonolitic_basanite,"phonolitic basanite"
+http://resource.geosciml.org/classifier/cgi/lithology/phonolitic_foidite,"phonolitic foidite"
+http://resource.geosciml.org/classifier/cgi/lithology/phonolitic_tephrite,"phonolitic tephrite"
+http://resource.geosciml.org/classifier/cgi/lithology/phonolitoid,phonolitoid
+http://resource.geosciml.org/classifier/cgi/lithology/phosphate_rich_sediment,"phosphate rich sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/phosphate_rich_sedimentary_material,"phosphate rich sedimentary material"
+http://resource.geosciml.org/classifier/cgi/lithology/phosphorite,phosphorite
+http://resource.geosciml.org/classifier/cgi/lithology/phyllite,phyllite
+http://resource.geosciml.org/classifier/cgi/lithology/phyllonite,phyllonite
+http://resource.geosciml.org/classifier/cgi/lithology/porphyry,porphyry
+http://resource.geosciml.org/classifier/cgi/lithology/pure_calcareous_carbonate_sediment,"pure calcareous carbonate sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/pure_carbonate_mudstone,"pure carbonate mudstone"
+http://resource.geosciml.org/classifier/cgi/lithology/pure_carbonate_sediment,"pure carbonate sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/pure_carbonate_sedimentary_rock,"pure carbonate sedimentary rock"
+http://resource.geosciml.org/classifier/cgi/lithology/pure_dolomitic_sediment,"pure dolomitic sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/pyroclastic_material,"pyroclastic material"
+http://resource.geosciml.org/classifier/cgi/lithology/pyroclastic_rock,"pyroclastic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/pyroxenite,pyroxenite
+http://resource.geosciml.org/classifier/cgi/lithology/quartz_alkali_feldspar_syenite,"quartz alkali feldspar syenite"
+http://resource.geosciml.org/classifier/cgi/lithology/quartz_alkali_feldspar_trachyte,"quartz alkali feldspar trachyte"
+http://resource.geosciml.org/classifier/cgi/lithology/quartz_anorthosite,"quartz anorthosite"
+http://resource.geosciml.org/classifier/cgi/lithology/quartz_diorite,"quartz diorite"
+http://resource.geosciml.org/classifier/cgi/lithology/quartz_gabbro,"quartz gabbro"
+http://resource.geosciml.org/classifier/cgi/lithology/quartz_latite,"quartz latite"
+http://resource.geosciml.org/classifier/cgi/lithology/quartz_monzodiorite,"quartz monzodiorite"
+http://resource.geosciml.org/classifier/cgi/lithology/quartz_monzogabbro,"quartz monzogabbro"
+http://resource.geosciml.org/classifier/cgi/lithology/quartz_monzonite,"quartz monzonite"
+http://resource.geosciml.org/classifier/cgi/lithology/quartz_rich_igneous_rock,"quartz rich igneous rock"
+http://resource.geosciml.org/classifier/cgi/lithology/quartz_syenite,"quartz syenite"
+http://resource.geosciml.org/classifier/cgi/lithology/quartz_trachyte,"quartz trachyte"
+http://resource.geosciml.org/classifier/cgi/lithology/quartzite,quartzite
+http://resource.geosciml.org/classifier/cgi/lithology/residual_material,"residual material"
+http://resource.geosciml.org/classifier/cgi/lithology/rhyolite,rhyolite
+http://resource.geosciml.org/classifier/cgi/lithology/rhyolitoid,rhyolitoid
+http://resource.geosciml.org/classifier/cgi/lithology/rock,rock
+http://resource.geosciml.org/classifier/cgi/lithology/rock_gypsum_or_anhydrite,"gypsum or anhydrite"
+http://resource.geosciml.org/classifier/cgi/lithology/rock_salt,"rock salt"
+http://resource.geosciml.org/classifier/cgi/lithology/sand,sand
+http://resource.geosciml.org/classifier/cgi/lithology/sand_size_sediment,"sand size sediment"
+http://resource.geosciml.org/classifier/cgi/lithology/sapropel,sapropel
+http://resource.geosciml.org/classifier/cgi/lithology/schist,schist
+http://resource.geosciml.org/classifier/cgi/lithology/sediment,sediment
+http://resource.geosciml.org/classifier/cgi/lithology/sedimentary_material,"sedimentary material"
+http://resource.geosciml.org/classifier/cgi/lithology/sedimentary_rock,"sedimentary rock"
+http://resource.geosciml.org/classifier/cgi/lithology/serpentinite,serpentinite
+http://resource.geosciml.org/classifier/cgi/lithology/shale,shale
+http://resource.geosciml.org/classifier/cgi/lithology/silicate_mud,"silicate mud"
+http://resource.geosciml.org/classifier/cgi/lithology/silicate_mudstone,"silicate mudstone"
+http://resource.geosciml.org/classifier/cgi/lithology/siliceous_ooze,"siliceous ooze"
+http://resource.geosciml.org/classifier/cgi/lithology/silt,silt
+http://resource.geosciml.org/classifier/cgi/lithology/siltstone,siltstone
+http://resource.geosciml.org/classifier/cgi/lithology/skarn,skarn
+http://resource.geosciml.org/classifier/cgi/lithology/slate,slate
+http://resource.geosciml.org/classifier/cgi/lithology/spilite,spilite
+http://resource.geosciml.org/classifier/cgi/lithology/syenite,syenite
+http://resource.geosciml.org/classifier/cgi/lithology/syenitic_rock,"syenitic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/syenitoid,syenitoid
+http://resource.geosciml.org/classifier/cgi/lithology/syenogranite,syenogranite
+http://resource.geosciml.org/classifier/cgi/lithology/tephra,Tephra
+http://resource.geosciml.org/classifier/cgi/lithology/tephrite,tephrite
+http://resource.geosciml.org/classifier/cgi/lithology/tephritic_foidite,"tephritic foidite"
+http://resource.geosciml.org/classifier/cgi/lithology/tephritic_phonolite,"tephritic phonolite"
+http://resource.geosciml.org/classifier/cgi/lithology/tephritoid,tephritoid
+http://resource.geosciml.org/classifier/cgi/lithology/tholeiitic_basalt,"tholeiitic basalt"
+http://resource.geosciml.org/classifier/cgi/lithology/tonalite,tonalite
+http://resource.geosciml.org/classifier/cgi/lithology/trachyte,trachyte
+http://resource.geosciml.org/classifier/cgi/lithology/trachytic_rock,"trachytic rock"
+http://resource.geosciml.org/classifier/cgi/lithology/trachytoid,trachytoid
+http://resource.geosciml.org/classifier/cgi/lithology/travertine,travertine
+http://resource.geosciml.org/classifier/cgi/lithology/tuff_breccia_agglomerate_or_pyroclastic_breccia,"tuff breccia agglomerate or pyroclastic breccia"
+http://resource.geosciml.org/classifier/cgi/lithology/tuffite,Tuffit
+http://resource.geosciml.org/classifier/cgi/lithology/ultrabasic_igneous_rock,"ultrabasic igneous rock"
+http://resource.geosciml.org/classifier/cgi/lithology/ultramafic_igneous_rock,"ultramafic igneous rock"
+http://resource.geosciml.org/classifier/cgi/lithology/unconsolidated_material,"unconsolidated material"
+http://resource.geosciml.org/classifier/cgi/lithology/wacke,wacke
+http://resource.geosciml.org/classifierscheme/cgi/201211/simplelithology,"CGI Simple Lithology Categories"

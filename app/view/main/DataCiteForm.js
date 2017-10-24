@@ -32,6 +32,11 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 	'PMDMeta.view.datacite.SubjectsGCMD11',
 	'PMDMeta.view.datacite.SubjectsGCMD12',
 	'PMDMeta.view.datacite.SubjectsGCMD13',
+	'PMDMeta.view.datacite.SubjectsGCMD14',
+	'PMDMeta.view.datacite.SubjectsGCMD15',
+	'PMDMeta.view.datacite.SubjectsGCMD16',
+	'PMDMeta.view.datacite.SubjectsGCMD17',
+	'PMDMeta.view.datacite.SubjectsGCMD18',
 //	'PMDMeta.view.datacite.SubjectsGEMET',	
 	'PMDMeta.view.datacite.AlternateIdentifiers',
 	'PMDMeta.view.datacite.RelatedIdentifiers',
@@ -80,6 +85,11 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 		new PMDMeta.store.datacite.SubjectGCMD11();
 		new PMDMeta.store.datacite.SubjectGCMD12();
 		new PMDMeta.store.datacite.SubjectGCMD13();
+		new PMDMeta.store.datacite.SubjectGCMD14();
+		new PMDMeta.store.datacite.SubjectGCMD15();
+		new PMDMeta.store.datacite.SubjectGCMD16();
+		new PMDMeta.store.datacite.SubjectGCMD17();
+		new PMDMeta.store.datacite.SubjectGCMD18();
 //		new PMDMeta.store.datacite.SubjectGEMET();		
 		new PMDMeta.store.datacite.Size();
 		new PMDMeta.store.datacite.Date();
@@ -205,7 +215,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 	items:[         {
                             xtype: 'button',
                             scale: 'medium',
-                            text: 'Describe Analog Models',
+                            text: 'Describe analogue models of geologic processes',
 			    id: 'analogbutton',
                             handler: function() {
 				Ext.getCmp('analogpanel1').show();
@@ -213,18 +223,36 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 				Ext.getCmp('analogbutton').disable();
 				Ext.getCmp('rockphysicspanel1').hide();
 				Ext.getCmp('rockphysicspanelbutton').enable();
+				Ext.getCmp('palmaganel1').hide();
+				Ext.getCmp('palmagpanelbutton').enable();
                             }
                         },{
                             xtype: 'button',
                             scale: 'medium',
 			    id: 'rockphysicspanelbutton',
-                            text: 'Describe Rock Physics',
+                            text: 'Describe rock physical properties',
                             handler: function() {
 				Ext.getCmp('analogpanel1').hide();
 				Ext.getCmp('analogpanel2').hide();
 				Ext.getCmp('analogbutton').enable();
 				Ext.getCmp('rockphysicspanel1').show();
 				Ext.getCmp('rockphysicspanelbutton').disable();
+				Ext.getCmp('palmaganel1').hide();
+				Ext.getCmp('palmagpanelbutton').enable();
+                            }
+                        },{
+                            xtype: 'button',
+                            scale: 'medium',
+			    id: 'palmagpanelbutton',
+                            text: 'Describe paleomagnetic data',
+                            handler: function() {
+				Ext.getCmp('analogpanel1').hide();
+				Ext.getCmp('analogpanel2').hide();
+				Ext.getCmp('analogbutton').enable();
+				Ext.getCmp('rockphysicspanel1').hide();
+				Ext.getCmp('rockphysicspanelbutton').enable();
+				Ext.getCmp('palmaganel1').show();
+				Ext.getCmp('palmagpanelbutton').disable();
                             }
                         },{
 				xtype: 'panel',
@@ -262,7 +290,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 			xtype: 'panel',
 			id: 'analogpanel1',
 			frame: true,
-                        title: 'Analogue Models',
+                        title: 'Analogue models of geologic processes',
 			layout: {type: 'hbox'},
 			items:[{
 					xtype: 'DataCite-SubjectsGCMD1',
@@ -293,7 +321,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 				xtype: 'panel',
 				frame: true,
 				id: 'analogpanel2',
-      	                        title: 'Analogue Models - Experimental Setup',
+      	                        title: 'Analogue models of geologic processes - experimental setup',
 				layout: {type: 'hbox'},
 				items:[{
 						xtype: 'DataCite-SubjectsGCMD5',
@@ -330,7 +358,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 				xtype: 'panel',
 				frame: true,
 				id: 'rockphysicspanel1',
-      	                        title: 'Rock Physics',
+      	                        title: 'Rock physical properties',
 				layout: {type: 'hbox'},
 				items:[{
 						xtype: 'DataCite-SubjectsGCMD9',
@@ -357,6 +385,43 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 	      	                       		 title: '',
 						frame: false
 				}]
+			},{
+				xtype: 'panel',
+				frame: true,
+				id: 'palmaganel1',
+      	                        title: 'Paleomagnetic Data',
+				layout: {type: 'hbox'},
+				items:[{
+						xtype: 'DataCite-SubjectsGCMD14',
+	      	                       		 title: '',
+						cls: 'PMD-grid-border',
+						flex:1,
+						frame: false
+					},{
+						xtype: 'DataCite-SubjectsGCMD15',
+	      	                       		 title: '',
+						cls: 'PMD-grid-border',
+						flex:1,
+						frame: false
+					},{
+						xtype: 'DataCite-SubjectsGCMD16',
+	      	                       		 title: '',
+						cls: 'PMD-grid-border',
+						flex:1,
+						frame: false
+					},{
+						xtype: 'DataCite-SubjectsGCMD17',
+	      	                       		 title: '',
+						cls: 'PMD-grid-border',
+						flex:1,
+						frame: false
+					},{
+						xtype: 'DataCite-SubjectsGCMD18',
+	      	                       		 title: '',
+						cls: 'PMD-grid-border',
+						flex:1,
+						frame: false
+					}]
 			},{
 				xtype: 'DataCite-SubjectsGCMD'
 			},{

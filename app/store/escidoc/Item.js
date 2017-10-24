@@ -18,7 +18,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
 				'DataCiteSubjectGCMD3','DataCiteSubjectGCMD4','DataCiteSubjectGCMD5','DataCiteSubjectGCMD6',
 				'DataCiteSubjectGCMD7','DataCiteSubjectGCMD8','DataCiteSubjectGCMD9',
 				'DataCiteSubjectGCMD10','DataCiteSubjectGCMD11','DataCiteSubjectGCMD12','DataCiteSubjectGCMD13','DataCiteFundingReference'
-
+,'DataCiteSubjectGCMD14','DataCiteSubjectGCMD15','DataCiteSubjectGCMD16','DataCiteSubjectGCMD17','DataCiteSubjectGCMD18'
                             //ISO    
                             ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent',
                             'difSpatialCoverage','difProject'
@@ -32,6 +32,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
 				'DataCiteSubjectGCMD3','DataCiteSubjectGCMD4','DataCiteSubjectGCMD5','DataCiteSubjectGCMD6',
 				'DataCiteSubjectGCMD7','DataCiteSubjectGCMD8','DataCiteSubjectGCMD9',
 				'DataCiteSubjectGCMD10','DataCiteSubjectGCMD11','DataCiteSubjectGCMD12','DataCiteSubjectGCMD13',
+'DataCiteSubjectGCMD14','DataCiteSubjectGCMD15','DataCiteSubjectGCMD16','DataCiteSubjectGCMD17','DataCiteSubjectGCMD18',
 				'DataCiteResourceOptAndTitle','DataCiteFundingReference'
                             //ISO    
                             ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent'
@@ -328,7 +329,9 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         var wp16stores=new Array('DataCiteSubjectGCMD','DataCiteSubjectGCMD1','DataCiteSubjectGCMD2',
 				'DataCiteSubjectGCMD3','DataCiteSubjectGCMD4','DataCiteSubjectGCMD5','DataCiteSubjectGCMD6',
 				'DataCiteSubjectGCMD7','DataCiteSubjectGCMD8','DataCiteSubjectGCMD9',
-				'DataCiteSubjectGCMD10','DataCiteSubjectGCMD11','DataCiteSubjectGCMD12','DataCiteSubjectGCMD13');
+				'DataCiteSubjectGCMD10','DataCiteSubjectGCMD11','DataCiteSubjectGCMD12','DataCiteSubjectGCMD13',
+				'DataCiteSubjectGCMD14','DataCiteSubjectGCMD15','DataCiteSubjectGCMD16','DataCiteSubjectGCMD17',
+				'DataCiteSubjectGCMD18');
 
 	Ext.each(wp16stores, function(wp16store){
 		var delkeywords=new Array();
@@ -344,6 +347,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
 //--------
 	var isanalog = false;
 	var isrockphysics = false;
+	var ispalmag = false;
         var analogstores=new Array('DataCiteSubjectGCMD1','DataCiteSubjectGCMD2',
 				'DataCiteSubjectGCMD3','DataCiteSubjectGCMD4','DataCiteSubjectGCMD5','DataCiteSubjectGCMD6',
 				'DataCiteSubjectGCMD7','DataCiteSubjectGCMD8','DataCiteSubjectGCMD13');
@@ -371,25 +375,52 @@ Ext.define('PMDMeta.store.escidoc.Item', {
 			}
 	});
 
-	if ((isrockphysics && isanalog) || (!isrockphysics && !isanalog)){
-		Ext.getCmp('analogpanel1').show(); //both analog and rock physics keywords - the user decides
+        var palmagstores=new Array('DataCiteSubjectGCMD14','DataCiteSubjectGCMD15','DataCiteSubjectGCMD16','DataCiteSubjectGCMD17','DataCiteSubjectGCMD18');
+	Ext.each(palmagstores, function(palmagstorename){
+		var thestore=Ext.getStore(palmagstorename);
+			if (!isrockphysics){
+				thestore.each(function(keyword){
+					if (keyword.get('subject')!=''){
+						ispalmag=true;
+					}
+				});
+			}
+	});
+
+	if ((isrockphysics && isanalog) || (ispalmag && isanalog) || (isrockphysics && ispalmag) || 
+            (!isrockphysics && !isanalog && !ispalmag)){
+		Ext.getCmp('analogpanel1').show(); //impossible to decide - let the user do it
 		Ext.getCmp('analogpanel2').show();
 		Ext.getCmp('analogbutton').enable();
 		Ext.getCmp('rockphysicspanel1').show();
 		Ext.getCmp('rockphysicspanelbutton').enable();
+		Ext.getCmp('palmaganel1').show();
+		Ext.getCmp('palmagpanelbutton').enable();
 	}else if (isanalog){
 		Ext.getCmp('analogpanel1').show();
 		Ext.getCmp('analogpanel2').show();
 		Ext.getCmp('analogbutton').disable();
 		Ext.getCmp('rockphysicspanel1').hide();
 		Ext.getCmp('rockphysicspanelbutton').enable();
+		Ext.getCmp('palmaganel1').hide();
+		Ext.getCmp('palmagpanelbutton').enable();
         }else if (isrockphysics){
 		Ext.getCmp('analogpanel1').hide();
 		Ext.getCmp('analogpanel2').hide();
 		Ext.getCmp('analogbutton').enable();
 		Ext.getCmp('rockphysicspanel1').show();
 		Ext.getCmp('rockphysicspanelbutton').disable();
-        }
+		Ext.getCmp('palmaganel1').hide();
+		Ext.getCmp('palmagpanelbutton').enable();
+        }else if (ispalmag){
+		Ext.getCmp('analogpanel1').hide();
+		Ext.getCmp('analogpanel2').hide();
+		Ext.getCmp('analogbutton').enable();
+		Ext.getCmp('rockphysicspanel1').hide();
+		Ext.getCmp('rockphysicspanelbutton').enable();
+		Ext.getCmp('palmaganel1').show();
+		Ext.getCmp('palmagpanelbutton').disable();
+	}
 //--------
        //points only have "min"-Values
         var extentstore=Ext.getStore('isoExtent'); 
@@ -726,6 +757,11 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         iso+=Ext.getStore('DataCiteSubjectGCMD11').asISOXML();
         iso+=Ext.getStore('DataCiteSubjectGCMD12').asISOXML();
         iso+=Ext.getStore('DataCiteSubjectGCMD13').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD14').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD15').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD16').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD17').asISOXML();
+        iso+=Ext.getStore('DataCiteSubjectGCMD18').asISOXML();
         iso+=Ext.getStore('DataCiteRight').asISOXML();  
       
         iso+=identificationinfo.asXML('language');
