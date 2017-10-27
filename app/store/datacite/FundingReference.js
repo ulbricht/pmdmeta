@@ -7,7 +7,7 @@ Ext.define('PMDMeta.store.datacite.FundingReference', {
 
         reader:{
                     type: 'xml',
-                    record: 'fundingReferences',
+                    record: 'fundingReference',
                     rootProperty: 'resource'
             }
     },
