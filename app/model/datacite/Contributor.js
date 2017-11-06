@@ -1,6 +1,6 @@
 Ext.define('PMDMeta.model.datacite.Contributor', {
     extend: 'Ext.data.Model',
-     fields: [
+    fields: [
         {name: 'name',  type: 'string', mapping: function(data){
                     var name=Ext.DomQuery.selectValue('contributorName',data);
                     var familyname=Ext.DomQuery.selectValue('familyName',data);
@@ -62,10 +62,10 @@ Ext.define('PMDMeta.model.datacite.Contributor', {
 			contributorname+='<contributorName>'+Ext.String.htmlEncode(this.getFullName())+'</contributorName>';
 			
 		if (this.getGivenName().length>0)
-			result+='<givenName>'+Ext.String.htmlEncode(this.getGivenName())+'</givenName>';
+			contributorname+='<givenName>'+Ext.String.htmlEncode(this.getGivenName())+'</givenName>';
 
 		if (this.getFamilyName().length>0)
-			result+='<familyName>'+Ext.String.htmlEncode(this.getFamilyName())+'</familyName>';
+			contributorname+='<familyName>'+Ext.String.htmlEncode(this.getFamilyName())+'</familyName>';
 
 		if (this.get('nameIdentifier') && this.get('nameIdentifier').length>0){
 			var scheme="";
