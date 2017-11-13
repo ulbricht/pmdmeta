@@ -166,7 +166,10 @@
      *      },
      *
      */
-
+     // "loader": {
+     //    "cache": false,
+     //    "cacheParam": "_ns"
+     // },
 
     /**
      * override objects for setting build environment specific 

@@ -83,7 +83,7 @@ Ext.define('PMDMeta.store.datacite.Subject', {
             });            
         }
         return ret;
-    },
+    }
    
 });
 
