@@ -6,10 +6,11 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
                     var descriptivekeywords=mdkeyword.parentNode;
                     var thesaurus=Ext.DomQuery.selectNode('gmd|thesaurusName',descriptivekeywords); 
                     var keyword=Ext.DomQuery.selectNode('gco|CharacterString',data);
-                    if (thesaurus && keyword)
+                    if (keyword)
                         return Ext.String.htmlDecode(keyword.firstChild.textContent);
                     else
                         return "";
+
                 }},
 		{name: 'subjectScheme',   type: 'string', mapping:function(data){
                     var mdkeyword=data.parentNode;
@@ -17,6 +18,7 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
                     var gcmd1=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(NASA/Global Change Master Directory)',descriptivekeywords);                     
                     var gcmd2=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(GCMD)',descriptivekeywords);                     
                     var gcmd3=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(Earth Science Keywords)',descriptivekeywords);                                         
+                    var other=Ext.DomQuery.selectNode('gmd|MD_KeywordTypeCode',descriptivekeywords);
                     if (gcmd1 && gcmd2 && gcmd3)
                         return "GCMD";                    
                     var gemet=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(GEMET - INSPIRE themes)',descriptivekeywords);                     
@@ -24,15 +26,19 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
                         return "GEMET";
                     var epos=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(EPOS WP16)',descriptivekeywords);                     
                     if (epos)
-                        return "EPOS WP16";                                              
+                        return "EPOS WP16"; 
+                    if (other)
+                        return other.innerHTML;                              
                     return "";
                 }},
 		{name: 'subjectSchemeURI',   type: 'string', mapping:function(data){
                     var mdkeyword=data.parentNode;
                     var descriptivekeywords=mdkeyword.parentNode;
+                    var rootNode = descriptivekeywords.parentNode.parentNode.parentNode.parentNode;
                     var gcmd1=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(NASA/Global Change Master Directory)',descriptivekeywords);                     
                     var gcmd2=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(GCMD)',descriptivekeywords);                     
                     var gcmd3=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(Earth Science Keywords)',descriptivekeywords);                                         
+                    var other=Ext.DomQuery.selectNode('gmd|MD_KeywordTypeCode',descriptivekeywords);
                     if (gcmd1 && gcmd2 && gcmd3)
                         return 'http://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/sciencekeywords';                                                
                     var gemet=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(GEMET - INSPIRE themes)',descriptivekeywords);                     
@@ -40,9 +46,28 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
                         return 'http://www.eionet.europa.eu/gemet/';
                     var epos=Ext.DomQuery.selectNode('gmd|thesaurusName:contains(EPOS WP16)',descriptivekeywords);                     
                     if (epos)
-                        return "http://epos-ip.org/WP16";                 
+                        return "http://epos-ip.org/WP16";
+                    if (other) {
+                        var keyword=Ext.DomQuery.selectNode('gco|CharacterString',data);
+                        var subjectEl = Ext.DomQuery.selectNode('subject:contains('+keyword.innerHTML+')',rootNode);
+                        if (subjectEl) return subjectEl.getAttribute('schemeURI');
+                    }
+
                     return "";
                 }},
+        {name: 'codeListValue', type: 'string', mapping:function(data){
+            var codeListValue="Theme";
+            var subject=Ext.String.htmlDecode(data.firstChild.textContent);
+            var envelope=data.parentNode.parentNode.parentNode;
+            var iso=Ext.DomQuery.selectNode('gmd|MD_Metadata',envelope); 
+            var id_info=Ext.DomQuery.selectNode('gmd|identificationInfo',iso); 
+            var data_id=Ext.DomQuery.selectNode('gmd|MD_DataIdentification',id_info);
+            var descriptivekeywords=Ext.DomQuery.selectNode('gmd|descriptiveKeywords:contains('+subject+')',data_id);
+            var keyword_type_code=Ext.DomQuery.selectNode('gmd|MD_KeywordTypeCode',descriptivekeywords); 
+            if (keyword_type_code)
+                codeListValue=keyword_type_code.getAttribute("codeListValue");
+            return codeListValue;  
+        }},
 		{name: 'lang', type: 'string', mapping: function(data){
                      return "en";
 		}}	
@@ -79,7 +104,7 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
         asDifXML: function(param){
             if (param=='scienceparamenters'){
                 
-                var sciparams=this.get('subject').split('>')
+                var sciparams=this.get('subject').split(/>|:/);
                 var category=sciparams[0];
                 var topic=sciparams[1];
                 var term=sciparams[2];
@@ -88,12 +113,13 @@ Ext.define('PMDMeta.model.datacite.ThesaurusSubject', {
                 var variable3=sciparams[5];
                 var detailed=sciparams[6];
                 
+                if (category.length === 0 && !topic) return;
                 if (!category || category.length===0)
-		    category="EARTH SCIENCE";
+		          category="EARTH SCIENCE";
                 if (!topic || topic.length===0)
-		    topic=" ";
+		          topic=" ";
                 if (!term || term.length===0)
-		    term=" ";
+		           term=" ";
 		    
                 var ret="";
                 if (category)

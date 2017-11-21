@@ -104,10 +104,19 @@
     },
     onAddViaThesaurus:function (grid, rowIndex){
         var me=this;
+        var result = null;
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", 'resources/thesaurus/thesaurus_list.txt', false);
+        xmlhttp.send();
+        if (xmlhttp.status==200) {
+          result = xmlhttp.responseText;
+        }
+        var list = result.split('\n');
         if (!me.thesaurus)
             me.thesaurus=Ext.create('PMDMeta.view.main.ThesaurusWindow', {
-                thesaurusList: ['gcmd', 'gemet']});
+                thesaurusList: list});
         me.thesaurus.setExchangeStore(me.getStore());
+        console.log(me.getStore());
         me.thesaurus.show();
     },
     onRemoveClick: function(grid, rowIndex){

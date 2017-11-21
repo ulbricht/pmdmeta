@@ -49,7 +49,7 @@ Ext.define('PMDMeta.view.datacite.Rights', {
             store: 'DataCiteRight',
             columns: [
 		{		
-                header: 'Licence',
+                header: 'License',
                 flex: 1,		    
                 dataIndex: 'right',	
 		sortable: false,		

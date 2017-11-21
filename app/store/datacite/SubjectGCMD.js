@@ -17,16 +17,16 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
                     ret+=data.asXML();
             });
 
-            if (ret.length>0)
-                    result="<subjects>"+ret+"</subjects>";
+            // if (ret.length>0)
+            //         result="<subjects>"+ret+"</subjects>";
 
-            return result;
+            return ret;
     },
     asISOXML: function(){
-
-        var gcmds=new Array();
-        var gemets=new Array();
-        var eposwp16s=new Array();
+        var gcmds = [];
+        var gemets = [];
+        var eposwp16s = [];
+        var others = []; 
         
         this.each(function(elem){
             if (elem.get('subjectScheme')=='GCMD')
@@ -35,6 +35,7 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
                 gemets.push(elem);
 	        else if (elem.get('subjectScheme')=='EPOS WP16')
                 eposwp16s.push(elem);
+            else others.push(elem);
         });
         
         var gcmd='<gmd:thesaurusName>';
@@ -128,19 +129,40 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
             ret+='</gmd:descriptiveKeywords>';
         }
 
-       return ret;
+
+        if (others.length > 0){ 
+            Ext.each(others, function(elem){
+                var scheme=elem.get('subjectScheme');
+                var codeListValue=elem.get('codeListValue');
+                if (scheme.length > 0 && codeListValue.length > 0) {
+                    ret+='<gmd:descriptiveKeywords>';
+                    ret+='<gmd:MD_Keywords>';
+                    ret+='<gmd:type>';
+                    ret+='<gmd:MD_KeywordTypeCode codeList="http://www.ngdc.noaa.gov/metadata/published/xsd/schema/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="'+codeListValue+'">';
+                    ret+=scheme;
+                    ret+='</gmd:MD_KeywordTypeCode>';
+                    ret+='</gmd:type>';
+                    ret+=elem.asISOXML();
+                    ret+='</gmd:MD_Keywords>';
+                    ret+='</gmd:descriptiveKeywords>';
+                }
+            });
+        }
+        return ret;
         
     },
     asDifXML:function(param){
         
-        var gcmds=new Array();
-        var gemets=new Array();
+        var gcmds = [];
+        var gemets = [];
+        var others = [];
         
         this.each(function(elem){
             if (elem.get('subjectScheme')=='GCMD')
                 gcmds.push(elem);
             else if (elem.get('subjectScheme')=='GEMET')
                 gemets.push(elem);
+            else others.push(elem);
         });
         
         var ret="";
@@ -151,6 +173,11 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
                 if (sciparam.length>0)
                     ret+='<dif:Parameters>'+sciparam+'</dif:Parameters>';
             });
+            Ext.each(others, function(keyword){
+                var sciparam=keyword.asDifXML(param);
+                if (sciparam && sciparam.length>0)
+                    ret+='<dif:Parameters>'+sciparam+'</dif:Parameters>';
+            });  
         }else if (param=='keyword'){
             Ext.each(gemets, function(keyword){
                 ret+=keyword.asDifXML(param);
