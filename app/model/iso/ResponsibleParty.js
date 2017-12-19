@@ -111,8 +111,6 @@ Ext.define('PMDMeta.model.iso.ResponsibleParty', {
             }
             if (this.get('internet').length>0){
                 var internet=this.get('internet').replace(/&/g,"&amp;");
-                if (internet.substring(0,7)!=="http://")
-                    internet="http://"+internet;
                 ret+='<gmd:onlineResource>';
                 ret+='<gmd:CI_OnlineResource>';
                 ret+='<gmd:linkage>';
