@@ -247,8 +247,8 @@ Ext.define('PMDMeta.view.iso.Extent', {
 	if (!grid.gmap)
 		grid.gmap=Ext.create('PMDMeta.view.main.MapWindow');
 	    
+	grid.gmap.fireEvent('PMDModelChange',store,model)	    
 	grid.gmap.show();
-	grid.gmap.setStore(store,model);		
 	    
     },      
     onRemoveClick: function(grid, rowIndex){

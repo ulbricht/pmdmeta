@@ -103,9 +103,13 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
    },
     onAddViaThesaurus:function (grid, rowIndex){
 	var me=this;
-	if (!me.thesaurus)
+	if (!me.thesaurus){
 	    me.thesaurus=Ext.create('PMDMeta.view.main.ThesaurusWindow');
-        me.thesaurus.setExchangeStore(me.getStore());
+	    me.thesaurus.setThesaurus({thesaurus1: 'gcmd', thesaurus2: 'gemet'});
+	}
+	me.thesaurus.on('PMDnewThesaurusSubject',function(keyword){
+		grid.getStore().insert(0,keyword);
+	});
         me.thesaurus.show();
     },
     onRemoveClick: function(grid, rowIndex){

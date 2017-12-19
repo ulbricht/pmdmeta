@@ -13,24 +13,21 @@ Ext.define('PMDMeta.view.datacite.Descriptions', {
         'Ext.form.*',
 	'PMDMeta.model.datacite.Description',
         'PMDMeta.store.datacite.Description',
+	'PMDMeta.view.datacite.PanelController',
 	'PMDMeta.store.datacite.combobox.DescriptiontypeCombo',
 	'PMDMeta.view.main.ComboBox'
     ],
     xtype: 'DataCite-Descriptions',
     title: 'Descriptions',
+    controller: 'PanelController',
     frame: true,
     layout: 'fit',
     modelname: 'PMDMeta.model.datacite.Description',
-    initComponent: function() {
-        this.cellEditing = new Ext.grid.plugin.CellEditing({
-            clicksToEdit: 1
-        });
-
-        Ext.create('PMDMeta.store.datacite.combobox.DescriptiontypeCombo');
-
-        Ext.apply(this, {
             height: 200,
-            plugins: [this.cellEditing],
+            plugins: {
+		ptype: 'cellediting',
+		clicksToEdit: 1
+	    },
             store: 'DataCiteDescription',
             columns: [
         {
@@ -40,9 +37,10 @@ Ext.define('PMDMeta.view.datacite.Descriptions', {
                 width: 130,
 		sortable: false,		
                 menuDisabled: true,		
-                editor: new PMDMeta.view.main.ComboBox({	
+                editor: {
+		    xtype: 'PMD-ComboBox',	
 		    store: 'DescriptiontypeCombo'
-		})
+		}
             },{
                 header: 'Language',
                 dataIndex: 'lang',   
@@ -50,9 +48,10 @@ Ext.define('PMDMeta.view.datacite.Descriptions', {
 		hidden:true,
 		sortable: false,		
                 menuDisabled: true,	
-                editor: new PMDMeta.view.main.ComboBox({
+                editor:{
+		    xtype: 'PMD-ComboBox',
                     store: 'LanguageCombo'
-		})
+		}
             }, {
 		cls: 'PMDrequired',		    
                 header: 'Description',
@@ -69,20 +68,13 @@ Ext.define('PMDMeta.view.datacite.Descriptions', {
                 items: [{
                     icon: 'resources/images/icons/fam/delete.gif',
                     tooltip: 'Delete Description',
-                    scope: this,
-                    handler: this.onRemoveClick
+                    handler: function(view, rowIndex) {
+     			this.fireEvent('itemClick', view, rowIndex);
+    		    }
                 }]
             }],
             selModel: {
                 selType: 'cellmodel'
             }
-        });
 
-        this.callParent();
-    },
-    onRemoveClick: function(grid, rowIndex){
-        var me=this;
-	me.getStore().removeAt(rowIndex);
-	me.newEntry();	    
-    }
 });

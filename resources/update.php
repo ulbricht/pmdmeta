@@ -207,7 +207,7 @@ try{
                 $sthds=$dbo->prepare('REPLACE INTO '.$pmdinstance.'dataset (id,item,lastmodified,doi) VALUES (?,?,?,?)');
                 $sthds->execute(array(  $newitem->getObjId(),
                                         DOMMapper::marshal($newitem),
-                                        DateTimeFormatter::ISO8601($newitem->getLastModificationDate()),
+                                        $newitem->getLastModificationDate()->format("Y-m-d H:i:s"),
                                         $doi
                                 ));
 
