@@ -1,7 +1,7 @@
 
 Ext.define('PMDMeta.view.main.ThesaurusWindow',{		
 	extend: 'Ext.window.Window',
-	requires:['PMDMeta.view.main.ThesaurusWindowController'],
+	requires:['PMDMeta.view.main.ThesaurusWindowController', 'Ext.tree.Panel'],
         title: 'Thesaurus',
 	closeAction: 'hide',
 	controller: 'ThesaurusWindowController',		
