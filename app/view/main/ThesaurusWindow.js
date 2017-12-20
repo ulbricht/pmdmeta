@@ -58,11 +58,6 @@ Ext.define('PMDMeta.view.main.ThesaurusWindow',{
                         }  
 		    ]
 		}
-	],
-	setThesauruses: function(thesauruses){
-		this.getStore().removeAll();
-                this.getStore().getProxy().extraParams = thesauruses;
-		this.getStore().load();
-	}
+	]
 
 });

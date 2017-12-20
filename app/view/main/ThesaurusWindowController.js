@@ -4,7 +4,10 @@ Ext.define('PMDMeta.view.main.ThesaurusWindowController', {
     control: {
         textfield: {
             change: 'onSearchChange'
-        }
+        },
+	'#':{
+	   PMDThesaurusChange: 'PMDThesaurusChange'
+	}
    },
 onSearchChange: function( textfield, newValue, oldValue){
     var tree = textfield.up('treepanel'),
@@ -47,6 +50,12 @@ onSearchChange: function( textfield, newValue, oldValue){
 beforeInit: function(view){
 	Ext.create('PMDMeta.store.Thesaurus');	
 	this.callParent(arguments);			
+},
+PMDThesaurusChange: function(thesauruses){
+	var store = this.getStore();
+	store.getStore().removeAll();
+        store.getProxy().extraParams = thesauruses;
+	store.load();
 }
 
 });
