@@ -15,6 +15,7 @@ Ext.define('PMDMeta.view.main.Main', {
 	'PMDMeta.view.main.FileAndVersionForm',
 	'PMDMeta.view.fileupload.FileUpload',
         'PMDMeta.view.main.LoadMetadataWindow',
+        'PMDMeta.view.main.CitationWindow',
         'PMDMeta.view.main.ReviewWindow'        
     ],
 
@@ -28,7 +29,7 @@ Ext.define('PMDMeta.view.main.Main', {
         new PMDMeta.store.escidoc.Files();   
         
         var me=this;
-        
+
         var metaclear=new Ext.Action({
                         text: 'Clear',
                         handler: function(){
@@ -287,6 +288,15 @@ Ext.define('PMDMeta.view.main.Main', {
                         }
                     });                   
         
+        var citationwindow=new Ext.Action({
+                        text: 'Citation',
+                        handler: function(){
+                            if (!me.citationwindow)
+                                me.citationwindow=new PMDMeta.view.main.CitationWindow();
+                            me.citationwindow.show();                           
+                        }
+                    });        
+
          Ext.apply(me, {
                
 
@@ -384,7 +394,8 @@ Ext.define('PMDMeta.view.main.Main', {
                         }
                     },
                     reviewlink,
-                    doiregister
+                    doiregister,
+		    citationwindow
                 ]
             }, {
                 text: 'About/Help',
