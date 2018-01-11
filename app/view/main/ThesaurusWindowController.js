@@ -23,7 +23,9 @@ onSearchChange: function( textfield, newValue, oldValue){
                     // Visibility of leaf nodes is whether they pass the test.
                     // Visibility of branch nodes depends on them having visible children.
 
-                var ismatched=v.test(node.get('keyword'));
+		var keywordmatch=v.test(node.get('keyword'));
+		var qtipmatch=v.test(node.get('qtip'));		
+                var ismatched= keywordmatch || qtipmatch;
                 var visible=node.isLeaf() ? ismatched : false;
                 var i;	
 
@@ -40,8 +42,7 @@ onSearchChange: function( textfield, newValue, oldValue){
             },
             id: 'titleFilter'
         });
-//					    tree.down('#matches').setValue(matches);
-        if (matches<100 && this.getValue().length>0)
+        if (matches<100 && textfield.getValue().length>0)
             tree.expandAll();						    
     } catch (e) {
         textfield.markInvalid('Invalid regular expression');
