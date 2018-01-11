@@ -24,7 +24,30 @@ Ext.define('PMDMeta.model.datacite.Author', {
         {name: 'nameIdentifierSchemeURI',   type: 'string', mapping: 'nameIdentifier@schemeURI'},
         {name: 'role',   type: 'string'},	        
         {name: 'affiliation',   type: 'string', mapping: function(data){
-                    var name=Ext.DomQuery.selectValue('affiliation',data);
+		    var name="";
+                    var namearray=Ext.DomQuery.select('affiliation',data);
+		    if (namearray.length>0)
+			name=namearray[0].firstChild.data;
+                    if (name)
+                        return Ext.String.htmlDecode(name);
+                    else
+                        return "";
+                }},
+        {name: 'affiliation2',   type: 'string', mapping: function(data){
+		    var name="";
+                    var namearray=Ext.DomQuery.select('affiliation',data);
+		    if (namearray.length>1)
+			name=namearray[1].firstChild.data;
+                    if (name)
+                        return Ext.String.htmlDecode(name);
+                    else
+                        return "";
+                }},
+        {name: 'affiliation3',   type: 'string', mapping: function(data){
+		    var name="";
+                    var namearray=Ext.DomQuery.select('affiliation',data);
+		    if (namearray.length>2)
+			name=namearray[2].firstChild.data;
                     if (name)
                         return Ext.String.htmlDecode(name);
                     else
@@ -78,8 +101,14 @@ Ext.define('PMDMeta.model.datacite.Author', {
 				result+='<nameIdentifier'+scheme+uri+'>'+this.get('nameIdentifier').trim()+'</nameIdentifier>'
 		}
 		if (this.get('affiliation') && this.get('affiliation').length>0){
-			result+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation'))+'</affiliation>'
+			result+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation'))+'</affiliation>';
 		}		
+		if (this.get('affiliation2') && this.get('affiliation2').length>0){
+			result+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation2'))+'</affiliation>';
+		}
+		if (this.get('affiliation3') && this.get('affiliation3').length>0){
+			result+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation3'))+'</affiliation>';
+		}
 		if (result.length>0)
 			return '<creator>'+result+'</creator>';
 
@@ -115,9 +144,14 @@ Ext.define('PMDMeta.model.datacite.Author', {
 				nameidentifier+='<nameIdentifier'+scheme+uri+'>'+this.get('nameIdentifier').trim()+'</nameIdentifier>'
 		}
 		if (this.get('affiliation') && this.get('affiliation').length>0){
-			affiliation+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation'))+'</affiliation>'
+			affiliation+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation'))+'</affiliation>';
 		}
-
+		if (this.get('affiliation2') && this.get('affiliation2').length>0){
+			affiliation+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation2'))+'</affiliation>';
+		}
+		if (this.get('affiliation3') && this.get('affiliation3').length>0){
+			affiliation+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation3'))+'</affiliation>';
+		}
                 if (!this.get('role') || this.get('role').length==0){
                     if (contributorname.length>0 || nameidentifier.length>0 || affiliation.length>0)                    
                         result+='<contributor>'+contributorname+nameidentifier+affiliation+'</contributor>';                    
@@ -168,8 +202,18 @@ Ext.define('PMDMeta.model.datacite.Author', {
              }
              
              if (this.get('affiliation').length>0){
+		var affiliation="";
+		if (this.get('affiliation') && this.get('affiliation').length>0){
+			affiliation+=Ext.String.htmlEncode(this.get('affiliation'));
+		}
+		if (this.get('affiliation2') && this.get('affiliation2').length>0){
+			affiliation+=' / '+Ext.String.htmlEncode(this.get('affiliation2'));
+		}
+		if (this.get('affiliation3') && this.get('affiliation3').length>0){
+			affiliation+=' / '+Ext.String.htmlEncode(this.get('affiliation3'));
+		}
                 ret+='<gmd:organisationName>';
-                ret+='<gco:CharacterString>'+Ext.String.htmlEncode(this.get('affiliation'))+'</gco:CharacterString>';
+                ret+='<gco:CharacterString>'+affiliation+'</gco:CharacterString>';
                 ret+='</gmd:organisationName>';
              }
              if (this.get('position').length>0){

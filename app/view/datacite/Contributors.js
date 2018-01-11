@@ -120,6 +120,24 @@ Ext.define('PMDMeta.view.datacite.Contributors', {
   	        editor: {
                     allowBlank: true
                 }	
+            },{
+                header: 'Affiliation2',
+                dataIndex: 'affiliation2',
+                flex: 1,                
+		sortable: false,			    
+                menuDisabled: true,
+  	        editor: {
+                    allowBlank: true
+                }	
+            },{
+                header: 'Affiliation3',
+                dataIndex: 'affiliation3',
+                flex: 1,                
+		sortable: false,			    
+                menuDisabled: true,
+  	        editor: {
+                    allowBlank: true
+                }	
             }, {
                 xtype: 'actioncolumn',
                 width: 30,

@@ -24,13 +24,35 @@ Ext.define('PMDMeta.model.datacite.Contributor', {
         {name: 'nameIdentifierSchemeURI',   type: 'string', mapping: 'nameIdentifier@schemeURI'},
         {name: 'role',   type: 'string', mapping: '@contributorType'},	
         {name: 'affiliation',   type: 'string', mapping: function(data){
-                var name=Ext.DomQuery.selectValue('affiliation',data);
-                if (name)
-                    return Ext.String.htmlDecode(name);
-                else
-                    return "";
-            }
-        }
+		    var name="";
+                    var namearray=Ext.DomQuery.select('affiliation',data);
+		    if (namearray.length>0)
+			name=namearray[0].firstChild.data;
+                    if (name)
+                        return Ext.String.htmlDecode(name);
+                    else
+                        return "";
+                }},
+        {name: 'affiliation2',   type: 'string', mapping: function(data){
+		    var name="";
+                    var namearray=Ext.DomQuery.select('affiliation',data);
+		    if (namearray.length>1)
+			name=namearray[1].firstChild.data;
+                    if (name)
+                        return Ext.String.htmlDecode(name);
+                    else
+                        return "";
+                }},
+        {name: 'affiliation3',   type: 'string', mapping: function(data){
+		    var name="";
+                    var namearray=Ext.DomQuery.select('affiliation',data);
+		    if (namearray.length>2)
+			name=namearray[2].firstChild.data;
+                    if (name)
+                        return Ext.String.htmlDecode(name);
+                    else
+                        return "";
+                }}
         
     ],
 	getFullName: function(){
@@ -75,10 +97,16 @@ Ext.define('PMDMeta.model.datacite.Contributor', {
 			if (this.get('nameIdentifierSchemeURI') && this.get('nameIdentifierSchemeURI').length>0)
 				uri=' schemeURI="'+this.get('nameIdentifierSchemeURI')+'"';
 			if (scheme.length>0 || uri.length>0 || this.get('nameIdentifier').length>0)
-				nameidentifier+='<nameIdentifier'+scheme+uri+'>'+this.get('nameIdentifier')+'</nameIdentifier>'
+				nameidentifier+='<nameIdentifier'+scheme+uri+'>'+this.get('nameIdentifier')+'</nameIdentifier>';
 		}
 		if (this.get('affiliation') && this.get('affiliation').length>0){
-			affiliation+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation'))+'</affiliation>'
+			affiliation+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation'))+'</affiliation>';
+		}
+		if (this.get('affiliation2') && this.get('affiliation2').length>0){
+			affiliation+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation2'))+'</affiliation>';
+		}
+		if (this.get('affiliation3') && this.get('affiliation3').length>0){
+			affiliation+='<affiliation>'+Ext.String.htmlEncode(this.get('affiliation3'))+'</affiliation>';
 		}
 
                 if (!this.get('role') || this.get('role').length==0){
@@ -101,64 +129,6 @@ Ext.define('PMDMeta.model.datacite.Contributor', {
 		name: { type: 'length', min: 1 },
 		role: { type: 'length', min: 1 }
 	},        
-        /*asISOXML: function(){
-            var roletable={ContactPerson:"pointOfContact",
-                        DataCollector:null,
-                        DataCurator:"custodian",
-                        DataManager:"custodian",
-                        Distributor:"distributor",
-                        Editor:null,
-                        Funder:null,
-                        HostingInstitution:"publisher",
-                        Producer: null,
-                        ProjectLeader:'principalInvestigator',
-                        ProjectManager:null,
-                        ProjectMember:null,
-                        RegistrationAgency:null,
-                        RegistrationAuthority:null,
-                        RelatedPerson:null,
-                        Researcher:"user",
-                        ResearchGroup:null,
-                        RightsHolder: "owner",
-                        Sponsor:null,
-                        Supervisor:null,
-                        WorkPackageLeader:null,
-                        Other:null};
-
-            var ret="";
-            var role =this.get('role');
-            
-            if ((this.get('name').length==0 && this.get('affiliation').length==0) || role.length==0)
-                return ret;            
-
-            var isorole=roletable[role];            
-            
-            if (!isorole)
-                return ret;
-            
-             ret+='<gmd:citedResponsibleParty>';
-             ret+='<gmd:CI_ResponsibleParty>';
-             if (this.get('name').length>0){             
-                ret+='<gmd:individualName>';
-                ret+='<gco:CharacterString>'+Ext.String.htmlEncode(this.get('name'))+'</gco:CharacterString>';
-                ret+='</gmd:individualName>';
-             }
-             
-             if (this.get('affiliation').length>0){
-                ret+='<gmd:organisationName>';
-                ret+='<gco:CharacterString>'+Ext.String.htmlEncode(this.get('affiliation'))+'</gco:CharacterString>';
-                ret+='</gmd:organisationName>';
-             }
-             
-             ret+='<gmd:role>';
-             ret+='<gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="'+isorole+'" >'+isorole+'</gmd:CI_RoleCode>';
-             ret+='</gmd:role>';
-             ret+='</gmd:CI_ResponsibleParty>';
-             ret+='</gmd:citedResponsibleParty>';            
-            
-            return ret;
-            
-        },*/
         getKey: function(){
             var ret=this.getFullName().trim()+this.get('nameIdentifier').trim()+this.get('nameIdentifierScheme').trim()+this.get('nameIdentifierSchemeURI')+this.get('affiliation').trim();
             if (ret.length>0)

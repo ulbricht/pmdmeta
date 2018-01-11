@@ -32,7 +32,14 @@ Ext.define('PMDMeta.Application', {
 
 		Ext.each(Ext.ComponentQuery.query('DataCite-Rights'), function(elem,idx){
 			elem.columns[1].hide();
-
+		});
+		Ext.each(Ext.ComponentQuery.query('DataCite-Authors'), function(elem,idx){
+			elem.columns[7].hide();
+			elem.columns[8].hide();
+		});
+		Ext.each(Ext.ComponentQuery.query('DataCite-Contributors'), function(elem,idx){
+			elem.columns[7].hide();
+			elem.columns[8].hide();
 		});
 	}
 	    
