@@ -4,7 +4,6 @@ Ext.define('PMDMeta.view.main.CitationWindow',{
 	requires:[
 			'PMDMeta.view.main.CitationWindowController',
 			'Ext.grid.Panel',
-			'Ext.grid.filters.Filters',
 		        'Ext.selection.CellModel'
 	],
         title: 'Citation Editor',
@@ -17,8 +16,6 @@ Ext.define('PMDMeta.view.main.CitationWindow',{
 		    height: 500,
 		    store: 'Citation',
 		    plugins: [{
-			ptype: 'gridfilters'
-		    },{
 			ptype: 'cellediting'
 		    }],
 		    columns: [
@@ -84,6 +81,26 @@ Ext.define('PMDMeta.view.main.CitationWindow',{
                                     }
 				}]
 			    }
+		    ],
+		    tbar:[
+                        '->',
+                        {
+                            labelWidth: 60,
+                            xtype: 'textfield',
+                            fieldLabel: 'Search',
+                            triggers:{
+                                    clearfield:{
+                                            cls: 'x-form-clear-trigger',
+                                            handler: function() {
+                                                     var store = this.up('grid').store;
+                                                     this.reset();
+                                                     store.clearFilter();
+                                                     this.focus();
+                                            }				
+
+                                    }
+                            }
+                        }  
 		    ]
 		}
 		

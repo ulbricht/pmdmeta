@@ -2,6 +2,9 @@ Ext.define('PMDMeta.view.main.CitationWindowController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.CitationWindowController',
     control: {
+        textfield: {
+            change: 'onSearchChange'
+        },
 	'#':{
 	   RemoveItem: 'RemoveItem',
 	   show: 'reload'
@@ -16,6 +19,26 @@ RemoveItem: function(grid,rowIndex){
 },
 reload: function(window){
 	window.down("grid").getStore().load();
+},
+onSearchChange: function( textfield, newValue, oldValue){
+    var grid = textfield.up('grid'),
+        v;
+    try {
+        v = new RegExp(newValue, 'i');
+        grid.store.filter({
+            filterFn: function(node) {
+		
+		var urlmatch=v.test(node.get('url'));
+		var citationmatch=v.test(node.get('citation'));
+
+                var visible= urlmatch || citationmatch;
+                return visible;
+            },
+	    id: 'titleFilter'
+        });
+    } catch (e) {
+        textfield.markInvalid('Invalid regular expression');
+    }
 }
 
 });

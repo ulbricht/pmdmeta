@@ -75,6 +75,68 @@ Ext.define('PMDMeta.view.main.Main', {
                             }); 
                         }
                     });
+	var metasavedatacite=new Ext.Action({
+                        text: 'DataCite',
+                        handler: function(){
+                            var xml=Ext.getStore('Item').marshalDataCite();
+                            Ext.Ajax.request({
+                                url: 'resources/upload/metastore.php',	
+                                method: 'POST',
+                                params:{
+                                    storedata: xml
+                                },                                                        
+                                success: function(response, opts) {
+                                    var title=Ext.getStore('DataCiteTitle').getAt(0).get('title');
+                                    var dt=new Date();
+                                    dt.setTime(Date.now());
+                                    var filename=title+"_"+Ext.Date.format(dt,'YmdHi')+'_datacite.xml';
+
+                                    var minPromptWidth=Ext.Msg.minPromptWidth;
+                                    Ext.Msg.minPromptWidth=600;
+                                    Ext.Msg.prompt('Save as', 'Filename:', function(btn, text){
+                                        if (btn === 'ok'){                                        
+                                            window.location.href='resources/upload/metastore.php?file='+Ext.String.htmlEncode(text);                                        
+                                        }
+                                    }, null , false, filename);
+                                    Ext.Msg.minPromptWidth=minPromptWidth;
+                               },
+                               failure: function(response, opts) {
+                                  console.log('server-side failure with status code ' + response.status);
+                               }            
+                            }); 
+                        }
+                    });
+	var metasaveiso=new Ext.Action({
+                        text: 'ISO19115/ISO19139',
+                        handler: function(){
+                            var xml=Ext.getStore('Item').marshalISO();
+                            Ext.Ajax.request({
+                                url: 'resources/upload/metastore.php',	
+                                method: 'POST',
+                                params:{
+                                    storedata: xml
+                                },                                                        
+                                success: function(response, opts) {
+                                    var title=Ext.getStore('DataCiteTitle').getAt(0).get('title');
+                                    var dt=new Date();
+                                    dt.setTime(Date.now());
+                                    var filename=title+"_"+Ext.Date.format(dt,'YmdHi')+'_iso19139.xml';
+
+                                    var minPromptWidth=Ext.Msg.minPromptWidth;
+                                    Ext.Msg.minPromptWidth=600;
+                                    Ext.Msg.prompt('Save as', 'Filename:', function(btn, text){
+                                        if (btn === 'ok'){                                        
+                                            window.location.href='resources/upload/metastore.php?file='+Ext.String.htmlEncode(text);                                        
+                                        }
+                                    }, null , false, filename);
+                                    Ext.Msg.minPromptWidth=minPromptWidth;
+                               },
+                               failure: function(response, opts) {
+                                  console.log('server-side failure with status code ' + response.status);
+                               }            
+                            }); 
+                        }
+                    });
         var metasubmit=new Ext.Action({
                         text: 'Submit to GFZ Library',
                         handler: function(){
@@ -105,7 +167,7 @@ Ext.define('PMDMeta.view.main.Main', {
                                 },
                                 failure: function(response, opts) {
                                   console.log('server-side failure with status code ' + response.status);
-                                }            
+                                } 
                             });
                         }
                     });
@@ -304,7 +366,13 @@ Ext.define('PMDMeta.view.main.Main', {
             {
                 text: 'Metadata',
                 menu: [
-                    metaclear,metaload,metasave,metasubmit
+                    metaclear,metaload,metasave,metasubmit,
+		    {
+			text: 'Export',
+			menu:[
+				metasavedatacite, metasaveiso
+			]
+		     }
                 ]
 
             }, {
