@@ -70,6 +70,47 @@ Ext.define('PMDMeta.model.iso.ResponsibleParty', {
                 this.get('phone').length==0 && this.get('internet').length==0)
             return ret;
        
+	var rolecode="";
+	switch (this.get('isorole')){
+		case 'resourceProvider':
+			rolecode="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode_resourceProvider";
+			break;
+		case 'custodian':
+			rolecode="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode_custodian";
+			break;
+		case 'owner':
+			rolecode="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode_owner";
+			break;
+		case 'user':
+			rolecode="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode_user";
+			break;
+		case 'distributor':
+			rolecode="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode_distributor";
+			break;
+		case 'originator':
+			rolecode="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode_originator";
+			break;
+		case 'pointOfContact':
+			rolecode="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode_pointOfContact";
+			break;
+		case 'principalInvestigator':
+			rolecode="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode_principalInvestigator";
+			break;
+		case 'processor':
+			rolecode="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode_processor";
+			break;
+		case 'publisher':
+			rolecode="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode_publisher";
+			break;
+		case 'author':
+			rolecode="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode_author";
+			break;
+		default:
+			rolecode=this.get('isorole');
+			break;
+	}
+
+
          ret+='<gmd:CI_ResponsibleParty>';
          if (this.get('name').length>0){             
             ret+='<gmd:individualName>';
@@ -126,7 +167,7 @@ Ext.define('PMDMeta.model.iso.ResponsibleParty', {
             ret+='</gmd:contactInfo>';            
         }
         ret+='<gmd:role>';
-        ret+='<gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="'+this.get('isorole')+'" >'+this.get('isorole')+'</gmd:CI_RoleCode>';
+        ret+='<gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="'+rolecode+'" >'+this.get('isorole')+'</gmd:CI_RoleCode>';
         ret+='</gmd:role>';
         ret+='</gmd:CI_ResponsibleParty>';
         return ret;

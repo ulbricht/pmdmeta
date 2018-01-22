@@ -179,14 +179,14 @@ Ext.define('PMDMeta.model.datacite.Author', {
             if (this.get('nameIdentifierScheme') && this.get('nameIdentifier')){
 	 	    var scheme=this.get('nameIdentifierScheme').toUpperCase();
  		    var identifier=this.get('nameIdentifier').trim()
-		    if (scheme=='ORCID'){
+		    if (scheme.toUpperCase()=='ORCID'){
 			iduri="http://orcid.org/"+identifier;
-		    }else if (scheme=='ISNI'){
+		    }else if (scheme.toUpperCase()=='ISNI'){
 			iduri="http://isni.org/isni/"+identifier;
-		    }else if (scheme=='SCOPUS'){
+		    }else if (scheme.toUpperCase()=='SCOPUSID'){
 			iduri="https://www.scopus.com/authid/detail.uri?authorId="+identifier;
-		    }else if (scheme=='RESEARCHER.ID'){
-			iduri="www.researcherid.com/rid/"+identifier;
+		    }else if (scheme.toUpperCase()=='RESEARCHER.ID'){
+			iduri="http://www.researcherid.com/rid/"+identifier;
 		    }
 
 		    if (iduri.length >0)
@@ -213,7 +213,7 @@ Ext.define('PMDMeta.model.datacite.Author', {
 			affiliation+=' / '+Ext.String.htmlEncode(this.get('affiliation3'));
 		}
                 ret+='<gmd:organisationName>';
-                ret+='<gco:CharacterString>'+affiliation+'</gco:CharacterString>';
+                ret+='<gco:CharacterString>'+affiliation.trim()+'</gco:CharacterString>';
                 ret+='</gmd:organisationName>';
              }
              if (this.get('position').length>0){
@@ -223,7 +223,7 @@ Ext.define('PMDMeta.model.datacite.Author', {
              }             
              
              ret+='<gmd:role>';
-             ret+='<gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="author" >author</gmd:CI_RoleCode>';
+             ret+='<gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode_author" >author</gmd:CI_RoleCode>';
              ret+='</gmd:role>';
              ret+='</gmd:CI_ResponsibleParty>';
              ret+='</gmd:citedResponsibleParty>';
