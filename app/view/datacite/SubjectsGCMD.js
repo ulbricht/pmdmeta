@@ -107,7 +107,7 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
 	    me.thesaurus=Ext.create('PMDMeta.view.main.ThesaurusWindow');
 	}
 
-	me.fireEvent('PMDThesaurusChange',{thesaurus1: 'gcmd', thesaurus2: 'gemet'});
+	me.thesaurus.fireEvent('PMDThesaurusChange',{thesaurus1: 'gcmd', thesaurus2: 'gemet'});
 
 	me.thesaurus.on('PMDnewThesaurusSubject',function(keyword){
 		grid.getStore().insert(0,keyword);

@@ -53,8 +53,9 @@ beforeInit: function(view){
 	this.callParent(arguments);			
 },
 PMDThesaurusChange: function(thesauruses){
-	var store = this.getStore();
-	store.getStore().removeAll();
+	var panel=this.getView().down('treepanel');
+	var store = panel.getStore();
+	store.removeAll();
         store.getProxy().extraParams = thesauruses;
 	store.load();
 }
