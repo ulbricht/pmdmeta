@@ -1,7 +1,7 @@
 Ext.define('PMDMeta.store.Thesaurus', {
     extend: 'Ext.data.TreeStore',
     storeId: 'Thesaurus',
-    autoLoad: true,	
+    autoLoad: false,	
     proxy: {
         requestMethod: 'GET',
         type: 'ajax',
