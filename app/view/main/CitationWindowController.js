@@ -2,7 +2,7 @@ Ext.define('PMDMeta.view.main.CitationWindowController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.CitationWindowController',
     control: {
-        textfield: {
+        'toolbar > textfield': {
             change: 'onSearchChange'
         },
 	'#':{

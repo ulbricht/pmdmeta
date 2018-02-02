@@ -32,7 +32,7 @@ if (isset($_REQUEST["citations"])){
 switch ($_REQUEST["cmd"]){
 	case 'c':
 		foreach ($citations as $citation)
-			createcitation($dbo,$citation["url"],$citation["citation"],$citation["datetimecopied"]);
+			createcitation($dbo,$citation["url"],$citation["citation"],null);
 		echo json_encode(array('success'=>true, 'message'=>'Created Record','citations'=>$citations));
 		break;
 	case 'r':
@@ -41,7 +41,7 @@ switch ($_REQUEST["cmd"]){
 		break;
 	case 'u':
 		foreach ($citations as $citation)
-			updatecitation($dbo,$citation["url"],$citation["citation"],$citation["datetimecopied"]);
+			updatecitation($dbo,$citation["url"],$citation["citation"],null);
 		echo json_encode(array('success'=>true, 'message'=>'Updated Record','citations'=>$citations));
 		break;
 	case 'd':

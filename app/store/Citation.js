@@ -73,7 +73,7 @@ Ext.define('PMDMeta.store.Citation', {
 			invalidexists=true;			
 	});
 	if (!invalidexists || store.getCount()===0){
-		store.insert(0,{url:'http://doi.org/',citation:'',datetimecopied:''});
+		store.insert(0,{url:'',citation:'',datetimecopied:''});
 	}
   }
 });			
