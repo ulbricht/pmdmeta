@@ -1,49 +1,81 @@
 Ext.define('PMDMeta.view.main.ThesaurusWindowController', {
     extend: 'Ext.app.ViewController',
+    requires: ['PMDMeta.store.Thesaurus'],
     alias: 'controller.ThesaurusWindowController',
     control: {
         textfield: {
-            change: 'onSearchChange'
+            change: 'onSearchChange',
+	    keyup: 'expandifenter'
         },
 	'#':{
 	   PMDThesaurusChange: 'PMDThesaurusChange'
 	}
    },
+expandifenter: function (textfield, event, eOpts ){
+    var tree = textfield.up('treepanel');
+    if (event.getKey()==event.ENTER)
+	tree.expandAll();
+},
 onSearchChange: function( textfield, newValue, oldValue){
-    var tree = textfield.up('treepanel'),
-        v,
-        matches = 0;
+    var tree = textfield.up('treepanel');
+
+    if (textfield.getValue().length==0){
+	tree.store.clearFilter();
+	tree.collapseAll();
+	return;
+    }else if (textfield.getValue().length <3){
+	return;	
+    }
+
+    var matchednodes={};
+    var matchedparents={};
+    var matchedchildren={};
+    var casecadenodes={};
     try {
-        v = new RegExp(newValue, 'i');
+
+	var v = new RegExp(newValue, 'i');
+	tree.store.getRoot().cascadeBy(function(node){
+		if (v.test(node.get('keyword')) || v.test(node.get('qtip'))){
+			matchednodes[node.getId()]=node;
+			if (!node.isLeaf()){
+				casecadenodes[node.getId()]=node;
+			}
+		}
+	});
+
+	for (var nodeid in matchednodes){
+		var node=matchednodes[nodeid];
+		for (var parent=node.parentNode;parent!=null;parent=parent.parentNode){
+			matchedparents[parent.getId()]=true;
+			//do not cascade subsets
+			if (matchednodes[parent.getId()])
+				casecadenodes[nodeid]=false;					
+		}
+	}
+
+	for (var nodeid in casecadenodes){
+		var cascadenode=casecadenodes[nodeid];
+		if (cascadenode){
+			cascadenode.cascadeBy(function(node){
+				matchedchildren[node.getId()]=true;
+			});
+		}
+	}
+
         tree.store.filter({
-            filterFn: function(node) {
-                var children = node.childNodes;
-                var len = children && children.length;
-
-                    // Visibility of leaf nodes is whether they pass the test.
-                    // Visibility of branch nodes depends on them having visible children.
-
-		var keywordmatch=v.test(node.get('keyword'));
-		var qtipmatch=v.test(node.get('qtip'));		
-                var ismatched= keywordmatch || qtipmatch;
-                var visible=node.isLeaf() ? ismatched : false;
-                var i;	
-
-                // We're visible if one of our child nodes is visible.
-                // No loop body here. We are looping only while the visible flag remains false.
-                // Child nodes are filtered before parents, so we can check them here.
-                // As soon as we find a visible child, this branch node must be visible.
-                for (i = 0; i < len && !(visible = children[i].get('visible')); i++);
-
-                if (ismatched && !node.isLeaf()) {
-                    matches++;
-                }
-                return visible;
+            filterFn: function(node) {	
+		if (matchednodes[node.getId()] ||
+			matchedparents[node.getId()] ||
+			matchedchildren[node.getId()]){
+			return true;
+		}
             },
             id: 'titleFilter'
         });
-        if (matches<100 && textfield.getValue().length>0)
-            tree.expandAll();						    
+        if (Object.keys(matchednodes).length<500 && textfield.getValue().length>0){
+		tree.expandAll();
+	}
+
     } catch (e) {
         textfield.markInvalid('Invalid regular expression');
     }
