@@ -1,10 +1,9 @@
 Ext.define('PMDMeta.store.datacite.FundingReference', {
     extend: 'Ext.data.Store',
-    model:  'PMDMeta.model.datacite.FundingReference',
+    model:  'PMDMeta.model.datacite.FundingReference',	
     storeId: 'DataCiteFundingReference',
     proxy:{
-            type: 'memory',
-
+        type: 'memory',
         reader:{
                     type: 'xml',
                     record: 'fundingReference',

@@ -4,6 +4,7 @@ Ext.define('PMDMeta.store.datacite.combobox.FunderCombo', {
     storeId: 'FunderCombo',
     proxy: {
         type: 'ajax',
+	noCache: false,
         url : 'resources/thesaurus/fundref/funderNames.json',
         reader: {
             type: 'json'
