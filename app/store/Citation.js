@@ -19,7 +19,8 @@ Ext.define('PMDMeta.store.Citation', {
             writer:{
                 type: 'json',
 		encode: 'true',
-		rootProperty: 'citations'
+		rootProperty: 'citations',
+		writeAllFields: true
             }      
     },
     constructor: function() {
@@ -48,7 +49,6 @@ Ext.define('PMDMeta.store.Citation', {
                 icon: Ext.Msg.ERROR,
                 buttons: Ext.Msg.OK
             });
-	    store.rejectChanges();
 	}
     },   
     listeners:{
@@ -64,16 +64,21 @@ Ext.define('PMDMeta.store.Citation', {
     },
     newEntry: function (store){
 	var invalidexists=false;
-	store.each(function(model){
-		if (!invalidexists && !model.isValid())
-			invalidexists=true;			
-	});
-	Ext.each(store.getRemovedRecords(), function(model){
-		if (!invalidexists && !model.isValid())
-			invalidexists=true;			
-	});
-	if (!invalidexists || store.getCount()===0){
+
+	if (store.isFiltered())
+		return;
+
+	if (store.getCount()===0 ){
 		store.insert(0,{url:'',citation:'',datetimecopied:''});
+	}else{
+		store.each(function(model){
+			if (!invalidexists && !model.isValid())
+				invalidexists=true;			
+		});
+
+		if (!invalidexists){
+			store.insert(0,{url:'',citation:'',datetimecopied:''});
+		}
 	}
   }
 });			
