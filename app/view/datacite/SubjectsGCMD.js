@@ -105,9 +105,10 @@ Ext.define('PMDMeta.view.datacite.SubjectsGCMD', {
 	var me=this;
 	if (!me.thesaurus){
 	    me.thesaurus=Ext.create('PMDMeta.view.main.ThesaurusWindow');
+	    me.thesaurus.fireEvent('PMDThesaurusChange',{thesaurus1: 'gcmd', thesaurus2: 'gcmdinst', thesaurus3: 'gcmdplat', thesaurus4: 'stratigraphy', thesaurus5: 'simplelithology', thesaurus6: 'gemet'});
+
 	}
 
-	me.thesaurus.fireEvent('PMDThesaurusChange',{thesaurus1: 'gcmd', thesaurus2: 'gemet'});
 
 	me.thesaurus.on('PMDnewThesaurusSubject',function(keyword){
 		grid.getStore().insert(0,keyword);
