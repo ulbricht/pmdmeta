@@ -1,5 +1,14 @@
 <?php
 
+$seconds=12*3600;
+$modified=time();
+$expires=$modified+$seconds;
+
+header( 'Last-Modified: ' . gmdate( 'D, d M Y H:i:s',$modified ) . ' GMT' ); 
+header("Expires: ".gmdate("D, d M Y H:i:s",$expires )." GMT"); 
+header("Cache-Control: private, max-age=$seconds");
+header("Pragma: cache");
+
 
 $thesauruses=array();
 
@@ -48,12 +57,17 @@ function walktree ($relations, $definitions, $keys, $thesaurusuri, $thesaurusnam
 		$obj["name"]=$definitions[$element][0];
 		$obj["qtip"]=$definitions[$element][1];
 	
-//		$obj["qtip"]=preg_replace("/[\n\r]/","<br>",$obj["qtip"]);
+		$obj["qtip"]=preg_replace("/[\n\r]/","<br>",$obj["qtip"]);
 
-                if ($element=='1eb0ea0a-312c-4d74-8d42-6f1ad758f999')//expand science keywords
-                    $obj['expanded']=true;
-		if (array_key_exists($element,$keys)!==FALSE)
-			$obj["keyword"]=$keys[$element][0];					
+//                if ($element=='1eb0ea0a-312c-4d74-8d42-6f1ad758f999')//expand science keywords
+//                    $obj['expanded']=true;
+		if (array_key_exists($element,$keys)!==FALSE){
+			$keyword=$keys[$element][0];
+			if ( strrpos($keyword, ">") !== FALSE) { 
+			    $keyword = substr($keyword, strrpos($keyword, ">")+1); 
+			}
+			$obj["keyword"]=trim($keyword);
+		}				
 
 		$obj["thesaurusuri"]= $thesaurusuri;
 		$obj["thesaurusname"]= $thesaurusname;
