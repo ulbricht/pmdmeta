@@ -557,8 +557,13 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         resource+=Ext.getStore('DataCiteTitle').asXML();
         resource+=dcrs.asXML('publisher');
         resource+=dcrs.asXML('publicationYear');
-        resource+=Ext.getStore('DataCiteSubject').asXML();	
-        
+
+        var s1=Ext.getStore('DataCiteSubject').asXML();
+        var s2=Ext.getStore('DataCiteSubjectGCMD').asXML();
+
+        if (s1.length >0 || s2.length>0){
+            resource+="<subjects>"+s1+s2+"</subjects>";	
+        }
         var contributors="";
         contributors+=Ext.getStore('DataCiteAuthor').asContributorXML();
 	contributors+=Ext.getStore('DataCiteContributor').asXML();

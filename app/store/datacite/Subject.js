@@ -17,8 +17,7 @@ Ext.define('PMDMeta.store.datacite.Subject', {
                 ret+=data.asXML();
         });
 
-        if (ret.length>0)
-                result="<subjects>"+ret+"</subjects>";
+        result=ret;
 
         return result;
     },
