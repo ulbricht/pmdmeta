@@ -14,6 +14,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 	'PMDMeta.view.datacite.Sizes',
 	'PMDMeta.view.datacite.Authors',
 	'PMDMeta.view.datacite.Contributors',	
+	'PMDMeta.view.datacite.Originators',	
 	'PMDMeta.view.datacite.Resource',
 	'PMDMeta.view.datacite.ResourceOpt',	
 	'PMDMeta.view.datacite.Titles',
@@ -101,6 +102,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 		new PMDMeta.store.datacite.Format();
 		new PMDMeta.store.datacite.Description();
 		new PMDMeta.store.datacite.Contributor();
+		new PMDMeta.store.datacite.Originator();
 		new PMDMeta.store.datacite.FundingReference();
 
 //		new PMDMeta.store.iso.TemporalCoverage();
@@ -278,6 +280,9 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 			},{
 				xtype: 'isoviewDatasetContact',
 				title: 'Contact Person(s) / Point of Contact'
+			},{
+				xtype: 'DataCite-Originators',
+				title: 'Originating Laboratory'
 			},{
 				xtype: 'DataCite-Contributors',
 				title: 'Contributors (Persons and/or Institutions)'

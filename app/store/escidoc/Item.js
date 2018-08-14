@@ -18,7 +18,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
 				'DataCiteSubjectGCMD3','DataCiteSubjectGCMD4','DataCiteSubjectGCMD5','DataCiteSubjectGCMD6',
 				'DataCiteSubjectGCMD7','DataCiteSubjectGCMD8','DataCiteSubjectGCMD9',
 				'DataCiteSubjectGCMD10','DataCiteSubjectGCMD11','DataCiteSubjectGCMD12','DataCiteSubjectGCMD13','DataCiteFundingReference'
-,'DataCiteSubjectGCMD14','DataCiteSubjectGCMD15','DataCiteSubjectGCMD16','DataCiteSubjectGCMD17','DataCiteSubjectGCMD18'
+,'DataCiteSubjectGCMD14','DataCiteSubjectGCMD15','DataCiteSubjectGCMD16','DataCiteSubjectGCMD17','DataCiteSubjectGCMD18','DataCiteOriginator'
                             //ISO    
                             ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent',
                             'difSpatialCoverage','difProject'
@@ -33,7 +33,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
 				'DataCiteSubjectGCMD7','DataCiteSubjectGCMD8','DataCiteSubjectGCMD9',
 				'DataCiteSubjectGCMD10','DataCiteSubjectGCMD11','DataCiteSubjectGCMD12','DataCiteSubjectGCMD13',
 'DataCiteSubjectGCMD14','DataCiteSubjectGCMD15','DataCiteSubjectGCMD16','DataCiteSubjectGCMD17','DataCiteSubjectGCMD18',
-				'DataCiteResourceOptAndTitle','DataCiteFundingReference'
+				'DataCiteResourceOptAndTitle','DataCiteFundingReference','DataCiteOriginator'
                             //ISO    
                             ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent'
                            ),
@@ -234,6 +234,18 @@ Ext.define('PMDMeta.store.escidoc.Item', {
            var store=Ext.getStore(storename);
            store.loadRawData(response)
         }); 
+
+	var originatorstore=Ext.getStore('DataCiteOriginator');
+	deloringinators=new Array();
+        originatorstore.each(function(originator){
+	    if (originator.get("role")!=="HostingInstitution"){
+                deloringinators.push(originator);
+            }
+        });
+        originatorstore.remove(deloringinators);
+
+
+
         var contributorstore=Ext.getStore('DataCiteContributor');
         contributorstore.loadRawData(response)
                 
@@ -287,6 +299,17 @@ Ext.define('PMDMeta.store.escidoc.Item', {
             }
         });
         contributorstore.remove(delcontrib);
+
+
+//delete contributors that are hostinginstitions
+	delcontrib=new Array();
+        contributorstore.each(function(contributor){
+	    if (contributor.get("role")==="HostingInstitution"){
+                delcontrib.push(contributor);
+            }
+        });
+        contributorstore.remove(delcontrib);
+
 
         var contributorgroup=new Object()
         contributorstore.each(function(contributor){
@@ -667,6 +690,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         var contributors="";
         contributors+=Ext.getStore('DataCiteAuthor').asContributorXML();
 	contributors+=Ext.getStore('DataCiteContributor').asXML();
+	contributors+=Ext.getStore('DataCiteOriginator').asXML();
     //    console.log(contributors);
         if (contributors.length>0)
             resource+="<contributors>"+contributors+"</contributors>";
