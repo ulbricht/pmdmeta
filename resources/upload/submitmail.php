@@ -46,6 +46,9 @@ function genfilename($xml){
 	if ($tq->length >0)
 		$title=$tq->item(0)->nodeValue;
 
+	if (strlen($title)>50)
+	    $title=substr($title,0,50);
+
 	$name="";
 	$nq=$xpath->query("//*[local-name()='resource']/*[local-name()='creators']/*[local-name()='creator']/*[local-name()='creatorName']");
 	if ($nq->length >0)
@@ -56,10 +59,7 @@ function genfilename($xml){
 	$timestamp=date("Ymd_Hi");
 	$savename=$name."_".$title."_".$timestamp;
 	return preg_replace('/[^A-Za-z0-9äöüÄÖÜß_\-\ ]/','',$savename);
-}
-
-
-
-     
+} 
      
 ?>
+
