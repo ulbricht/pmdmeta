@@ -41,6 +41,13 @@ function genfilename($xml){
 	$dom->loadXML($xml);
 	$xpath=new DOMXPath($dom);
 
+	$doi="";
+	$dq=$xpath->query("//*[local-name()='resource']/*[local-name()='identifier' and @identifierType='DOI']");
+	if ($dq->length >0)
+		$doi=$dq->item(0)->nodeValue;
+
+	$doi=preg_replace("|/|",".",$doi);
+
 	$title="";
 	$tq=$xpath->query("//*[local-name()='resource']/*[local-name()='titles']/*[local-name()='title']");
 	if ($tq->length >0)
@@ -57,9 +64,12 @@ function genfilename($xml){
 	$name=array_shift(preg_split('/,/',$name));
 
 	$timestamp=date("Ymd_Hi");
-	$savename=$name."_".$title."_".$timestamp;
-	return preg_replace('/[^A-Za-z0-9äöüÄÖÜß_\-\ ]/','',$savename);
-} 
+	$savename=$doi."_".$name."_".$title."_".$timestamp.".xml";
+	return preg_replace('/[^A-Za-z0-9äöüÄÖÜß_\-\ \.]/','',$savename);
+}
+
+
+
+     
      
 ?>
-
