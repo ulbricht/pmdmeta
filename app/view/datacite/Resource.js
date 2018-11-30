@@ -58,7 +58,8 @@ Ext.define('PMDMeta.view.datacite.Resource', {
                 header: 'Publisher',
                 dataIndex: 'publisher',
                 flex: 1, 
-		sortable: false,		
+		sortable: false,
+		hidden: true,
                 menuDisabled: true,			    
                 editor: new PMDMeta.view.main.ComboBox({
 		    store: 'PublisherCombo',
