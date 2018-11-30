@@ -41,6 +41,9 @@ Ext.define('PMDMeta.Application', {
 			elem.columns[7].hide();
 			elem.columns[8].hide();
 		});
+		Ext.each(Ext.ComponentQuery.query('DataCite-Resource'), function(elem,idx){
+			elem.columns[2].hide();
+		});
 	}
 	    
         if (urlparameter.action==="new"){
