@@ -9,6 +9,7 @@ xmlns:difalt="http://gcmd.gsfc.nasa.gov/Aboutus/xml/dif"
 
     <xsl:output  method="xml" encoding="utf-8" omit-xml-declaration="no"/>
 <xsl:strip-space elements="*"/>
+
 <!-- template to copy elements -->
     <xsl:template match="*">
         <xsl:element name="{local-name()}" namespace="{namespace-uri()}">
@@ -52,8 +53,11 @@ xmlns:difalt="http://gcmd.gsfc.nasa.gov/Aboutus/xml/dif"
     </xsl:template>
 
     <!-- template to copy the rest of the nodes -->
-    <xsl:template match="comment() | text() | processing-instruction()">
+    <xsl:template match="comment() | processing-instruction()">
         <xsl:copy/>
     </xsl:template>
 
+    <xsl:template match="text()">
+        <xsl:value-of select="normalize-space(.)"/>
+    </xsl:template>
 </xsl:stylesheet>
