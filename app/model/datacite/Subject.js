@@ -2,12 +2,27 @@ Ext.define('PMDMeta.model.datacite.Subject', {
 	extend: 'Ext.data.Model',
 	fields: [
 		{name: 'subject',  type: 'string', mapping :function(data) {
-			    return Ext.String.htmlDecode(data.firstChild.textContent);
-			}},
-		{name: 'subjectScheme',   type: 'string', mapping: '@subjectScheme'},
-		{name: 'subjectSchemeURI',   type: 'string', mapping: '@schemeURI'},
+
+			for (var i=0;i<data.attributes.length;i++){
+				if (data.attributes.item(i).localName=='subjectScheme'){
+					var val=data.attributes.item(i).value;
+					if (val.length > 0)
+						return null;
+				}
+			}
+
+			return Ext.String.htmlDecode(data.firstChild.textContent);
+		}},
+//		{name: 'subjectScheme',   type: 'string', mapping: '@subjectScheme'},
+//		{name: 'subjectSchemeURI',   type: 'string', mapping: '@schemeURI'},
+		{name: 'subjectScheme',   type: 'string', mapping :function(data) {
+			return null;
+		}},
+		{name: 'subjectSchemeURI',   type: 'string', mapping :function(data) {
+			return null;
+		}},
 		{name: 'lang', type: 'string', mapping: function(data){
-		for (var i=0;i<data.attributes.length;i++){			
+		for (var i=0;i<data.attributes.length;i++){
 			if (data.attributes.item(i).localName=='lang')
 				return data.attributes.item(i).value
 		}		
