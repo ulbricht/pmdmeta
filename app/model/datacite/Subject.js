@@ -3,6 +3,9 @@ Ext.define('PMDMeta.model.datacite.Subject', {
 	fields: [
 		{name: 'subject',  type: 'string', mapping :function(data) {
 
+			if (!data || !data.firstChild)
+				return null;
+
 			for (var i=0;i<data.attributes.length;i++){
 				if (data.attributes.item(i).localName=='subjectScheme'){
 					var val=data.attributes.item(i).value;

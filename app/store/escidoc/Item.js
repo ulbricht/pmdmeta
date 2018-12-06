@@ -315,7 +315,14 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                 delkeywords.push(keyword);   
         });
         Ext.getStore('DataCiteSubjectGCMD').remove(delkeywords);
-        
+	
+	delkeywords=new Array();
+        Ext.getStore('DataCiteSubject').each(function(keyword){
+           var subject=keyword.get('subject');
+           if (!subject || (subject && subject.length==0))
+                delkeywords.push(keyword);   
+        });
+        Ext.getStore('DataCiteSubject').remove(delkeywords);        
 
        //points only have "min"-Values
         var extentstore=Ext.getStore('isoExtent'); 
