@@ -17,6 +17,8 @@
 	array_push($outlabs,$lab);
   }
 
-  file_put_contents("names.json",json_encode($outlabs));
+
+echo json_encode($outlabs)
+//  file_put_contents("names.json",json_encode($outlabs));
 
 ?>
