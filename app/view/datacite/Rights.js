@@ -20,7 +20,7 @@ Ext.define('PMDMeta.view.datacite.Rights', {
     frame: true,
     layout: 'fit',
     modelname:'PMDMeta.model.datacite.Right',	
-    numEntries:1,
+//    numEntries:1,
     initComponent: function() {
         this.cellEditing = new Ext.grid.plugin.CellEditing({
 		clicksToEdit: 1,
@@ -44,7 +44,7 @@ Ext.define('PMDMeta.view.datacite.Rights', {
 	Ext.create('PMDMeta.store.datacite.combobox.RightsCombo');	
 
         Ext.apply(this, {
-            height: 100,
+            height: 125,
             plugins: [this.cellEditing],
             store: 'DataCiteRight',
             columns: [
