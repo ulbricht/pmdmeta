@@ -1,5 +1,7 @@
 <?php
 
+//ini_set("display_errors",1);
+
 $seconds=12*3600;
 $modified=time();
 $expires=$modified+$seconds;
@@ -59,8 +61,10 @@ function walktree ($relations, $definitions, $keys, $thesaurusuri, $thesaurusnam
 	
 		$obj["qtip"]=preg_replace("/[\n\r]/","<br>",$obj["qtip"]);
 
-//                if ($element=='1eb0ea0a-312c-4d74-8d42-6f1ad758f999')//expand science keywords
-//                    $obj['expanded']=true;
+                if ($element=='1eb0ea0a-312c-4d74-8d42-6f1ad758f999'||
+			$element=='e9f67a66-e9fc-435c-b720-ae32a2c3d8f5'||
+			$element=='894f9116-ae3c-40b6-981d-5113de961710')//expand science keywords
+                    $obj['expanded']=true;
 		if (array_key_exists($element,$keys)!==FALSE){
 			$keyword=$keys[$element][0];
 			if ( strrpos($keyword, ">") !== FALSE) { 
