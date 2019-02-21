@@ -375,7 +375,7 @@ Ext.define('PMDMeta.view.main.Main', {
 		     }
                 ]
 
-            }, {
+            }/*, {
                 text: 'Dataset',
                 menu: [
                     datasave,datapreview
@@ -465,7 +465,7 @@ Ext.define('PMDMeta.view.main.Main', {
                     doiregister,
 		    citationwindow
                 ]
-            }, {
+            }*/, {
                 text: 'About/Help',
                 menu: [
                     quickstart,helpformular,helpmetadatafields

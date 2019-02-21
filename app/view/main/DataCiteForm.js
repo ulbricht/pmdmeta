@@ -19,6 +19,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 	'PMDMeta.view.datacite.Titles',
 	'PMDMeta.view.datacite.Subjects',
 	'PMDMeta.view.datacite.SubjectsGCMD',
+	'PMDMeta.view.datacite.Subjects4DMBDomains',
 //	'PMDMeta.view.datacite.SubjectsGEMET',	
 	'PMDMeta.view.datacite.AlternateIdentifiers',
 	'PMDMeta.view.datacite.RelatedIdentifiers',
@@ -54,7 +55,8 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 		new PMDMeta.store.datacite.AlternateIdentifier();
 		new PMDMeta.store.datacite.Subject();
 		new PMDMeta.store.datacite.SubjectGCMD();
-//		new PMDMeta.store.datacite.SubjectGEMET();		
+//		new PMDMeta.store.datacite.SubjectGEMET();
+		new PMDMeta.store.datacite.Subject4DMBDomains();		
 		new PMDMeta.store.datacite.Size();
 		new PMDMeta.store.datacite.Date();
 		new PMDMeta.store.datacite.Right(); 
@@ -208,6 +210,9 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                                 hidden:true
 			},*/{
 				xtype: 'DataCite-Descriptions'
+			},{
+				xtype: 'DataCite-Subjects4DMBDomains',
+                                title: '4D Mointain Building Disciplines'
 			},{
 				xtype: 'DataCite-SubjectsGCMD',
                                 title: 'Thesaurus Keywords (Choose at least one keyword from each thesaurus)'
