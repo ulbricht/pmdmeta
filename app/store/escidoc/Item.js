@@ -14,7 +14,8 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                                 'DataCiteAuthor','DataCiteTitle','DataCiteAlternateIdentifier','DataCiteSubject',
                                 'DataCiteSize','DataCiteDate','DataCiteRight','DataCiteResourceOpt','DataCiteResource',
                                 'DataCiteRelatedIdentifier','DataCiteGeoLocation','DataCiteFormat','DataCiteDescription',
-                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD','DataCiteFundingReference'
+                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD','DataCiteFundingReference',
+				'DataCiteSubject4DMBDomains'
                             //ISO    
                             ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent',
                             'difSpatialCoverage','difProject'
@@ -24,7 +25,8 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                                 'DataCiteAuthor','DataCiteTitle','DataCiteAlternateIdentifier','DataCiteSubject',
                                 'DataCiteSize','DataCiteDate','DataCiteRight','DataCiteResourceOpt','DataCiteResource',
                                 'DataCiteRelatedIdentifier'/*,'DataCiteGeoLocation'*/,'DataCiteFormat','DataCiteDescription',
-                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD','DataCiteResourceOptAndTitle','DataCiteFundingReference'
+                                /*'DataCiteContributor','DataCiteContact',*/'DataCiteSubjectGCMD','DataCiteResourceOptAndTitle','DataCiteFundingReference',
+				'DataCiteSubject4DMBDomains'
                             //ISO    
                             ,'isoCitedResponsibleParty','isoIdentificationInfo','isoMD_Metadata','isoMetadataContact','isoDatasetContact','isoExtent'
                            ),
@@ -311,10 +313,23 @@ Ext.define('PMDMeta.store.escidoc.Item', {
        var delkeywords=new Array();
         Ext.getStore('DataCiteSubjectGCMD').each(function(keyword){
            var subject=keyword.get('subject');
-           if (!subject || (subject && subject.length==0))
+	   var valid=Ext.getStore('DataCiteSubjectGCMD').isvalidscheme(keyword.get('subjectScheme'));
+
+
+           if (!subject || (subject && subject.length==0) || !valid)
                 delkeywords.push(keyword);   
         });
         Ext.getStore('DataCiteSubjectGCMD').remove(delkeywords);
+
+	delkeywords=new Array();
+        Ext.getStore('DataCiteSubject4DMBDomains').each(function(keyword){
+           var subject=keyword.get('subject');
+	   var valid=Ext.getStore('DataCiteSubject4DMBDomains').isvalidscheme(keyword.get('subjectScheme'));
+           if (!subject || (subject && subject.length==0) || !valid)
+                delkeywords.push(keyword);   
+        });
+        Ext.getStore('DataCiteSubject4DMBDomains').remove(delkeywords);        
+
 	
 	delkeywords=new Array();
         Ext.getStore('DataCiteSubject').each(function(keyword){
@@ -323,6 +338,9 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                 delkeywords.push(keyword);   
         });
         Ext.getStore('DataCiteSubject').remove(delkeywords);        
+
+
+
 
        //points only have "min"-Values
         var extentstore=Ext.getStore('isoExtent'); 
@@ -567,9 +585,10 @@ Ext.define('PMDMeta.store.escidoc.Item', {
 
         var s1=Ext.getStore('DataCiteSubject').asXML();
         var s2=Ext.getStore('DataCiteSubjectGCMD').asXML();
+        var s3=Ext.getStore('DataCiteSubject4DMBDomains').asXML();
 
-        if (s1.length >0 || s2.length>0){
-            resource+="<subjects>"+s1+s2+"</subjects>";	
+        if (s1.length >0 || s2.length>0 || s3.length>0){
+            resource+="<subjects>"+s1+s2+s3+"</subjects>";	
         }
         var contributors="";
         contributors+=Ext.getStore('DataCiteAuthor').asContributorXML();
@@ -590,8 +609,8 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         resource+=dcrsopt.asXML('resourceType');							
         resource+=Ext.getStore('DataCiteAlternateIdentifier').asXML();	
         resource+=Ext.getStore('DataCiteRelatedIdentifier').asXML();	
-//        resource+=Ext.getStore('DataCiteSize').asXML();
-//        resource+=Ext.getStore('DataCiteFormat').asXML();
+        resource+=Ext.getStore('DataCiteSize').asXML();
+        resource+=Ext.getStore('DataCiteFormat').asXML();
         resource+=Ext.getStore('Files').asDataCiteXML('size');
         resource+=Ext.getStore('Files').asDataCiteXML('format');        
         resource+=dcrsopt.asXML('version');							
@@ -652,6 +671,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
         iso+=datasetcontact.asXML();
         iso+=Ext.getStore('DataCiteSubject').asISOXML();
         iso+=Ext.getStore('DataCiteSubjectGCMD').asISOXML();
+	iso+=Ext.getStore('DataCiteSubject4DMBDomains').asISOXML();
         iso+=Ext.getStore('DataCiteRight').asISOXML(); 
         iso+=Ext.getStore('DataCiteRelatedIdentifier').asISOXML(); 
         iso+=identificationinfo.asXML('language');
@@ -724,7 +744,7 @@ Ext.define('PMDMeta.store.escidoc.Item', {
                 var data=Ext.JSON.decode(response.responseText);
                 if (data.success){
                     if (oldhref.length===0){
-                        window.location.href="?object="+data.object+"&formview=bib";
+                        window.location.href="?object="+data.object;
                     }else{                    
                         var store=Ext.getStore('Item');
                         store.loaddata({href:data.object});

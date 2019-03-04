@@ -68,7 +68,6 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 		new PMDMeta.store.datacite.Description();
 		new PMDMeta.store.datacite.Contributor();
 		new PMDMeta.store.datacite.FundingReference();
-
 //		new PMDMeta.store.iso.TemporalCoverage();
 		new PMDMeta.store.escidoc.Author();
 		new PMDMeta.store.escidoc.Title();
@@ -194,6 +193,9 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                                     }
                                 ]
 			},{
+				xtype: 'DataCite-AlternateIdentifiers',
+				title: 'Dataset URL - Put here the web address to your dataset'
+			},{
 				xtype: 'DataCite-Rights',
 				title: 'Licenses and Rights'
 			},{
@@ -218,7 +220,13 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
                                 title: 'Thesaurus Keywords (Choose at least one keyword from each thesaurus)'
 			},{
 				xtype: 'DataCite-Subjects',
-                                title: 'Free Keywords (Supply as many keywords as you want)'
+		                title: 'Free Keywords (Supply as many keywords as you want)'
+			},{
+				xtype: 'DataCite-PMDDates'
+			},{    
+				xtype: 'DataCite-Sizes'
+			},{
+				xtype: 'DataCite-Formats'
 			},{                            
 /*				xtype: 'DataCite-SubjectsGEMET'
 			},{    
@@ -227,9 +235,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 */				xtype: 'ISO-Extent'
 /*			},{
 				xtype: 'ISO-TemporalCoverage'				    
-*/			},{
-				xtype: 'DataCite-PMDDates'
-			}/*,{
+*/			}/*,{
 				xtype: 'DataCite-Dates',
                                 disabled: false
 			}*/,{
@@ -239,16 +245,7 @@ Ext.define('PMDMeta.view.main.DataCiteForm', {
 				xtype: 'DataCite-FundingReference'				    
 
 			},{
-				xtype: 'DataCite-AlternateIdentifiers',
-				hidden:true
-			},{    
-				xtype: 'DataCite-Sizes',
-				hidden:true
-			},{
-				xtype: 'DataCite-Formats',
-				hidden:true
-			},{
-                            html:'<h2>The metadata are stored inside your browser. Please save a copy using the SAVE button in the upper right of the form. <br><br></h2> '
+                            html:'<h2>The metadata are stored inside your browser. Please save a copy using the <b>SAVE to DISK</b> button in the upper right of the form. <br><br></h2> '
                             
                         }			
 	]

@@ -2,6 +2,10 @@ Ext.define('PMDMeta.store.datacite.SubjectGCMD', {
     extend: 'Ext.data.Store',
     model:  'PMDMeta.model.datacite.ThesaurusSubject',
     storeId: 'DataCiteSubjectGCMD',
+    subjectScheme: ['NASA/GCMD Earth Science Keywords','GEMET - INSPIRE themes, version 1.0'],
+    isvalidscheme: function(subjectScheme){
+	return (this.subjectScheme.indexOf(subjectScheme)>=0);
+    },
     proxy:{
             type: 'memory',
 

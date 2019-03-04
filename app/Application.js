@@ -27,7 +27,8 @@ Ext.define('PMDMeta.Application', {
 		tabs[1].hide();
 		tabs[2].hide();
 		Ext.getCmp('doibutton').hide();
-		Ext.getCmp('syncbutton').hide();
+//		Ext.getCmp('syncbutton').hide();
+		Ext.getCmp('formerrorbutton').hide();
 		Ext.getCmp('previewbutton').hide();
 
 		Ext.each(Ext.ComponentQuery.query('DataCite-Rights'), function(elem,idx){

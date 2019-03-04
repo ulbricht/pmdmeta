@@ -10,6 +10,10 @@
     
  session_start();         
  
+
+    if (!preg_match("/^escidoc:\d+$/",$_REQUEST["id"]))
+        return;
+
     
 try{
     

@@ -29,13 +29,14 @@ Ext.define('PMDMeta.view.datacite.AlternateIdentifiers', {
     	Ext.create('PMDMeta.store.datacite.combobox.IdentifiertypeCombo');
 
         Ext.apply(this, {
-            height: 200,
+            height: 100,
             plugins: [this.cellEditing],
             store: 'DataCiteAlternateIdentifier',
             columns: [
         {
                 header: 'Type',
                 dataIndex: 'identifierType',
+		hidden:true,
                 width: 130,
 		sortable: false,		
                 menuDisabled: true,			
@@ -43,7 +44,7 @@ Ext.define('PMDMeta.view.datacite.AlternateIdentifiers', {
 		    store: 'IdentifiertypeCombo'
 		})
             }, {
-                header: 'Identifier',
+                header: 'URL',
                 flex:1,		    
                 dataIndex: 'identifier',
 		sortable: false,		

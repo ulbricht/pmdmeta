@@ -2,6 +2,10 @@ Ext.define('PMDMeta.store.datacite.Subject4DMBDomains', {
     extend: 'Ext.data.Store',
     model:  'PMDMeta.model.datacite.ThesaurusSubject',
     storeId: 'DataCiteSubject4DMBDomains',
+    subjectScheme: '4D Mountain building disciplines',
+    isvalidscheme: function(subjectScheme){
+	return (subjectScheme==this.subjectScheme);
+},
     proxy:{
             type: 'memory',
 

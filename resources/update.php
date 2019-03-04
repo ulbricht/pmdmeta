@@ -1,234 +1,247 @@
 <?php
  
        
-    include_once("includes/inc_conf.php");    
-
-    require_once 'classes/escidoc/cls_pmdconfig.php';    
-    use escidoc\client\ItemHandler;
-   // use escidoc\client\ContainerHandler;
-    use escidoc\mapping\DOMMapper;
-//    use escidoc\resources\om\item\component\Component;
-    use escidoc\resources\common\MetadataRecord;
-    use escidoc\resources\common\MetadataRecords;
-    use escidoc\resources\om\item\Item;
-    use escidoc\resources\common\reference\ContentModelRef;
-    use escidoc\resources\common\reference\ContextRef;    
+ //   include_once("includes/inc_conf.php");    
     
-    use escidoc\util\DateTimeFormatter;
-    use escidoc\resources\common\reference\ItemRef;
-    use escidoc\resources\common\reference\RoleRef;
-    use escidoc\resources\aa\useraccount\Grant;
-    use escidoc\client\GroupHandler;
-    
-    require_once ("Net/URL.php");
-    use \Net_URL;   
-    
-           
+      
+// ini_set("display_errors",1);
+     
     
 try{
 
-    include_once "classes/escidoc/escidoclogin.php";
-    
-    $_SESSION["itemhandler"]=new ItemHandler(new Net_URL($escidoccoreservice));
-    $_SESSION["itemhandler"]->setHandle($_SESSION["eSciDocUserHandle"]);
-    $_SESSION["grouphandler"]=new GroupHandler(new Net_URL($escidoccoreservice));
-    $_SESSION["grouphandler"]->setHandle($_SESSION["eSciDocUserHandle"]);
+
     
     $param=$_POST['objects'];
     
     $itemdiff= json_decode($param,true);
-    
- //  print_r($itemdiff);
+
+
+
+$mdrecords=array();
+$itemid=false;
     
     foreach ($itemdiff as $itemhref=>$itemcontent){
         
         $hrefarray=preg_split("|/|",$itemhref);
         $itemid=array_pop($hrefarray);
 
-        $item=false;
-        if ($itemid)    
-            $item= $_SESSION["itemhandler"]->retrieve($itemid);
-        else
-            $item=new Item();
-        
         foreach ($itemcontent as $structtype=>$structvalue){
             if ($structtype=='mdrecords'){
                 foreach ($structvalue as $mdrecord){                    
-                    $itemmdrecords=$item->getMetadataRecords();                    
                     foreach ($mdrecord as $mdrecordname=>$mdrecordstringcontent){                            
-                        $mdrecordcontent=new DOMDocument();
-                        $mdrecordcontent->loadXML($mdrecordstringcontent);
-                        $record=new MetadataRecord($mdrecordname);
-                        $record->setContent($mdrecordcontent->documentElement);
-                        $itemmdrecords->add($record);
+			$mdrecords[$mdrecordname]=$mdrecordstringcontent;
                     }
-                    $item->setMetadataRecords($itemmdrecords);
                 }
+            } 
+         }
+    }  
+
+
+    $doi="";
+    $fulltext="";
+    $itemxml="<envelope>";
+
+	
+
+    $dbindex=array();
+
+    $dbindex["title"]=false;
+    $dbindex["description"]=false;
+    $dbindex["creator"]=array();
+    $dbindex["affiliations"]=array();
+    $dbindex["category"]=array();
+    $dbindex["subject"]=array();
+    $dbindex["bbox"]=array();
+    $dbindex["contributor"]=array();
+    $dbindex["sciencekeywordtree"]=array();
+
+    $xsl = new XSLTProcessor();    
+    $xsldom=new DOMDocument();
+    $xsldom->load("convert-fulltext.xslt");
+    $xsl->importStyleSheet($xsldom);
+
+    foreach ($mdrecords as  $mdrecordname=>$mdrecord){
+        $content=new DOMDocument();
+        $content->loadXML($mdrecord);
+
+	$fulltext.=$xsl->transformToXML($content); 
+	$itemxml.=$mdrecord;
+
+        if ($mdrecordname==="datacite"){
+    	    $xpath=new DOMXPath($content);
+
+    	    $res=$xpath->query("//*[local-name() = 'identifier' and @identifierType='DOI']");
+	    if ($res->length >0){
+	        $doi=$res->item(0)->nodeValue;
             }
-            else if ($structtype=='components'){
-                foreach ($structvalue as $components){
-                    foreach ($components as $componenthref => $component){
-                        
 
-                        
-                        $hrefarray=preg_split("|/|",$componenthref);
-                        $componentid=array_pop($hrefarray);
-                        
-                        if (count($hrefarray)==0 && is_array($component)) { 
-                                //new component
-                            foreach ($component as $componentstructtype=>$componentstructvalue){
-                                 if ($componentstructtype=='content'){
-                                        $newitemcomponent=DOMMapper::unmarshal($componentstructvalue, true); 
-                                 }                                 
-                            }
-                            foreach ($component as $componentstructtype=>$componentstructvalue){
-                                if ($componentstructtype=='mdrecords'){
-                                    $itemcomponentmdrecords=new MetadataRecords();
-                                    foreach ($componentstructvalue as $mdrecord){
-                                        foreach ($mdrecord as $mdrecordname=>$mdrecordstringcontent){
-                                            if ($mdrecordstringcontent && strlen($mdrecordstringcontent)>0){                                            
-                                                $mdrecordcontent=new DOMDocument();
-                                                $mdrecordcontent->loadXML($mdrecordstringcontent);
-                                                $record=new MetadataRecord($mdrecordname);
-                                                $record->setContent($mdrecordcontent->documentElement);
-                                                $itemcomponentmdrecords->add($record);
-                                            }
-                                        }
-                                        $newitemcomponent->setMetadataRecords($itemcomponentmdrecords);
-                                    }
-                                }
-                            }                            
-                            $item->getComponents()->add($newitemcomponent);
-                        }else if (!is_array($component)){
-                                //delete component                            
-                            foreach ($item->getComponents()->getList() as $delcomp)                        
-                                if ($delcomp->getObjId()==$componentid)
-                                    $item->getComponents()->remove($delcomp);
-                        }else{
-                            //modify component
-                            foreach ($component as $componentstructtype=>$componentstructvalue){
-                                 if ($componentstructtype=='content'){
-                                        $modifyitemcomponent=DOMMapper::unmarshal($componentstructvalue, true); 
-                                 }                                 
-                            }
-                            $deletecomponentsmdrecords=array();
-                            foreach ($component as $componentstructtype=>$componentstructvalue){
-                                if ($componentstructtype=='mdrecords'){
-                                    $itemcomponentmdrecords=new MetadataRecords();
-                                    foreach ($componentstructvalue as $mdrecord){
-                                        foreach ($mdrecord as $mdrecordname=>$mdrecordstringcontent){
-                                            if ($mdrecordstringcontent && strlen($mdrecordstringcontent)>0){                                            
-                                                $mdrecordcontent=new DOMDocument();
-                                                $mdrecordcontent->loadXML($mdrecordstringcontent);
-                                                $record=new MetadataRecord($mdrecordname);
-                                                $record->setContent($mdrecordcontent->documentElement);
-                                                $itemcomponentmdrecords->add($record);
-                                            }else{
-                                                array_push($deletecomponentsmdrecords,$mdrecordname);
-                                            }
-                                        }
-                                        $modifyitemcomponent->setMetadataRecords($itemcomponentmdrecords);                                        
-                                    }
-                                }
-                            } 
-                            
-                            $itemcomponent=false;
-                            foreach ($item->getComponents()->getList() as $compsearch){
-                                if ($compsearch->getObjId()==$componentid){
-                                    $itemcomponent=$compsearch;
-                                    break;
-                                }
-                            }
-                            $itemcomponent->getProperties()->setVisibility($modifyitemcomponent->getProperties()->getVisibility());
-                            $itemcomponent->getProperties()->setValidStatus($modifyitemcomponent->getProperties()->getValidStatus());  
-                            $itemcomponent->getProperties()->setContentCategory($modifyitemcomponent->getProperties()->getContentCategory()); 
-                            
-                            foreach ($modifyitemcomponent->getMetadataRecords()->getList() as $mdrecord){
-                                $itemcomponent->getMetadataRecords()->add($mdrecord);
-                            }
-                            foreach ($deletecomponentsmdrecords as $name){
-                                $itemcomponent->getMetadataRecords()->remove($name);
-                            }
-                            
-                        }
-                    }
-                }
-            }  
-         }      
+    	    $res=$xpath->query("//*[local-name() = 'title']");
+	    if ($res->length>0){
+		    $dbindex["title"]=$res->item(0)->nodeValue;
+	    }
 
-//echo DOMMapper::marshal($item);
-//return;
+    	    $res=$xpath->query("//*[local-name() = 'description' and @descriptionType='Abstract']");
+	    if ($res->length>0){
+		    $dbindex["description"]=$res->item(0)->nodeValue;
+	    }
 
-        
+    	    $res=$xpath->query("//*[local-name() = 'creatorName']");
+	    if ($res->length>0){
+		    foreach ($res as $creator){
+			    array_push($dbindex["creator"],$creator->nodeValue);
+		    }
+	    }
 
-        if ($item->getObjid()){     
-            $newitem=$_SESSION["itemhandler"]->update($item->getObjid(),$item);
-        }else{            
-            $item->getProperties()->setContext(new ContextRef($_SESSION["eSciDoc_context"]->getObjid()));
-            $contentmodelid=preg_split("|/|",$escidoccontentmodel);
-            $item->getProperties()->setContentModel(new ContentModelRef(array_pop($contentmodelid)));
-            $newitem=$_SESSION["itemhandler"]->create($item);
+    	    $res=$xpath->query("//*[local-name() = 'contributorName']");
+	    if ($res->length>0){
+		    foreach ($res as $contributor){
+			    array_push($dbindex["contributor"],$contributor->nodeValue);
+		    }
+	    }
 
-            $_SESSION["eSciDoc_pmdconfig"]=new PanmetadocsContextConfig($_SESSION["eSciDoc_context"]->getAdmindescriptors()->get("panmetadocs")->getContent()); 
-            $groupid=$_SESSION["eSciDoc_pmdconfig"]->getUserGroupID();            
-            $role=new RoleRef($roles["item-writeable"]);
-            $newgrant=new Grant($role);
-            $assignedon=new ItemRef($newitem->getObjid());        
-            $newgrant->getProperties()->setAssignedOn($assignedon);
-            $_SESSION["grouphandler"]->createGrant($groupid, $newgrant);
-        }
+    	    $res=$xpath->query("//*[local-name() = 'geoLocationBox']");
+	    if ($res->length>0){
+		    foreach ($res as $node){
+			$box=array();
+			$box["minlat"]=$xpath->query("//*[local-name() = 'southBoundLatitude']",$node)->item(0)->nodeValue;
+			$box["maxlat"]=$xpath->query("//*[local-name() = 'northBoundLatitude']",$node)->item(0)->nodeValue;
+			$box["minlon"]=$xpath->query("//*[local-name() = 'westBoundLongitude']",$node)->item(0)->nodeValue;
+			$box["maxlon"]=$xpath->query("//*[local-name() = 'eastBoundLongitude']",$node)->item(0)->nodeValue;
+		    	array_push($dbindex["bbox"],$box);
+		    }
+	    }
 
-        
-        $doi="";
-        $fulltext="";
-        
-        $xsl = new XSLTProcessor();    
-        $xsldom=new DOMDocument();
-        $xsldom->load("convert-fulltext.xslt");
-        $xsl->importStyleSheet($xsldom);
-        
-        foreach ($newitem->getMetadataRecords()->getList() as $mdrecord){
-            $content=new DOMDocument();
-            $childnode=$content->importNode($mdrecord->getContent(),true);
-            $content->appendChild($childnode);
-            if ($mdrecord->getName()==="datacite"){
-                $xpath=new DOMXPath($content);
-                $res=$xpath->query("//*[local-name() = 'identifier' and @identifierType='DOI']");
-                if ($res->length >0)
-                    $doi=$res->item(0)->nodeValue;
-            }            
-            $fulltext.=$xsl->transformToXML($content);            
-        }
-        
+    	    $res=$xpath->query("//*[local-name() = 'geoLocationPoint']");
+	    if ($res->length>0){
+		    foreach ($res as $node){
+			$box=array();
+			$box["minlat"]=$xpath->query("//*[local-name() = 'pointLatitude']",$node)->item(0)->nodeValue;
+			$box["maxlat"]=$xpath->query("//*[local-name() = 'pointLatitude']",$node)->item(0)->nodeValue;
+			$box["minlon"]=$xpath->query("//*[local-name() = 'pointLongitude']",$node)->item(0)->nodeValue;
+			$box["maxlon"]=$xpath->query("//*[local-name() = 'pointLongitude']",$node)->item(0)->nodeValue;
+		    	array_push($dbindex["bbox"],$box);
+		    }
+	    }
+
+    	    $res=$xpath->query("//*[local-name() = 'subject' and ( @subjectScheme!='NASA/GCMD Earth Science Keywords' or normalize-space(@subjectScheme)='' ) ]");
+	    if ($res->length>0){
+		    foreach ($res as $subject){
+			    array_push($dbindex["subject"],strtolower($subject->nodeValue));
+		    }
+	    }
+
+   	    $res=$xpath->query("//*[local-name() = 'subject' and @subjectScheme='NASA/GCMD Earth Science Keywords']");
+	    if ($res->length>0){
+		    $sciencekeyword=array();
+		    foreach ($res as $subject){
+			    $candidate=$subject->nodeValue;
+			    $candidate=strtolower($candidate);
+			    $candidate=trim($candidate);
+			    do{
+				$sciencekeyword[$candidate]=true;
+				$len=strrpos($candidate,">");
+				$candidate=substr($candidate,0,$len);
+				$candidate=trim($candidate);
+				
+			    }while(strlen($candidate)>0);
+		    }
+		    $dbindex["sciencekeywordtree"]=array_keys($sciencekeyword);
+	    }
+       }   
+    }
+
+    $itemxml.="</envelope>";
+
+
+    error_reporting(E_ALL ^ E_NOTICE);
+
+
+    $dsn="mysql:localhost;dbname=db";//pdo connection string
+    $dbo = new PDO($dsn,"user","pass");
+    $dbo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+
+
+
+     $pmdinstance="4dmb_";
+
+
+       
         try{
+
+
+            if (strlen($itemid)==0){
+
+		$sth=$dbo->prepare("select uuid() as uuid;");
+		if ($sth->execute()) {
+		    $result=$sth->fetch(PDO::FETCH_ASSOC);
+		    $itemid=$result["uuid"];
+		} else {
+		    throw new Exception("Failed to get UUID from database");
+		}
+
+		if (strlen($itemid)==0){
+		    throw new Exception("Failed to get UUID from database");
+		}
+
+	    }
+
+//var_dump($dbindex);
+
 
             $dbo->beginTransaction();
 
                 $sthds=$dbo->prepare('REPLACE INTO '.$pmdinstance.'dataset (id,item,lastmodified,doi) VALUES (?,?,?,?)');
-                $sthds->execute(array(  $newitem->getObjId(),
-                                        DOMMapper::marshal($newitem),
-                                        $newitem->getLastModificationDate()->format("Y-m-d H:i:s"),
+                $sthds->execute(array(  $itemid,
+                                        $itemxml,
+                                        date('Y-m-d H:i:s'),
                                         $doi
                                 ));
 
                 $sthmd=$dbo->prepare('REPLACE INTO '.$pmdinstance.'mdrecords (datasetid,name,content) VALUES (?,?,?)');
 
-                foreach ($newitem->getMetadataRecords()->getList() as $mdrecord){
 
-                    $content=new DOMDocument();
-                    $childnode=$content->importNode($mdrecord->getContent(),true);
-                    $content->appendChild($childnode);
-                    $sthmd->execute(array(  $newitem->getObjId(),
-                                            $mdrecord->getName(),
-                                            $content->saveXML()
+		foreach ($mdrecords as  $mdrecordname=>$mdrecord){
+                    $sthmd->execute(array(  $itemid,
+                                            $mdrecordname,
+                                            $mdrecord
                                     ));
                 }
                 
-                    $sthft=$dbo->prepare('REPLACE INTO '.$pmdinstance.'fullidx (datasetid,fullidx) VALUES (?,?)');
-                    $sthft->execute(array(  $newitem->getObjId(),
+                $sthft=$dbo->prepare('REPLACE INTO '.$pmdinstance.'fullidx (datasetid,fullidx) VALUES (?,?)');
+                $sthft->execute(array(  $itemid,
                                             $fulltext
-                                    ));
+                               ));
                 
+                $sthfct=$dbo->prepare('DELETE FROM '.$pmdinstance.'facets WHERE datasetid = ?');
+                $sthfct->execute(array($itemid));
+
+                $sthfct=$dbo->prepare('DELETE FROM '.$pmdinstance.'location WHERE datasetid = ?');
+                $sthfct->execute(array($itemid));
+
+                $sthfct=$dbo->prepare('INSERT INTO '.$pmdinstance.'facets (datasetid,label,value) VALUES (?,?,?)');
+                $sthloc=$dbo->prepare('INSERT INTO '.$pmdinstance.'location (datasetid,minlat,maxlat,minlon,maxlon) VALUES (?,?,?,?,?)');
+
+		foreach ($dbindex as $label=>$value){
+			if (!is_array($value)){
+				$sthfct->execute(array($itemid,$label,$value));
+			}else{
+
+				if ($label=="bbox"){
+					foreach ($value as $box){
+						$sthloc->execute(array($itemid,
+								$box["minlat"],
+								$box["maxlat"],
+								$box["minlon"],
+								$box["maxlon"]));
+					}
+
+				}else{
+					foreach ($value as $val){
+						$sthfct->execute(array($itemid,$label,$val));
+					}
+				}
+			}
+		}
                 
                 
             $dbo->commit();
@@ -238,7 +251,7 @@ try{
             throw $e;
         }
         $warning="";
-        
+  /*     
         $sql="select id, content from ".$pmdinstance."dataset as dataset join ".$pmdinstance."mdrecords as mdrecords on dataset.id=mdrecords.datasetid where mdrecords.name='datacite' and doi=?";
         if(trim($doi!='')){
             try{
@@ -264,17 +277,19 @@ try{
                     $warning.="Unable to verify if DOI:".$doi." is assinged uniquely.";
             }
         }
+   */     
         
-        
-        echo json_encode(array("success"=>true, "message"=>$warning, "object"=> $newitem->getXLink()->getHref()->getPath()));                 
+        echo json_encode(array("success"=>true, "message"=>$warning, "object"=> $itemid));                 
                 
         return; //do the loop for only one item 
-    }
     
+  
 }catch (Exception $e){
     
     echo json_encode(array("success"=>false, "message"=>$e->getMessage()."|".$_SESSION["eSciDocUserHandle"]."|" , "escidocid"=> ""));                 
 
 }
+
+
 
 ?>

@@ -90,16 +90,75 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                         Ext.getStore('Item').loaddata();                                                    
                                     }
                                 },{
+                                    xtype: 'button',
+                                    scale: 'large',                                                
+                                    text: 'Save',
+				    id:   'syncbutton',
+//hidden: true,
+                                    tooltip: 'Store on server',
+                                    handler: function() {	  
+                                            Ext.getStore('Item').synccontent();
+                                    }
+                                },{
+                                    xtype: 'button',
+                                    scale: 'large',                                                
+                                    text: 'Delete',
+				    id:   'deletebutton',
+//hidden: true,
+                                    tooltip: 'Delete metadata entry',
+                                    handler: function() {
+
+                                        var item=Ext.getStore('Item').getAt(0);
+                                        if (!item) return;
+
+
+                                            Ext.Msg.show({
+                                                title: 'Please confirm deletion',
+                                                msg: 'Do you want to delete this metadata entry?',
+                                                icon: Ext.MessageBox.QUESTION,
+                                                buttons: Ext.Msg.YESNO,
+						fn: function(btn) {
+							if (btn === 'yes') {
+						                Ext.Ajax.request({
+						                    url: 'resources/delete.php',	
+						                    method: 'POST',
+						                    params:{
+						                        id: item.get("href")
+						                    },                                                        
+						                    success: function(response, opts) {
+
+                                               					var responseData = Ext.decode(response.responseText);
+
+						                                if (!responseData.success){                                                               
+						                                    Ext.Msg.alert('Failure', 'Error deleting metadata.' + responseData.message);
+						                                    return;
+						                                }
+
+										Ext.getStore('Item').loaddata();
+
+						                   },
+						                   failure: function(response, opts) {
+						                      console.log('server-side failure with status code ' + response.status);
+						                   }            
+						                }); 
+							} else if (btn === 'no') {
+
+							}
+						}
+                                            });
+
+                                    }
+                                },{
                                     xtype: 'fileuploadfield',
                                     name: 'metaupload',
-                                    tooltip: 'Load default metadata',
+                                    tooltip: 'Load from Disk',
                                     buttonOnly: true,
                                     hideLabel:true,
                                     msgTarget: 'under',
                                     buttonConfig: {
                                          scale: 'large'
                                     },                                           
-                                    buttonText: 'Load',
+                                    buttonText: 'Load from Disk',
                                     listeners:{
                                         change: function( elem, value, eOpts ) {
                                             var form = elem.up('form').getForm();
@@ -139,7 +198,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                 },{
                                     xtype: 'button',
                                     scale: 'large',                                                
-                                    text: 'Save As',
+                                    text: 'Save to Disk',
                                     tooltip: 'Save metadata to local hard disk',
                                     handler: function() {	  
                                         var xml=Ext.getStore('Item').marshal();
@@ -171,18 +230,9 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                     }
                                 },{
                                     xtype: 'button',
-                                    scale: 'large',                                                
-                                    text: 'Sync',
-				    id:   'syncbutton',
-//hidden: true,
-                                    tooltip: 'Sync data to eSciDoc repository',
-                                    handler: function() {	  
-                                            Ext.getStore('Item').synccontent();
-                                    }
-                                },{
-                                    xtype: 'button',
-                                    scale: 'large',                                                
-                                    text: 'Submit',
+                                    scale: 'large',
+                                    text: 'Submit & Publish',
+                                    tooltip: 'Submit for publishing with DOI',
                                     handler: function() {	  
                                         var xml=Ext.getStore('Item').marshal();
                                         Ext.Ajax.request({
@@ -218,6 +268,7 @@ Ext.define('PMDMeta.view.main.FileAndVersionForm', {
                                 },{
 					xtype: 'button',
 					scale: 'large',
+					id:   'formerrorbutton',
 					text: 'Form Errors',
 					handler: function(){
 						if (!me.validationwindow)

@@ -25,7 +25,7 @@ Ext.define('PMDMeta.view.datacite.Formats', {
         });
 
         Ext.apply(this, {
-            height: 200,
+            height: 120,
             plugins: [this.cellEditing],
             store: 'DataCiteFormat',
             columns: [

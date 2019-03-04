@@ -13,8 +13,11 @@ Ext.define('PMDMeta.model.datacite.AlternateIdentifier', {
 	asXML: function(){
 		var type="";
 		var result="";
-		if (this.get('identifierType').length>0)
+		if (this.get('identifierType').length>0){
 			type=' alternateIdentifierType="'+this.get('identifierType')+'"';
+		}else{
+			type=' alternateIdentifierType="URL"';
+		}
 		if (this.get('identifier') && this.get('identifier').length>0)
 		result='<alternateIdentifier'+type+'>'+this.get('identifier')+'</alternateIdentifier>';
 		return result;
