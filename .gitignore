@@ -43,6 +43,17 @@ resources/thesaurus/stratigraphy_index.csv
 resources/thesaurus/stratigraphy_keywords.csv
 resources/thesaurus/stratigraphy_labels.csv
 resources/thesaurus/stratigraphy_relations.csv
+resources/thesaurus/4dmbdisciplines_index.csv
+resources/thesaurus/4dmbdisciplines_keywords.csv
+resources/thesaurus/4dmbdisciplines_labels.csv
+resources/thesaurus/4dmbdisciplines_relations.csv
+resources/thesaurus/gcmd4dmb_index.csv
+resources/thesaurus/gcmd4dmb_keywords.csv
+resources/thesaurus/gcmd4dmb_keywords_origgcmd.csv
+resources/thesaurus/gcmd4dmb_keywordsmod.csv
+resources/thesaurus/gcmd4dmb_labels.csv
+resources/thesaurus/gcmd4dmb_relations.csv
+resources/thesaurus/gcmd4dmb_relations_origgcmd.csv
 resources/thesaurus/alt/
 resources/thesaurus/geosciml/
 resources/thesaurus/ics/
