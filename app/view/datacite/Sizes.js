@@ -12,7 +12,8 @@ Ext.define('PMDMeta.view.datacite.Sizes', {
         'Ext.util.*',
         'Ext.form.*',
 	'PMDMeta.model.datacite.Size',
-        'PMDMeta.store.datacite.Size'
+        'PMDMeta.store.datacite.Size',
+	'PMDMeta.store.datacite.combobox.SizeCombo'	
     ],
     xtype: 'DataCite-Sizes',
     title: 'Sizes',
@@ -24,7 +25,9 @@ Ext.define('PMDMeta.view.datacite.Sizes', {
             clicksToEdit: 1
         });
 
-        Ext.apply(this, {
+	new PMDMeta.store.datacite.combobox.SizeCombo();	
+        
+	Ext.apply(this, {
             height: 120,
             plugins: [this.cellEditing],
             store: 'DataCiteSize',
@@ -35,9 +38,11 @@ Ext.define('PMDMeta.view.datacite.Sizes', {
                 dataIndex: 'size',
 		sortable: false,		
 		menuDisabled: true,				
-                editor: {
-                    allowBlank: false
-                }	
+		editor: new PMDMeta.view.main.ComboBox({
+		    store: 'SizeCombo',
+		    emptyText: 'please estimate the file size and choose a category',
+                    editable: true
+		})	
             }, {
                 xtype: 'actioncolumn',
                 width: 30,

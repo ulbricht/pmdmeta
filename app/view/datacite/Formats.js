@@ -12,7 +12,8 @@ Ext.define('PMDMeta.view.datacite.Formats', {
         'Ext.util.*',
         'Ext.form.*',
 	'PMDMeta.model.datacite.Format',
-        'PMDMeta.store.datacite.Format'
+        'PMDMeta.store.datacite.Format',
+	'PMDMeta.store.datacite.combobox.FormatCombo'
     ],
     xtype: 'DataCite-Formats',
     title: 'Formats',
@@ -23,6 +24,8 @@ Ext.define('PMDMeta.view.datacite.Formats', {
         this.cellEditing = new Ext.grid.plugin.CellEditing({
             clicksToEdit: 1
         });
+
+	new PMDMeta.store.datacite.combobox.FormatCombo();	
 
         Ext.apply(this, {
             height: 120,
@@ -35,9 +38,11 @@ Ext.define('PMDMeta.view.datacite.Formats', {
                 dataIndex: 'format',
 		sortable: false,		
                 menuDisabled: true,				
-                editor: {
-                    allowBlank: false
-                }	
+		editor: new PMDMeta.view.main.ComboBox({
+		    store: 'FormatCombo',
+		    emptyText: 'please choose at least one file type',
+                    editable: true
+		})	
             }, {
                 xtype: 'actioncolumn',
                 width: 30,
