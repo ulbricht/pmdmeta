@@ -26,6 +26,10 @@
     $history=$_REQUEST["history"];
     $files=$_REQUEST["files"];
     
+
+    if (!preg_match("/^escidoc:\d+$/",$urlparam[3]))
+        return;
+
     
     header("Content-type: text/xml");     
     try{
