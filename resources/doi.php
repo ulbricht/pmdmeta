@@ -84,15 +84,7 @@ try{
         
         if (!($registermode==='register' || $registermode==='metadata' || $registermode==='deactivate'))
             throw new Exception("Please choose as registration mode one of: <br>register DOI, <br>update DOI metadata, or <br>deactivate DOI.");            
-        
 
-	$authcontext = stream_context_create(array(
-	    'http' => array(
-		'header'  => "Authorization: Basic " . base64_encode("user:passwd")
-	    )
-	));
-        file_get_contents("http://doidb.wdc-terra.org/search/admin/dataimport?command=full-import&clean=false&commit=true&optimize=false",false, $authcontext);
-       
         $item=$_SESSION["itemhandler"]->retrieve($escidocitemid);
         uniquedoi($dbo,$item,$pmdinstance);
         $successmessage=registerDOIFromItem($item,$targeturl,$publication,$doidbrestserver,$registermode);
@@ -192,14 +184,17 @@ function registerDOIFromItem($item,$targeturl,$publication,$doidbrestserver,$reg
                 throw new Exception("Dataset must be released to register a DOI.");
 
 
-$prefixes= array( "GFZ" => array("10.1594/GFZ.","10.5880/GFZ.","10.5880/FIDGEO."),
+$prefixes= array( "GFZ" => array("10.1594/GFZ.","10.5880/GFZ.","10.5880/BFO"),
+		  "FID" => array("10.5880/FIDGEO.","10.5880/FID."),
 		  "PIK" => array("10.5880/PIK."),
 		  "TERENO" => array("10.5880/TERENO."),
 		  "IGETS" => array("10.5880/IGETS."),
 		  "ICGEM" => array("10.5880/ICGEM."),
+		  "GIPP" => array("10.5880/GIPP-MT.","10.5880/GIPP."),
 		  "SDDB" => array("10.1594/GFZ.SDDB.","10.1594/GFZ/ICDP","10.5880/SDDB.","10.5880/ICDP."),
 		  "WSM" => array("10.1594/GFZ.WSM.","10.5880/WSM."),
-		  "ENMAP" => array("10.5880/ENMAP.")
+		  "ENMAP" => array("10.5880/ENMAP."),
+		  "INTERMAGNET"=> array("10.5880/INTERMAGNET.")
 	   );
 
 	$account=null;
